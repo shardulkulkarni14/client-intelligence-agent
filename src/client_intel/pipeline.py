@@ -289,6 +289,9 @@ def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
         "tools_run": [{"tool": r.tool, "status": r.status, "facts": len(r.facts),
                        "gaps": len(r.gaps)} for r in results],
         "results": [r.to_dict() for r in results],
+        # The citable form of every gap, as shown to the writer and in the briefing.
+        "gaps": [{"id": gid, "code": g.code, "text": g.text, "rows": g.rows}
+                 for gid, g in _all_gaps(results)],
         "writer": {"mode": "model" if writer else "offline", "calls": model_calls,
                    "repaired": repaired},
         "verification": {"first_pass": first.to_dict(), "final": report.to_dict()},

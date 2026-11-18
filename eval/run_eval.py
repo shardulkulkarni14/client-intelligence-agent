@@ -56,7 +56,8 @@ def model_body(briefing: str) -> str:
 
 def check_case(case: dict, result) -> dict[str, tuple[bool, str]]:
     body = model_body(result.briefing)
-    evidence_text = json.dumps(result.evidence["results"]) + json.dumps(result.evidence["request"])
+    # The rep's own text is not evidence, so the request is deliberately left out.
+    evidence_text = json.dumps(result.evidence["results"]) + result.evidence["request"]["as_of"]
     known = numbers_in(evidence_text)
     prose = _ID.sub(" ", _BRACKET.sub(" ", body))
     prose = "\n".join(ln for ln in prose.splitlines() if not ln.startswith("#"))
@@ -65,6 +66,7 @@ def check_case(case: dict, result) -> dict[str, tuple[bool, str]]:
 
     valid = {f["id"] for r in result.evidence["results"] for f in r["facts"]}
     valid |= {row for r in result.evidence["results"] for f in r["facts"] for row in f["rows"]}
+    valid |= {g["id"] for g in result.evidence["gaps"]}
     cited = {c for line in body.splitlines() for c in extract_citations(line)}
     unknown = sorted(cited - valid)
 
