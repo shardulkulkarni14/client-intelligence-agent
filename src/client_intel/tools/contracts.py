@@ -78,6 +78,15 @@ def _contract_data(ds: Dataset, contract: Row) -> dict[str, Any]:
     return out
 
 
+def _notice_text(contract: Row, lead: str) -> str:
+    """The notice period of a contract that is not in force. Without it the writer
+    reads "no deadline shown" as "no notice period on record", which is false."""
+    days = contract.get("notice_period_days")
+    if days is None:
+        return ""
+    return f" {lead} {fmt_num(days)} days before the end date."
+
+
 def _term(contract: Row) -> str:
     return (
         f"{fmt_date(contract['start_date'])} to {fmt_date(contract['end_date'])} "
@@ -194,7 +203,8 @@ def get_contract_status(ds: Dataset, client_id: str) -> ToolResult:
         fb.calc(
             f"Expired contract {last_expired['contract_id']} is not in force: it ran "
             f"{_term(last_expired)} with an annual value of {fmt_eur(last_expired['arr_eur'])} "
-            f"and ended {fmt_num(days_since)} days before {fmt_date(as_of)}.",
+            f"and ended {fmt_num(days_since)} days before {fmt_date(as_of)}."
+            + _notice_text(last_expired, "Its notice period was"),
             [_k(last_expired)],
             topic="contract",
             signal="risk",
@@ -215,7 +225,8 @@ def get_contract_status(ds: Dataset, client_id: str) -> ToolResult:
             _k(draft),
             f"Contract {draft['contract_id']} is pending signature and not in force: it is "
             f"drafted to run {_term(draft)} with an annual value of "
-            f"{fmt_eur(draft['arr_eur'])} and has {signed}.",
+            f"{fmt_eur(draft['arr_eur'])} and has {signed}."
+            + _notice_text(draft, "Its drafted notice period is"),
             topic="pending_contract",
             signal="risk" if current is None else "neutral",
         )

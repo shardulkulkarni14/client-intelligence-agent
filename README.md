@@ -71,7 +71,7 @@ points (command, API, UI) cannot drift apart. The port is set with
 ### 4. Tests and evaluation
 
 ```bash
-uv run pytest                           # 266 tests, no model calls
+uv run pytest                           # 273 tests, no model calls
 uv run ruff check .
 uv run python eval/run_eval.py          # the evaluation, with the model
 uv run python eval/run_eval.py --no-llm # same cases on tool output only, free
@@ -99,7 +99,7 @@ request ─► resolve client ─► plan (trigger config) ─► tools (Python 
 | Plan | configuration, `triggers.toml` | Each trigger names its question, the tools to run, the sections of the briefing and what to lead with. Profile and data quality always run. |
 | Tools | code, `tools/` | Ten functions. Each returns facts: one sentence, figures already formatted, with the IDs of the rows it came from. Missing data comes back as an explicit gap. |
 | Write | model, `prompts/` | Gets the question, the sections, the facts and the gaps. Chooses what matters, orders it, words it, proposes next steps. Copies figures; calculates nothing. |
-| Verify | code, `verify.py` | Every number on a line must be in a fact cited on that line; signs and directions must agree; unknown citations fail. |
+| Verify | code, `verify.py` | Every number on a line must be in a fact cited on that line; a change must carry its sign or a known direction word that agrees with the fact; a figure that only a person wrote needs an attribution; unknown citations fail. |
 | Repair | model, once | The flagged lines go back to the writer with the reason. |
 | Policy | code | What is still unsupported stays in the text, marked `[UNVERIFIED: reason]`, and is listed in a Verification section. |
 | Gaps | code | "Data gaps and confidence" is rendered from the tools' gaps, not written by the model. |
@@ -219,19 +219,27 @@ Done after the six must-haves were complete and evaluated:
 |---|---|
 | New trigger through configuration only | Done; see "Adding a trigger". |
 | Note-versus-data conflicts | Done as the `claim_check` tool; the conflict reaches the briefing as a cited fact and a gap. It is not yet phrased as a question for the rep by code; the writer does that. |
-| Unit tests and a repeatable regression run | 266 tests; `eval/run_eval.py` re-runs the cases after any prompt change. |
+| Unit tests and a repeatable regression run | 273 tests; `eval/run_eval.py` re-runs the cases after any prompt change. |
 | Parallel tools with a trace | Tools run in a thread pool with the result order kept stable. `evidence.json` has a `trace`: every step with seconds, and tokens and cost for model calls. A tool that raises becomes a visible `tool_error` gap, not a failed run. These are parallel deterministic tools, not parallel model specialists. |
 | Portfolio view | `--portfolio` ranks all clients by renewal risk and by growth without a model. The score is a sum of fixed points; every point carries the fact and citation that earned it. It is an ordering aid, not a probability: the data has no churn history to fit weights to, and only a handful of clients carry real risk signals. |
-| Small UI | A FastAPI service (`api.py`, four endpoints) and a Next.js page in `ui/` that calls it. Run a briefing, click any citation to see the evidence behind it, see the trace, browse the portfolio. The API is a thin layer over the same `run()` function; it loads the data once and runs the pipeline in a worker thread. It is a local, single-user service: no authentication, no job queue for the 20 to 60 second runs, no rate limiting. |
+| Small UI | A FastAPI service (`api.py`, four endpoints) and a Next.js page in `ui/` that calls it. Run a briefing, click any citation to see the evidence behind it, see the trace, browse the portfolio. The API is a thin layer over the same `run()` function; it loads the data once and runs the pipeline in a worker thread. It is a local, single-user service: no authentication, no job queue for runs of up to a minute, no rate limiting. |
 | LLM-as-judge scoring | Not done. I preferred to spend the time on the verifier; a judge model would rate usefulness, which is the part my automatic checks do not cover, so it is the first thing in "next". |
 
 ## Known limitations
 
 - **The verifier checks figures, not meaning.** It proves that a figure exists in
-  the cited fact with the right sign. It does not prove the figure is attached to
-  the right subject within that fact, it does not check number words ("halved"),
-  and a sentence without figures is not checked at all; the Verification section
-  counts those lines.
+  the cited fact with the right sign. What it does not prove, each confirmed by an
+  independent review with crafted lines:
+  - that the figure is attached to the right subject or unit ("752,000 active
+    users" passes next to a contract worth EUR 752,000, and a figure for one
+    product passes in a sentence about another);
+  - identifiers in prose ("ticket T-9999" next to a valid citation);
+  - number words ("halved", "four of five");
+  - any sentence without figures. One sample briefing from an earlier run said a
+    notice period was "not in the data" because the tool did not state it for an
+    expired contract; the tool now states it, but the class of error remains.
+  The Verification section of each briefing says this in one sentence and counts
+  the lines that were not checked.
 - **One repair attempt.** Some briefings still go out with a flagged line. That is
   the intended behaviour, and the exit code reports it, but it is not zero.
 - **Note handling is keyword based.** Statements are quoted verbatim and sorted
@@ -245,7 +253,13 @@ Done after the six must-haves were complete and evaluated:
 - **Synthetic data only**, 25 clients. The evaluation cases were chosen by me after
   reading the data, so they test what I knew to look for.
 - **Name matching** has no typo tolerance.
-- Latency is 20 to 60 seconds per briefing, almost all of it the model writing.
+- Latency was 13 to 28 seconds per briefing in the committed runs, almost all of it
+  the model writing; a repair adds one more call.
+- **Length.** The prompt asks for about 400 words; with the code-written
+  Verification and gaps sections the files are 500 to 700 words, more than one page
+  for a client with many gaps.
+- **The rep's context does not change the plan.** It reaches the writer only; the
+  tools that run depend on the trigger alone.
 
 ## What I would do next for production
 
@@ -253,7 +267,7 @@ Done after the six must-haves were complete and evaluated:
    model change, with a rep rating usefulness, which no automatic check covers.
 2. Tie each figure to its subject: have the writer emit structured claims
    (fact ID plus sentence) so the verifier can check the pairing, not only the number.
-3. Put the API behind authentication, move the 20 to 60 second runs to a job
+3. Put the API behind authentication, move the runs of up to a minute to a job
    queue with status polling, and add rate limits. Read from the warehouse through reviewed SQL views instead of a file, with data
    freshness in the header and row-level access by account owner.
 4. Tracing and cost per briefing, an audit log of what was sent to the model, and

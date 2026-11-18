@@ -392,3 +392,13 @@ def test_every_opportunity_appears_once_and_serialises(ds: Dataset) -> None:
         json.dumps(result.to_dict())
         seen += [o["opp_id"] for o in result.data["open"] + result.data["closed"]]
     assert sorted(seen) == [f"O-{n:04d}" for n in range(1, 20)]
+
+
+def test_notice_period_is_stated_for_contracts_that_are_not_in_force(ds):
+    # C007 has no contract in force; both of its contracts carry 90 days of notice,
+    # and a briefing must not say that no notice period is on record.
+    from client_intel.tools.contracts import get_contract_status
+
+    texts = " ".join(f.text for f in get_contract_status(ds, "C007").facts)
+    assert "Its notice period was 90 days before the end date." in texts
+    assert "Its drafted notice period is 90 days before the end date." in texts

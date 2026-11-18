@@ -136,3 +136,10 @@ def test_athletic_names_both_candidates(ds: Dataset) -> None:
         '"Athletic" matches several clients and none was chosen: '
         "Thornbury Athletics Federation (C014), Wexley Athletic FC (C017)."
     )
+
+
+def test_a_one_letter_fragment_is_not_a_client(ds):
+    from client_intel.tools.clients import resolve_client
+
+    assert resolve_client(ds, "../../x").data["status"] == "not_found"
+    assert resolve_client(ds, "x").data["status"] == "not_found"

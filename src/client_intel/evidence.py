@@ -35,6 +35,9 @@ class Fact:
     kind: str = DATA
     topic: str = ""  # short grouping key, e.g. "renewal", "utilisation", "open_tickets"
     signal: str = ""  # optional reading for the planner: "risk" | "opportunity" | "neutral" | ""
+    # Filled only when facts about one row are merged for the verifier: what people
+    # wrote about the row, kept apart from what was measured about it.
+    reported_text: str = ""
 
 
 @dataclass

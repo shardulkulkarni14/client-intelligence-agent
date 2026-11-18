@@ -112,7 +112,11 @@ def make_plan(trigger: str) -> Plan:
 
 def index_facts(results: list[ToolResult]) -> dict[str, Fact]:
     """One entry per citation ID. Several tools may state facts about the same row
-    (for example a contract), so their texts are merged under that ID."""
+    (for example a ticket: its measured fields, and the subject the client wrote).
+
+    Measured and reported text stay apart under the one ID, so that a figure which
+    exists only in what somebody wrote still needs an attribution in the briefing.
+    """
     index: dict[str, Fact] = {}
     for result in results:
         for fact in result.facts:
@@ -120,11 +124,17 @@ def index_facts(results: list[ToolResult]) -> dict[str, Fact]:
             if seen is None:
                 index[fact.id] = Fact(**vars(fact))
                 continue
-            seen.text = f"{seen.text} {fact.text}"
             seen.rows = sorted(set(seen.rows) | set(fact.rows))
-            # A row is only "reported" if nothing measured was said about it.
-            if seen.kind == REPORTED and fact.kind != REPORTED:
-                seen.kind = fact.kind
+            if fact.kind == REPORTED:
+                if seen.kind == REPORTED:
+                    seen.text = f"{seen.text} {fact.text}"
+                else:
+                    seen.reported_text = f"{seen.reported_text} {fact.text}".strip()
+            elif seen.kind == REPORTED:
+                seen.reported_text = f"{seen.text} {seen.reported_text}".strip()
+                seen.text, seen.kind = fact.text, fact.kind
+            else:
+                seen.text = f"{seen.text} {fact.text}"
     # A gap is evidence too: the writer may say "March 2026 is missing" and cite it.
     for gap_id, gap in _all_gaps(results):
         index[gap_id] = Fact(id=gap_id, text=gap.text, rows=list(gap.rows), topic="gap")
@@ -173,6 +183,7 @@ def build_prompt(plan: Plan, client: dict[str, Any], ds: Dataset, results: list[
         question=plan.question,
         client_name=client["client_name"],
         client_id=client["client_id"],
+        account_owner=client["account_owner"],
         as_of=ds.as_of.isoformat(),
         context_block=f"THE REP ADDED: {context}\n" if context else "",
         sections="\n".join(f"- {s}" for s in plan.sections),
@@ -209,7 +220,9 @@ def gaps_section(results: list[ToolResult]) -> str:
     if quality and quality.data.get("confidence"):
         lines.append(
             f"**Confidence in the data behind this briefing: {quality.data['confidence']}.** "
-            "The rating is set by a fixed rule in code from the gaps listed here."
+            "The rating is set by a fixed rule in code from the state of the data "
+            "(duplicates, missing months, short history, blank fields). A conflict between "
+            "a note and the measured data is listed below but does not change the rating."
         )
     gaps = _all_gaps(results)
     if not gaps:

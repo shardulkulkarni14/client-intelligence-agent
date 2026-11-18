@@ -23,6 +23,13 @@ def _words(text: str) -> list[str]:
     return [w for w in re.findall(r"[a-z0-9]+", text.casefold()) if w not in _IGNORED_WORDS]
 
 
+MIN_PARTIAL = 3  # "x" is inside one name by accident; that is not a request for it
+
+
+def _part_of(typed: str, name_word: str) -> bool:
+    return typed == name_word or (len(typed) >= MIN_PARTIAL and typed in name_word)
+
+
 def _candidate(row: Row) -> dict[str, str]:
     return {"client_id": row["client_id"], "client_name": row["client_name"]}
 
@@ -63,7 +70,8 @@ def _match(ds: Dataset, query: str) -> tuple[str, list[Row]]:
 
     # Loosest tier, also used to list every plausible candidate when a tier is ambiguous.
     loose = [
-        c for c in clients if all(any(w in n for n in names[c["client_id"]]) for w in q_words)
+        c for c in clients
+        if all(any(_part_of(w, n) for n in names[c["client_id"]]) for w in q_words)
     ]
 
     # Every word typed is a whole word of the name: "Brenmoor League".

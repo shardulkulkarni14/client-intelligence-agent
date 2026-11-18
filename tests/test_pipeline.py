@@ -272,3 +272,26 @@ def test_a_draft_with_swapped_sections_comes_out_in_plan_order(ds):
     result = run(ds, "C001", "renewal", writer=swapped)
     positions = [result.briefing.index(f"## {name}") for name in sections]
     assert positions == sorted(positions)
+
+
+def test_a_figure_that_only_a_note_states_needs_attribution_through_the_whole_run(ds):
+    # N-006 (C003) quotes "+10%"; the same note also has measured fields (its date),
+    # so the reported text must survive the merge of facts with one ID.
+    from client_intel.pipeline import make_plan, run
+
+    sections = make_plan("at_risk").sections
+
+    def writer_for(line: str):
+        def write(system: str, user: str) -> str:
+            return "\n\n".join(f"## {name}\n{line if i == 0 else 'Nothing to add.'}"
+                                 for i, name in enumerate(sections))
+        return write
+
+    bare = run(ds, "C003", "at_risk",
+               writer=writer_for("The renewal is agreed at +10% [note:N-006]."))
+    assert [v.kind for v in bare.report.violations] == ["number_only_reported"]
+    assert "UNVERIFIED" in bare.briefing
+
+    attributed = run(ds, "C003", "at_risk", writer=writer_for(
+        "The account owner noted that the client reported +10% [note:N-006]."))
+    assert attributed.report.ok

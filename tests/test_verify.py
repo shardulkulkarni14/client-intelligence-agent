@@ -193,7 +193,8 @@ def test_money_must_be_money_in_the_evidence(facts):
 
 @pytest.mark.parametrize(
     "written",
-    ["down 28.0%", "-28.0%", "28%", "28.0 percent", "down -28.0%", "a change of -28.0%", "−28.0 %"],
+    ["down 28.0%", "-28.0%", "down 28%", "down 28.0 percent", "down -28.0%",
+     "a change of -28.0%", "−28.0 %"],
 )
 def test_percent_matches_at_written_precision_with_the_right_direction(facts, written):
     assert verify(f"API calls moved {written} [{TREND}].", facts).ok is True
@@ -244,10 +245,20 @@ def test_direction_mismatch(facts, line, token, detail):
         "API calls are 28.0% below the July level",
         "API calls dropped, by our count, 28.0%",
         "A decline of 28.0% in API calls",
-        "API calls moved 28.0%",
         # the nearest direction word decides
         "From a higher base, calls are down 28.0%",
-        # another sentence does not count
+    ],
+)
+def test_direction_agrees_or_is_not_stated(facts, line):
+    assert verify(f"{line} [{TREND}].", facts).ok is True
+
+
+@pytest.mark.parametrize(
+    "line",
+    [
+        "API calls moved 28.0%",
+        "API calls surprised everyone with 28.0%",
+        # a direction word in another sentence does not count
         "Revenue is up. API calls moved 28.0%",
         # too far away: more than 5 words before
         "Up is not the word for what happened here: 28.0%",
@@ -256,8 +267,18 @@ def test_direction_mismatch(facts, line, token, detail):
         "A change of up to 28.0%",
     ],
 )
-def test_direction_agrees_or_is_not_stated(facts, line):
-    assert verify(f"{line} [{TREND}].", facts).ok is True
+def test_a_change_without_sign_or_direction_word_is_flagged(facts, line):
+    # The evidence says -28.0%. A sentence that gives neither the sign nor a known
+    # direction word cannot be checked, and the word list can never be complete.
+    report = verify(f"{line} [{TREND}].", facts)
+    assert [v.kind for v in report.violations] == ["direction_mismatch"]
+    assert "copy it as in the evidence: -28.0%" in report.violations[0].detail
+
+
+@pytest.mark.parametrize("word", ["surged", "climbed", "jumped"])
+def test_more_rise_words_are_caught_against_a_fall(facts, word):
+    report = verify(f"API calls {word} 28.0% [{TREND}].", facts)
+    assert [v.kind for v in report.violations] == ["direction_mismatch"]
 
 
 def test_direction_against_positive_and_unsigned_evidence(facts):
@@ -513,7 +534,9 @@ def test_apply_policy_states_uncited_lines(facts):
     one = f"The account is at risk.\n- Worth EUR 752,000 [{K}]."
     assert apply_policy(one, verify(one, facts)).endswith(
         "## Verification\n\n"
-        "All 1 numbers and 1 citations were checked against the evidence.\n\n"
+        "All 1 numbers and 1 citations were matched to the facts cited on their lines. "
+        "The check covers figures, their signs and citation IDs; it does not judge the "
+        "wording around them.\n\n"
         "1 line carries no figure and no citation; it is interpretation and was not checked.\n"
     )
     two = "The account is at risk.\nCall them.\nUsage fell to 9,999 calls."
@@ -605,7 +628,9 @@ def test_apply_policy_clean(facts):
     out = apply_policy(briefing, verify(briefing, facts))
     assert out == (
         f"- Value is EUR 752,000 [{K}].\n\n## Verification\n\n"
-        "All 1 numbers and 1 citations were checked against the evidence.\n"
+        "All 1 numbers and 1 citations were matched to the facts cited on their lines. "
+        "The check covers figures, their signs and citation IDs; it does not judge the "
+        "wording around them.\n"
     )
 
 

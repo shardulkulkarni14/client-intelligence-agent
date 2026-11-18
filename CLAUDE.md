@@ -4,7 +4,7 @@ These are the instructions the coding assistant worked under. They are part of
 the submission on purpose: they show how the build was steered.
 
 ## What this is
-A command-line agent that writes a cited briefing about one client for a sales
+A command-line agent (also served over a small HTTP API with a web page) that writes a cited briefing about one client for a sales
 rep. Input: client (name or ID), trigger, optional rep context. Output:
 `briefing.md` and `evidence.json`.
 
@@ -36,8 +36,9 @@ rep. Input: client (name or ID), trigger, optional rep context. Output:
 
 ## How to work here
 - Python 3.12+, `uv`. Run `uv run pytest` and `uv run ruff check .` after every change.
-- Type hints everywhere. Comments say why, not what. Small files.
-- No new dependency without asking. Dependencies: `anthropic`; dev: `pytest`, `ruff`.
+- Type hints everywhere. Comments say why, not what.
+- No new dependency without asking. Dependencies: `anthropic`, `fastapi`, `uvicorn`;
+  dev: `pytest`, `ruff`, `httpx`.
 - Tests never call a model: pass a fake `Writer` (a function from system and user
   text to text). Tests assert exact values against known rows of the data pack.
 - Never read or print `.env`. The code reports a missing key itself.
@@ -55,7 +56,11 @@ src/client_intel/
   prompts/         the run-time prompts, as plain files
   llm.py           the only module that calls a model
   verify.py        number and citation check, flag policy
+  trace.py         timing, tokens and cost per step
+  portfolio.py     all clients ranked, no model
   cli.py           the command
+  api.py           the same run() over HTTP
+ui/                Next.js page that calls the API
 eval/              evaluation cases and runner
 outputs/           sample briefings with their evidence
 ```

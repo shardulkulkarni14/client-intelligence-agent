@@ -275,12 +275,14 @@ _CONTEXT_MARKER_RE = re.compile(r"\b(?:reps?|representative|context)\b", re.IGNO
 
 _UP_WORDS = frozenset(
     "up rose rise rises risen rising grew grow grows growing growth increase increased "
-    "increases increasing above higher".split()
+    "increases increasing above higher surge surged surging jump jumped jumping climb "
+    "climbed climbing soared gain gained gaining more".split()
 )
 _DOWN_WORDS = frozenset(
     "down fell fall falls fallen falling dropped drop drops dropping decline declined "
     "declines declining decrease decreased decreases decreasing below lower shrank "
-    "shrink shrinks shrinking".split()
+    "shrink shrinks shrinking slid slipped plunged plummeted sank tumbled reduced "
+    "reduction cut loss lost less fewer contracted".split()
 )
 _SENTENCE_END_RE = re.compile(r"[.;!?](?=\s|$)")
 _WORD_RE = re.compile(r"[A-Za-z]+")
@@ -341,13 +343,19 @@ class _Evidence:
         self.by_row: dict[str, list[Fact]] = {}
         self.numbers: dict[int, list[NumberToken]] = {}
         self.facts: list[Fact] = []
-        for key, fact in facts.items():
-            self.facts.append(fact)
-            self.numbers[id(fact)] = extract_numbers(fact.text)
-            for citation in dict.fromkeys([key, fact.id]):
-                self.by_id.setdefault(citation, []).append(fact)
-            for row in dict.fromkeys(fact.rows):
-                self.by_row.setdefault(row, []).append(fact)
+        for key, merged in facts.items():
+            parts = [merged]
+            if merged.reported_text:
+                # What people wrote about a row is a second, reported fact under the same ID.
+                parts.append(Fact(id=merged.id, text=merged.reported_text,
+                                  rows=list(merged.rows), kind=REPORTED, topic=merged.topic))
+            for fact in parts:
+                self.facts.append(fact)
+                self.numbers[id(fact)] = extract_numbers(fact.text)
+                for citation in dict.fromkeys([key, fact.id]):
+                    self.by_id.setdefault(citation, []).append(fact)
+                for row in dict.fromkeys(fact.rows):
+                    self.by_row.setdefault(row, []).append(fact)
 
     def is_valid(self, citation: str) -> bool:
         return citation in self.by_id or citation in self.by_row
@@ -454,6 +462,18 @@ def verify(
                 else:
                     wanted, word = _direction_word(blanked, start, end)
                 matched = [ev for fact in supporting for ev in evidence.matches(fact, token)]
+                # A change written without its sign and without a known direction word
+                # ("surged 40.0%") cannot be checked, so it is not let through: the
+                # list of direction words can never be complete.
+                if not wanted and matched and all(
+                    ev.sign and Decimal(ev.value) != 0 for ev in matched
+                ):
+                    found = ", ".join(dict.fromkeys(f"{ev.sign}{ev.raw}" for ev in matched))
+                    detail = (
+                        f"{token.raw} is a change written without its sign; "
+                        f"copy it as in the evidence: {found}"
+                    )
+                    violations.append(Violation(line_no, line, DIRECTION, token.raw, detail))
                 if wanted and not _direction_agrees(wanted, bool(token.sign), matched):
                     written = f"{token.sign}{token.raw}" if token.sign else f"'{word}' {token.raw}"
                     found = ", ".join(dict.fromkeys(f"{ev.sign}{ev.raw}" for ev in matched))
@@ -532,7 +552,13 @@ def apply_policy(briefing: str, report: VerificationReport) -> str:
     out += ["", "## Verification", ""]
     counts = f"{report.numbers_checked} numbers and {report.citations_checked} citations"
     if report.ok:
-        out.append(f"All {counts} were checked against the evidence.")
+        # Say what was checked and no more: the check ties figures to facts, it does
+        # not read the sentence around them.
+        out.append(
+            f"All {counts} were matched to the facts cited on their lines. The check "
+            "covers figures, their signs and citation IDs; it does not judge the wording "
+            "around them."
+        )
     else:
         out.append(
             f"{counts} were checked against the evidence; {len(report.violations)} "
