@@ -10,3 +10,8 @@ notes/
 case/
 # ad-hoc runs; the evaluation's sample outputs live in outputs/ and are committed
 runs/
+
+# web UI build output
+ui/node_modules/
+ui/.next/
+ui/next-env.d.ts
