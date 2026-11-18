@@ -279,12 +279,10 @@ Done after the six must-haves were complete and evaluated:
 
 ## How I built it
 
-**Time.** Timed build on Wednesday 18 November 2026, start 08:59, end RESULT_END.
-Before the build, I read the brief and the data pack and wrote
-myself a data survey and a schema diagram. So
-the design decisions on duplicates, missing months and the seasonal comparison were
-made before the coding has started; all code, prompts, tests and this README were
-written inside the timed session.
+**Time.** Timed build on Wednesday 18 November 2026, 09:00 to 13:00, as announced
+by mail at the start. All code, prompts, tests and this README were written in that
+session. The first large commit, a few minutes in, is the output of four sub-agents
+working in parallel against the data contract described below.
 
 **Tool.** Claude Code, with the instructions in `CLAUDE.md`. I set the architecture
 and the rules (numbers from code, fixed sequence, triggers as configuration, flag
