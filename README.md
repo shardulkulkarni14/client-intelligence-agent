@@ -3,14 +3,28 @@
 One command turns a client and a trigger into a one-page briefing for the account
 manager, plus an evidence file that backs every figure in it.
 
+## How to run
+
+Requirements: Python 3.12+, [uv](https://docs.astral.sh/uv/), and an Anthropic API
+key. The optional web UI also needs Node 20+.
+
+### 1. Set up (once)
+
 ```bash
-uv sync
+uv sync                       # installs the Python packages
 cp .env.example .env          # then put your Anthropic API key in .env
+```
+
+### 2. Run the agent (command line)
+
+There is no server to start: the agent is a command.
+
+```bash
 uv run client-intel --client "Halden Bet" --trigger renewal
 ```
 
-Output goes to `runs/<client id>_<trigger>/briefing.md` and `evidence.json`, and the
-briefing is printed.
+The briefing is printed and saved to `runs/<client id>_<trigger>/briefing.md`,
+next to its `evidence.json`.
 
 | Option | Meaning |
 |---|---|
@@ -19,24 +33,37 @@ briefing is printed.
 | `--context "..."` | free text from the rep |
 | `--no-llm` | facts-only briefing without any model call; needs no key |
 | `--out DIR` | output folder (default `runs`) |
+| `--portfolio` | rank all clients by renewal risk and growth, no model; add `--out DIR` to save it |
+| `--json`, `--list` | machine-readable output, used by the web UI |
 
 Exit code: 0 clean, 1 briefing written with flagged lines, 2 request could not be answered.
 
+### 3. Run the web UI (optional)
+
+The UI is a thin page over the same command. It has no separate backend: its
+server-side routes run `uv run client-intel ...` in this repository, so step 1
+must be done first.
+
+```bash
+cd ui
+npm install
+npm run dev                   # then open http://localhost:3000
+```
+
+- **Briefing** page: choose a client and a trigger, run, click any citation to
+  see the evidence behind it. Untick "Use the model" for a free, facts-only run.
+- **Portfolio** page (`/portfolio`): all clients ranked, with the reasons.
+
+### 4. Tests and evaluation
+
 ```bash
 uv run pytest                           # 250 tests, no model calls
+uv run ruff check .
 uv run python eval/run_eval.py          # the evaluation, with the model
 uv run python eval/run_eval.py --no-llm # same cases on tool output only, free
 ```
 
-Optional extras:
-
-```bash
-uv run client-intel --portfolio --out runs/portfolio   # all clients ranked, no model
-cd ui && npm install && npm run dev                    # small web UI on localhost:3000
-```
-
-Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/); the UI also needs Node 20+. The model is set with
-`CLIENT_INTEL_MODEL` (default `claude-haiku-5-5`).
+The model is set with `CLIENT_INTEL_MODEL` in `.env` (default `claude-haiku-5-5`).
 
 ## Design
 
@@ -221,10 +248,10 @@ Done after the six must-haves were complete and evaluated:
 ## How I built it
 
 **Time.** Timed build on Wednesday 18 November 2026, start 08:59, end RESULT_END.
-Before the timed build, on 17 November, I read the brief and the data pack and wrote
-myself a data survey and a schema diagram (about two hours, no solution code). So
+Before the build, I read the brief and the data pack and wrote
+myself a data survey and a schema diagram. So
 the design decisions on duplicates, missing months and the seasonal comparison were
-made before the clock started; all code, prompts, tests and this README were
+made before the coding has started; all code, prompts, tests and this README were
 written inside the timed session.
 
 **Tool.** Claude Code, with the instructions in `CLAUDE.md`. I set the architecture
