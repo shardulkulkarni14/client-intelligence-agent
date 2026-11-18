@@ -23,12 +23,19 @@ briefing is printed.
 Exit code: 0 clean, 1 briefing written with flagged lines, 2 request could not be answered.
 
 ```bash
-uv run pytest                           # 232 tests, no model calls
+uv run pytest                           # 250 tests, no model calls
 uv run python eval/run_eval.py          # the evaluation, with the model
 uv run python eval/run_eval.py --no-llm # same cases on tool output only, free
 ```
 
-Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/). The model is set with
+Optional extras:
+
+```bash
+uv run client-intel --portfolio --out runs/portfolio   # all clients ranked, no model
+cd ui && npm install && npm run dev                    # small web UI on localhost:3000
+```
+
+Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/); the UI also needs Node 20+. The model is set with
 `CLIENT_INTEL_MODEL` (default `claude-haiku-5-5`).
 
 ## Design
@@ -161,6 +168,20 @@ Separately, the test suite runs all 25 clients with all 4 triggers without a mod
 and requires zero verifier flags, which proves that the tools' own sentences are
 traceable.
 
+## Beyond the must-haves
+
+Done after the six must-haves were complete and evaluated:
+
+| Stretch goal | State |
+|---|---|
+| New trigger through configuration only | Done; see "Adding a trigger". |
+| Note-versus-data conflicts | Done as the `claim_check` tool; the conflict reaches the briefing as a cited fact and a gap. It is not yet phrased as a question for the rep by code; the writer does that. |
+| Unit tests and a repeatable regression run | 250 tests; `eval/run_eval.py` re-runs the cases after any prompt change. |
+| Parallel tools with a trace | Tools run in a thread pool with the result order kept stable. `evidence.json` has a `trace`: every step with seconds, and tokens and cost for model calls. A tool that raises becomes a visible `tool_error` gap, not a failed run. These are parallel deterministic tools, not parallel model specialists. |
+| Portfolio view | `--portfolio` ranks all clients by renewal risk and by growth without a model. The score is a sum of fixed points; every point carries the fact and citation that earned it. It is an ordering aid, not a probability: the data has no churn history to fit weights to, and only a handful of clients carry real risk signals. |
+| Small UI | `ui/`, Next.js. A thin view over the command: run a briefing, click any citation to see the evidence behind it, see the trace, browse the portfolio. All logic stays in Python. Local use only, no authentication. |
+| LLM-as-judge scoring | Not done. I preferred to spend the time on the verifier; a judge model would rate usefulness, which is the part my automatic checks do not cover, so it is the first thing in "next". |
+
 ## Known limitations
 
 - **The verifier checks figures, not meaning.** It proves that a figure exists in
@@ -225,6 +246,9 @@ assistant wrote the code against them.
    the database, attacked the verifier with deliberately wrong lines and ran the
    sample requests. It was told to report only, not to edit.
 5. Three agents fixed its findings in parallel, again by file ownership.
+6. With the must-haves evaluated, two more agents built the stretch goals in
+   parallel against a JSON contract I wrote first: one the trace, parallel tools
+   and portfolio in Python, one the web UI in its own folder.
 
 **What worked.** A written data contract before parallel work: four agents
 produced code that fitted together at the first attempt. Exact-value tests against
@@ -263,7 +287,10 @@ src/client_intel/
   prompts/              run-time prompts
   llm.py                the only model call
   verify.py             verifier and flag policy
+  trace.py              step timing and cost
+  portfolio.py          ranking of all clients
   cli.py
+ui/                     optional Next.js view over the command
 eval/                   cases, runner, reports
 outputs/                sample briefings and evidence from the evaluation
 data/starter_pack/      the provided data, unchanged
