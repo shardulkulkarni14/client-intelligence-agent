@@ -1,0 +1,30 @@
+# One block per trigger. Adding a trigger means adding a block here; no code changes.
+#   question  what the rep needs answered; given to the writer as the brief
+#   tools     analyses to run, in order (names from pipeline.TOOLS).
+#             resolve_client, client_profile and data_quality always run and are not listed.
+#   sections  headings of the briefing, in order
+#   lead      fact topics/signals the writer should put first
+
+[renewal]
+question = "Is this renewal on track, at what value, and what must the rep do before the notice deadline?"
+tools = ["contract_status", "opportunities", "usage_trend", "support_summary", "meeting_notes", "whitespace"]
+sections = ["Bottom line", "Contract and renewal position", "Usage against what they pay for", "Risks to the renewal", "Room to grow", "Suggested next steps"]
+lead = ["contract", "renewal", "risk"]
+
+[meeting_prep]
+question = "What should the rep know walking into the next meeting: what was promised, what is open, what has changed?"
+tools = ["meeting_notes", "support_summary", "contract_status", "opportunities", "usage_trend"]
+sections = ["Bottom line", "Where we left off", "Open issues the client may raise", "What changed in the numbers", "Commercial position", "Suggested agenda"]
+lead = ["notes", "open_tickets", "risk"]
+
+[upsell]
+question = "Where can this account grow: more of what they use, or products they do not hold yet, and what would make the pitch land or fail?"
+tools = ["usage_trend", "whitespace", "opportunities", "contract_status", "meeting_notes", "support_summary"]
+sections = ["Bottom line", "More of what they already use", "Products they do not hold", "What could block the pitch", "Timing", "Suggested next steps"]
+lead = ["opportunity", "whitespace", "utilisation"]
+
+[at_risk]
+question = "Is this account at risk of shrinking or leaving, how strong is the evidence, and what should the rep do first?"
+tools = ["usage_trend", "support_summary", "contract_status", "opportunities", "meeting_notes"]
+sections = ["Bottom line", "Warning signs", "Signs of health", "What we do not know", "Suggested next steps"]
+lead = ["risk", "open_tickets", "renewal"]
