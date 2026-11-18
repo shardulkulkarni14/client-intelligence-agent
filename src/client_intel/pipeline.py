@@ -17,6 +17,7 @@ from client_intel import verify as verifier
 from client_intel.db import Dataset
 from client_intel.evidence import REPORTED, Fact, Gap, ToolResult
 from client_intel.llm import Writer
+from client_intel.tools.claims import check_claims
 from client_intel.tools.clients import get_client_profile, resolve_client
 from client_intel.tools.contracts import get_contract_status, get_opportunities
 from client_intel.tools.notes import get_meeting_notes
@@ -40,6 +41,7 @@ TOOLS: dict[str, Tool] = {
     "whitespace": get_whitespace,
     "support_summary": get_support_summary,
     "meeting_notes": get_meeting_notes,
+    "claim_check": check_claims,
 }
 # Run for every request, whatever the trigger: who the client is, and how far
 # the data can be trusted.
