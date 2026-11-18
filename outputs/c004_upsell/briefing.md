@@ -3,44 +3,47 @@
 _Data as of 2026-11-01. Account owner: Elif Aydin._
 
 ## Bottom line
-Growth looks more likely from new products than from more of Live Match Data Feed, because the one product held is only 40.0% used and 7 of 8 catalogue products are not held [calc:usage_trend#2] [calc:whitespace#1]. Confidence is low: the usage history is two months and the peer group has two clients [calc:data_quality#1] [gap:small_peer_group#1]. Match Visualisation Widgets and In-play Odds Feed are both often bought with the held product, and the prerequisite for Odds is already in place [product:WIDGETS] [product:ODDS_LIVE].
+The clearest growth is in new products, not more volume: they used 40.0% of their included volume in Oct 2026 [calc:usage_trend#2] and hold 1 of 8 catalogue products [calc:whitespace#1]. Confidence is low because usage covers only 2 months [calc:usage_trend#1] [gap:short_history#1] and the peer group has just 2 other clients [gap:small_peer_group#1].
 
 ## More of what they already use
-- Oct 2026 utilisation is 40.0%: 800 of 2,000 API calls (thousands) included [calc:usage_trend#2].
-- The Sep-Oct average of 33.1% covers only two months, so the trend is unclear [calc:usage_trend#3] [gap:short_history#1].
-- Usage has never exceeded the included volume [calc:usage_trend#5]. There is no overage signal to build on.
+- Volume is not the lever yet: 800 API calls (thousands) used in Oct 2026 against 2,000 included, a utilisation of 40.0% [calc:usage_trend#2].
+- Usage was above the included volume in 0 of the last 2 months [calc:usage_trend#5].
+- Average utilisation was 33.1% in Sep-Oct 2026, with only 2 months of history [calc:usage_trend#3] [gap:short_history#1].
+- Growth in usage cannot be shown year on year, because there is no comparison period [gap:short_history#1].
 
 ## Products they do not hold
-- Match Visualisation Widgets: indicative EUR 30,000 per year, often bought with LIVE_DATA, held by both segment peers [product:WIDGETS].
-- In-play Odds Feed: indicative EUR 75,000 per year, often bought with LIVE_DATA, prerequisite already held [product:ODDS_LIVE].
-- Historical Stats Archive: indicative EUR 20,000 per year, held by both segment peers [product:STATS_ARCHIVE].
-- Not typically sold to Fantasy & Gaming: Fan Engagement Analytics EUR 17,500 [product:FAN_INSIGHTS], Integrity Monitoring EUR 25,000 [product:INTEGRITY], Pre-match Odds EUR 45,000 [product:ODDS_PRE], Live Streaming EUR 55,000 [product:STREAM].
+- Match Visualisation Widgets (WIDGETS): indicative entry price EUR 30,000 per year, often bought with held LIVE_DATA, typically sold to Fantasy & Gaming, and held by 2 of 2 segment peers [product:WIDGETS].
+- Historical Stats Archive (STATS_ARCHIVE): indicative entry price EUR 20,000 per year, typically sold to Fantasy & Gaming, and held by 2 of 2 segment peers [product:STATS_ARCHIVE].
+- In-play Odds Feed (ODDS_LIVE): indicative entry price EUR 75,000 per year. Its prerequisite, LIVE_DATA, is already held, but it is not typically sold to Fantasy & Gaming [product:ODDS_LIVE].
+- Fan Engagement Analytics EUR 17,500, Integrity Monitoring EUR 25,000, Pre-match Odds Feed EUR 45,000 and Live Streaming EUR 55,000 are not typically sold to the segment, and 0 of 2 segment peers hold them [product:FAN_INSIGHTS] [product:INTEGRITY] [product:ODDS_PRE] [product:STREAM].
 
 ## What could block the pitch
-- Idle capacity: at 40.0% utilisation, a bigger LIVE_DATA-linked deal invites the question of why current capacity is unused [calc:usage_trend#2].
-- Thin relationship: the client has been a customer since 2026-09-01 [client:C004], and no meeting notes exist [gap:no_meeting_notes#1].
-- Weak peer evidence: peer holdings are based on two clients [product:WIDGETS] [gap:small_peer_group#1].
-- Service health is unknown: no support tickets are recorded, which is not the same as no problems [gap:no_support_tickets#1].
+- A volume pitch would likely fail while 40.0% of the included volume is unused [calc:usage_trend#2].
+- Peer adoption is weak evidence: the group is too small for a reliable comparison [gap:small_peer_group#1] [product:WIDGETS].
+- No meeting notes exist, so the relationship and the client's stated priorities are not known [gap:no_meeting_notes#1].
+- No support tickets are recorded. This means no ticket data, not that the client has no problems [gap:no_support_tickets#1].
 
 ## Timing
-- Contract K-0006 runs 2026-09-01 to 2027-08-31 at EUR 48,000 a year [contracts:K-0006].
-- It renews automatically unless notice is given 30 days before the end date, so the notice deadline is 2027-08-01 [contracts:K-0006] [calc:contract_status#2].
-- The contract ends in 303 days from 2026-11-01 [calc:contract_status#1].
-- The CRM next step reads "Signed" for the closed opportunity (reported), and the contract confirms the deal is in force [opp:O-0004] [contracts:K-0006].
+- Contract K-0006 runs 2026-09-01 to 2027-08-31 at an annual value of EUR 48,000 [contracts:K-0006].
+- It renews automatically unless notice is given. The notice deadline is 2027-08-01 [contracts:K-0006] [calc:contract_status#2].
+- Opportunity O-0004 closed won at EUR 48,000 [opp:O-0004]. Its CRM next step reads "Signed" (reported) [opp:O-0004].
+- Whether the client is ready for another purchase soon is not known.
 
 ## Suggested next steps
-- Review LIVE_DATA usage with Elif Aydin before pitching anything new, since utilisation is 40.0% [calc:usage_trend#2] [client:C004].
-- Lead with Match Visualisation Widgets as the add-on bought with LIVE_DATA, at EUR 30,000 per year [product:WIDGETS].
-- Schedule the renewal conversation before the notice deadline of 2027-08-01 [calc:contract_status#2].
-- Ask the account team to record meeting notes and support status, since neither exists yet [gap:no_meeting_notes#1] [gap:no_support_tickets#1].
+- Lead the pitch with WIDGETS at EUR 30,000 per year, the product most often bought with LIVE_DATA [product:WIDGETS].
+- Do not propose extra volume while utilisation sits at 40.0% [calc:usage_trend#2].
+- Before pitching, find out what the client's contact wants from the service, since no meeting notes exist [gap:no_meeting_notes#1].
+- Put the K-0006 notice deadline of 2027-08-01 in the diary and plan the renewal conversation ahead of it [calc:contract_status#2].
 
 ## Verification
 
-All 27 numbers and 35 citations were checked against the evidence.
+All 37 numbers and 31 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
+
+1 line carries no figure and no citation; it is interpretation and was not checked.
 
 
 ## Data gaps and confidence
-**Confidence in the data behind this briefing: low.** The rating is set by a fixed rule in code from the gaps listed here.
+**Confidence in the data behind this briefing: low.** The rating is set by a fixed rule in code from the state of the data (duplicates, missing months, short history, blank fields). A conflict between a note and the measured data is listed below but does not change the rating.
 - LIVE_DATA (Live Match Data Feed): only 2 months of usage history (fewer than 12), so no year-on-year comparison is possible. [gap:short_history#1][usage:U-00265][usage:U-00266]
 - Only 2 other clients in segment Fantasy & Gaming; peer adoption is a weak comparison and no percentage is given. [gap:small_peer_group#1][client:C006][client:C019]
 - Contract K-0006 is the only signed contract on file, so the change in annual value at the last renewal cannot be computed. [gap:no_previous_contract#1][contracts:K-0006]

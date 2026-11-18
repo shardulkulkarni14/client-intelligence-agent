@@ -99,7 +99,8 @@
           ],
           "kind": "data",
           "topic": "client",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -128,7 +129,8 @@
           ],
           "kind": "data",
           "topic": "profile",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -153,7 +155,8 @@
           "rows": [],
           "kind": "calc",
           "topic": "confidence",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         }
       ],
       "gaps": [
@@ -211,7 +214,8 @@
           ],
           "kind": "calc",
           "topic": "history",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#2",
@@ -221,7 +225,8 @@
           ],
           "kind": "calc",
           "topic": "usage_latest",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#3",
@@ -236,7 +241,8 @@
           ],
           "kind": "calc",
           "topic": "usage_yoy",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#4",
@@ -251,7 +257,8 @@
           ],
           "kind": "calc",
           "topic": "usage_prior_period",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#5",
@@ -263,7 +270,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#6",
@@ -273,7 +281,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation_peak",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#7",
@@ -294,7 +303,8 @@
           ],
           "kind": "calc",
           "topic": "over_included",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#8",
@@ -305,7 +315,8 @@
           ],
           "kind": "calc",
           "topic": "history",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#9",
@@ -315,7 +326,8 @@
           ],
           "kind": "calc",
           "topic": "usage_latest",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#10",
@@ -330,7 +342,8 @@
           ],
           "kind": "calc",
           "topic": "usage_yoy",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#11",
@@ -345,7 +358,8 @@
           ],
           "kind": "calc",
           "topic": "usage_prior_period",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#12",
@@ -357,7 +371,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#13",
@@ -367,7 +382,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation_peak",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#14",
@@ -388,7 +404,8 @@
           ],
           "kind": "calc",
           "topic": "over_included",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#15",
@@ -399,7 +416,8 @@
           ],
           "kind": "calc",
           "topic": "history",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#16",
@@ -409,7 +427,8 @@
           ],
           "kind": "calc",
           "topic": "usage_latest",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#17",
@@ -424,7 +443,8 @@
           ],
           "kind": "calc",
           "topic": "usage_yoy",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#18",
@@ -439,7 +459,8 @@
           ],
           "kind": "calc",
           "topic": "usage_prior_period",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#19",
@@ -451,7 +472,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#20",
@@ -461,7 +483,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation_peak",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#21",
@@ -482,7 +505,8 @@
           ],
           "kind": "calc",
           "topic": "over_included",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#22",
@@ -493,7 +517,8 @@
           ],
           "kind": "calc",
           "topic": "history",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#23",
@@ -503,7 +528,8 @@
           ],
           "kind": "calc",
           "topic": "usage_latest",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#24",
@@ -518,7 +544,8 @@
           ],
           "kind": "calc",
           "topic": "usage_yoy",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#25",
@@ -533,7 +560,8 @@
           ],
           "kind": "calc",
           "topic": "usage_prior_period",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#26",
@@ -545,7 +573,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#27",
@@ -555,7 +584,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation_peak",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#28",
@@ -576,7 +606,8 @@
           ],
           "kind": "calc",
           "topic": "over_included",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#29",
@@ -588,7 +619,8 @@
           ],
           "kind": "calc",
           "topic": "overage",
-          "signal": "opportunity"
+          "signal": "opportunity",
+          "reported_text": ""
         }
       ],
       "gaps": [
@@ -1462,7 +1494,8 @@
           ],
           "kind": "calc",
           "topic": "support_overview",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#2",
@@ -1479,7 +1512,8 @@
           ],
           "kind": "calc",
           "topic": "support_12m",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#3",
@@ -1496,7 +1530,8 @@
           ],
           "kind": "calc",
           "topic": "support_12m",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#4",
@@ -1506,7 +1541,8 @@
           ],
           "kind": "calc",
           "topic": "support_12m",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#5",
@@ -1521,7 +1557,8 @@
           ],
           "kind": "calc",
           "topic": "csat_12m",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#6",
@@ -1538,7 +1575,8 @@
           ],
           "kind": "calc",
           "topic": "support_12m",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#7",
@@ -1548,7 +1586,8 @@
           ],
           "kind": "calc",
           "topic": "support_90d",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#8",
@@ -1558,7 +1597,8 @@
           ],
           "kind": "calc",
           "topic": "support_90d",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#9",
@@ -1566,7 +1606,8 @@
           "rows": [],
           "kind": "calc",
           "topic": "support_90d",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#10",
@@ -1576,7 +1617,8 @@
           ],
           "kind": "calc",
           "topic": "csat_90d",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#11",
@@ -1586,7 +1628,8 @@
           ],
           "kind": "calc",
           "topic": "support_90d",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#12",
@@ -1597,7 +1640,8 @@
           ],
           "kind": "calc",
           "topic": "ticket_trend",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#13",
@@ -1605,7 +1649,8 @@
           "rows": [],
           "kind": "calc",
           "topic": "open_tickets",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "ticket:T-0267",
@@ -1615,7 +1660,8 @@
           ],
           "kind": "data",
           "topic": "notable_tickets",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "ticket:T-0194",
@@ -1625,7 +1671,8 @@
           ],
           "kind": "data",
           "topic": "notable_tickets",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -1766,7 +1813,8 @@
           ],
           "kind": "data",
           "topic": "contract",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0008",
@@ -1776,7 +1824,8 @@
           ],
           "kind": "data",
           "topic": "renewal",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:contract_status#1",
@@ -1786,7 +1835,8 @@
           ],
           "kind": "calc",
           "topic": "renewal",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:contract_status#2",
@@ -1796,7 +1846,8 @@
           ],
           "kind": "calc",
           "topic": "renewal",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:contract_status#3",
@@ -1806,7 +1857,8 @@
           ],
           "kind": "calc",
           "topic": "renewal",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0008",
@@ -1817,7 +1869,8 @@
           ],
           "kind": "data",
           "topic": "contract_lines",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0008",
@@ -1828,7 +1881,8 @@
           ],
           "kind": "data",
           "topic": "contract_lines",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0008",
@@ -1839,7 +1893,8 @@
           ],
           "kind": "data",
           "topic": "contract_lines",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0008",
@@ -1850,7 +1905,8 @@
           ],
           "kind": "data",
           "topic": "contract_lines",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:contract_status#4",
@@ -1861,7 +1917,8 @@
           ],
           "kind": "calc",
           "topic": "contract_change",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:contract_status#5",
@@ -1872,7 +1929,8 @@
           ],
           "kind": "calc",
           "topic": "contract_change",
-          "signal": "risk"
+          "signal": "risk",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -2008,7 +2066,8 @@
           ],
           "kind": "calc",
           "topic": "renewal",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         }
       ],
       "gaps": [
@@ -2052,7 +2111,8 @@
           ],
           "kind": "calc",
           "topic": "last_meeting",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "note:N-010",
@@ -2062,7 +2122,8 @@
           ],
           "kind": "data",
           "topic": "note",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "note:N-010",
@@ -2072,7 +2133,8 @@
           ],
           "kind": "reported",
           "topic": "complaint",
-          "signal": "risk"
+          "signal": "risk",
+          "reported_text": ""
         },
         {
           "id": "note:N-010",
@@ -2082,7 +2144,8 @@
           ],
           "kind": "reported",
           "topic": "other",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "note:N-010",
@@ -2092,7 +2155,8 @@
           ],
           "kind": "reported",
           "topic": "commitment",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -2183,47 +2247,33 @@
     "calls": [
       {
         "model": "claude-haiku-5-5",
-        "input_tokens": 6808,
-        "output_tokens": 4606,
-        "stop_reason": "end_turn"
-      },
-      {
-        "model": "claude-haiku-5-5",
-        "input_tokens": 8174,
-        "output_tokens": 1845,
+        "input_tokens": 6859,
+        "output_tokens": 4822,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": true
+    "repaired": false
   },
   "verification": {
     "first_pass": {
-      "ok": false,
-      "numbers_checked": 27,
-      "citations_checked": 27,
-      "violations": [
-        {
-          "line_no": 2,
-          "line": "The usage and support data do not show the account shrinking or leaving. The real exposure is timing: contract K-0008 ends on 2026-11-30 and renews automatically, the notice deadline has already passed, and no renewal opportunity is on file. Confidence is medium, because the renewal intent is unknown and the data has gaps.",
-          "kind": "number_without_citation",
-          "token": "2026-11-30",
-          "detail": "2026-11-30 is on a line with no citation"
-        }
-      ],
+      "ok": true,
+      "numbers_checked": 25,
+      "citations_checked": 30,
+      "violations": [],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 27,
-      "citations_checked": 31,
+      "numbers_checked": 25,
+      "citations_checked": 30,
       "violations": [],
       "uncited_lines": 0
     }
   },
   "trace": {
     "model": "claude-haiku-5-5",
-    "total_seconds": 27.094,
-    "total_cost_usd": 0.004724,
+    "total_seconds": 20.311,
+    "total_cost_usd": 0.003097,
     "steps": [
       {
         "name": "plan",
@@ -2334,42 +2384,21 @@
       {
         "name": "first_draft",
         "kind": "model",
-        "seconds": 20.045,
+        "seconds": 20.296,
         "detail": {
-          "input_tokens": 6808,
-          "output_tokens": 4606,
-          "cost_usd": 0.002984,
+          "input_tokens": 6859,
+          "output_tokens": 4822,
+          "cost_usd": 0.003097,
           "stop_reason": "end_turn"
         }
       },
       {
         "name": "verify_first_draft",
         "kind": "verify",
-        "seconds": 0.007,
-        "detail": {
-          "numbers_checked": 27,
-          "citations_checked": 27,
-          "violations": 1
-        }
-      },
-      {
-        "name": "repair",
-        "kind": "model",
-        "seconds": 7.025,
-        "detail": {
-          "input_tokens": 8174,
-          "output_tokens": 1845,
-          "cost_usd": 0.00174,
-          "stop_reason": "end_turn"
-        }
-      },
-      {
-        "name": "verify_repair",
-        "kind": "verify",
         "seconds": 0.008,
         "detail": {
-          "numbers_checked": 27,
-          "citations_checked": 31,
+          "numbers_checked": 25,
+          "citations_checked": 30,
           "violations": 0
         }
       },
@@ -2379,7 +2408,7 @@
         "seconds": 0.0,
         "detail": {
           "flagged": 0,
-          "repaired": true
+          "repaired": false
         }
       }
     ]

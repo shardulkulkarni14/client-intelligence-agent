@@ -107,7 +107,8 @@
           ],
           "kind": "data",
           "topic": "client",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -136,7 +137,8 @@
           ],
           "kind": "data",
           "topic": "profile",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -167,7 +169,8 @@
           ],
           "kind": "calc",
           "topic": "confidence",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         }
       ],
       "gaps": [
@@ -221,13 +224,14 @@
       "facts": [
         {
           "id": "calc:contract_status#1",
-          "text": "Expired contract K-0011 is not in force: it ran 2024-10-01 to 2026-09-30 (24 months) with an annual value of EUR 189,000 and ended 32 days before 2026-11-01.",
+          "text": "Expired contract K-0011 is not in force: it ran 2024-10-01 to 2026-09-30 (24 months) with an annual value of EUR 189,000 and ended 32 days before 2026-11-01. Its notice period was 90 days before the end date.",
           "rows": [
             "contracts:K-0011"
           ],
           "kind": "calc",
           "topic": "contract",
-          "signal": "risk"
+          "signal": "risk",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0011",
@@ -238,7 +242,8 @@
           ],
           "kind": "data",
           "topic": "contract_lines",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0011",
@@ -249,7 +254,8 @@
           ],
           "kind": "data",
           "topic": "contract_lines",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0011",
@@ -260,17 +266,19 @@
           ],
           "kind": "data",
           "topic": "contract_lines",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0045",
-          "text": "Contract K-0045 is pending signature and not in force: it is drafted to run 2026-10-01 to 2028-09-30 (24 months) with an annual value of EUR 200,000 and has no signed date.",
+          "text": "Contract K-0045 is pending signature and not in force: it is drafted to run 2026-10-01 to 2028-09-30 (24 months) with an annual value of EUR 200,000 and has no signed date. Its drafted notice period is 90 days before the end date.",
           "rows": [
             "contracts:K-0045"
           ],
           "kind": "data",
           "topic": "pending_contract",
-          "signal": "risk"
+          "signal": "risk",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0045",
@@ -281,7 +289,8 @@
           ],
           "kind": "data",
           "topic": "contract_lines",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0045",
@@ -292,7 +301,8 @@
           ],
           "kind": "data",
           "topic": "contract_lines",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0045",
@@ -303,7 +313,8 @@
           ],
           "kind": "data",
           "topic": "contract_lines",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:contract_status#2",
@@ -314,7 +325,8 @@
           ],
           "kind": "calc",
           "topic": "pending_contract",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         }
       ],
       "gaps": [
@@ -443,7 +455,8 @@
           ],
           "kind": "data",
           "topic": "open_opportunity",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "opp:O-0005",
@@ -453,7 +466,8 @@
           ],
           "kind": "reported",
           "topic": "open_opportunity",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:opportunities#1",
@@ -464,7 +478,8 @@
           ],
           "kind": "calc",
           "topic": "renewal",
-          "signal": "opportunity"
+          "signal": "opportunity",
+          "reported_text": ""
         },
         {
           "id": "calc:opportunities#2",
@@ -474,7 +489,8 @@
           ],
           "kind": "calc",
           "topic": "stale_opportunity",
-          "signal": "risk"
+          "signal": "risk",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -530,7 +546,8 @@
           ],
           "kind": "calc",
           "topic": "history",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#2",
@@ -540,7 +557,8 @@
           ],
           "kind": "calc",
           "topic": "usage_latest",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#3",
@@ -555,7 +573,8 @@
           ],
           "kind": "calc",
           "topic": "usage_yoy",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#4",
@@ -570,7 +589,8 @@
           ],
           "kind": "calc",
           "topic": "usage_prior_period",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#5",
@@ -581,7 +601,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#6",
@@ -591,7 +612,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation_peak",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#7",
@@ -611,7 +633,8 @@
           ],
           "kind": "calc",
           "topic": "over_included",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#8",
@@ -622,7 +645,8 @@
           ],
           "kind": "calc",
           "topic": "history",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#9",
@@ -632,7 +656,8 @@
           ],
           "kind": "calc",
           "topic": "usage_latest",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#10",
@@ -647,7 +672,8 @@
           ],
           "kind": "calc",
           "topic": "usage_yoy",
-          "signal": "opportunity"
+          "signal": "opportunity",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#11",
@@ -662,7 +688,8 @@
           ],
           "kind": "calc",
           "topic": "usage_prior_period",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#12",
@@ -673,7 +700,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#13",
@@ -683,7 +711,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation_peak",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#14",
@@ -703,7 +732,8 @@
           ],
           "kind": "calc",
           "topic": "over_included",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#15",
@@ -714,7 +744,8 @@
           ],
           "kind": "calc",
           "topic": "history",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#16",
@@ -724,7 +755,8 @@
           ],
           "kind": "calc",
           "topic": "usage_latest",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#17",
@@ -739,7 +771,8 @@
           ],
           "kind": "calc",
           "topic": "usage_yoy",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#18",
@@ -754,7 +787,8 @@
           ],
           "kind": "calc",
           "topic": "usage_prior_period",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#19",
@@ -765,7 +799,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#20",
@@ -775,7 +810,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation_peak",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#21",
@@ -795,7 +831,8 @@
           ],
           "kind": "calc",
           "topic": "over_included",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         }
       ],
       "gaps": [
@@ -1469,7 +1506,8 @@
           ],
           "kind": "calc",
           "topic": "support_overview",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#2",
@@ -1482,7 +1520,8 @@
           ],
           "kind": "calc",
           "topic": "support_12m",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#3",
@@ -1495,7 +1534,8 @@
           ],
           "kind": "calc",
           "topic": "support_12m",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#4",
@@ -1503,7 +1543,8 @@
           "rows": [],
           "kind": "calc",
           "topic": "support_12m",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#5",
@@ -1515,7 +1556,8 @@
           ],
           "kind": "calc",
           "topic": "csat_12m",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#6",
@@ -1528,7 +1570,8 @@
           ],
           "kind": "calc",
           "topic": "support_12m",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#7",
@@ -1538,7 +1581,8 @@
           ],
           "kind": "calc",
           "topic": "support_90d",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#8",
@@ -1548,7 +1592,8 @@
           ],
           "kind": "calc",
           "topic": "support_90d",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#9",
@@ -1556,7 +1601,8 @@
           "rows": [],
           "kind": "calc",
           "topic": "support_90d",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#10",
@@ -1566,7 +1612,8 @@
           ],
           "kind": "calc",
           "topic": "csat_90d",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#11",
@@ -1576,7 +1623,8 @@
           ],
           "kind": "calc",
           "topic": "support_90d",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#12",
@@ -1586,7 +1634,8 @@
           ],
           "kind": "calc",
           "topic": "ticket_trend",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:support_summary#13",
@@ -1594,7 +1643,8 @@
           "rows": [],
           "kind": "calc",
           "topic": "open_tickets",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "ticket:T-0276",
@@ -1604,7 +1654,8 @@
           ],
           "kind": "data",
           "topic": "notable_tickets",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -1715,7 +1766,8 @@
           ],
           "kind": "calc",
           "topic": "last_meeting",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "note:N-009",
@@ -1725,7 +1777,8 @@
           ],
           "kind": "data",
           "topic": "note",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "note:N-009",
@@ -1735,7 +1788,8 @@
           ],
           "kind": "reported",
           "topic": "renewal",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "note:N-009",
@@ -1745,7 +1799,8 @@
           ],
           "kind": "reported",
           "topic": "renewal",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "note:N-009",
@@ -1755,7 +1810,8 @@
           ],
           "kind": "reported",
           "topic": "commitment",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -1813,7 +1869,8 @@
           ],
           "kind": "data",
           "topic": "held_products",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "product:LIVE_DATA",
@@ -1824,7 +1881,8 @@
           ],
           "kind": "data",
           "topic": "held_products",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "product:STATS_ARCHIVE",
@@ -1835,7 +1893,8 @@
           ],
           "kind": "data",
           "topic": "held_products",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:whitespace#1",
@@ -1848,7 +1907,8 @@
           ],
           "kind": "calc",
           "topic": "whitespace_summary",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:whitespace#2",
@@ -1862,7 +1922,8 @@
           ],
           "kind": "calc",
           "topic": "peer_group",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "product:FAN_INSIGHTS",
@@ -1876,7 +1937,8 @@
           ],
           "kind": "data",
           "topic": "whitespace",
-          "signal": "opportunity"
+          "signal": "opportunity",
+          "reported_text": ""
         },
         {
           "id": "product:STREAM",
@@ -1890,7 +1952,8 @@
           ],
           "kind": "data",
           "topic": "whitespace",
-          "signal": "opportunity"
+          "signal": "opportunity",
+          "reported_text": ""
         },
         {
           "id": "product:WIDGETS",
@@ -1900,7 +1963,8 @@
           ],
           "kind": "data",
           "topic": "whitespace",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "product:ODDS_LIVE",
@@ -1910,7 +1974,8 @@
           ],
           "kind": "data",
           "topic": "whitespace",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "product:ODDS_PRE",
@@ -1920,7 +1985,8 @@
           ],
           "kind": "data",
           "topic": "whitespace",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         }
       ],
       "gaps": [
@@ -2140,14 +2206,14 @@
     "calls": [
       {
         "model": "claude-haiku-5-5",
-        "input_tokens": 6928,
-        "output_tokens": 4801,
+        "input_tokens": 7016,
+        "output_tokens": 5485,
         "stop_reason": "end_turn"
       },
       {
         "model": "claude-haiku-5-5",
-        "input_tokens": 8955,
-        "output_tokens": 2232,
+        "input_tokens": 8522,
+        "output_tokens": 2025,
         "stop_reason": "end_turn"
       }
     ],
@@ -2156,43 +2222,36 @@
   "verification": {
     "first_pass": {
       "ok": false,
-      "numbers_checked": 42,
-      "citations_checked": 27,
+      "numbers_checked": 37,
+      "citations_checked": 31,
       "violations": [
         {
-          "line_no": 2,
-          "line": "The renewal is not confirmed on track. No contract has been in force since K-0011 ended on 2026-09-30, and its replacement, K-0045, is still unsigned. If K-0045 is signed as drafted, the annual value is EUR 200,000, up 5.8% from EUR 189,000 [calc:contract_status#2]. Confidence is low, and the data records no notice deadline, so the timing risk cannot be sized.",
-          "kind": "number_not_in_cited_evidence",
-          "token": "2026-09-30",
-          "detail": "2026-09-30 is not in the evidence cited on this line; it does appear in calc:contract_status#1, opp:O-0005, calc:opportunities#2"
-        },
-        {
-          "line_no": 7,
-          "line": "- Renewal opportunity O-0005 (EUR 200,000) is still at Negotiation. Its expected close of 2026-09-30 has passed, so it is stale [calc:opportunities#2].",
-          "kind": "number_not_in_cited_evidence",
-          "token": "EUR 200,000",
-          "detail": "EUR 200,000 is not in the evidence cited on this line; it does appear in contracts:K-0045, calc:contract_status#2, opp:O-0005"
+          "line_no": 28,
+          "line": "1. Confirm in writing the interim service arrangement for feed access after 30 September [note:N-009] [ticket:T-0276].",
+          "kind": "number_only_reported",
+          "token": "30",
+          "detail": "30 comes only from reported text (note:N-009); say who reported it"
         }
       ],
-      "uncited_lines": 2
+      "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 42,
-      "citations_checked": 30,
+      "numbers_checked": 37,
+      "citations_checked": 31,
       "violations": [],
-      "uncited_lines": 2
+      "uncited_lines": 0
     }
   },
   "trace": {
     "model": "claude-haiku-5-5",
-    "total_seconds": 26.544,
-    "total_cost_usd": 0.005104,
+    "total_seconds": 29.813,
+    "total_cost_usd": 0.005309,
     "steps": [
       {
         "name": "plan",
         "kind": "plan",
-        "seconds": 0.001,
+        "seconds": 0.0,
         "detail": {
           "trigger": "renewal",
           "tools": [
@@ -2309,32 +2368,32 @@
       {
         "name": "first_draft",
         "kind": "model",
-        "seconds": 18.747,
+        "seconds": 22.324,
         "detail": {
-          "input_tokens": 6928,
-          "output_tokens": 4801,
-          "cost_usd": 0.003093,
+          "input_tokens": 7016,
+          "output_tokens": 5485,
+          "cost_usd": 0.003444,
           "stop_reason": "end_turn"
         }
       },
       {
         "name": "verify_first_draft",
         "kind": "verify",
-        "seconds": 0.009,
+        "seconds": 0.008,
         "detail": {
-          "numbers_checked": 42,
-          "citations_checked": 27,
-          "violations": 2
+          "numbers_checked": 37,
+          "citations_checked": 31,
+          "violations": 1
         }
       },
       {
         "name": "repair",
         "kind": "model",
-        "seconds": 7.77,
+        "seconds": 7.463,
         "detail": {
-          "input_tokens": 8955,
-          "output_tokens": 2232,
-          "cost_usd": 0.002011,
+          "input_tokens": 8522,
+          "output_tokens": 2025,
+          "cost_usd": 0.001865,
           "stop_reason": "end_turn"
         }
       },
@@ -2343,8 +2402,8 @@
         "kind": "verify",
         "seconds": 0.007,
         "detail": {
-          "numbers_checked": 42,
-          "citations_checked": 30,
+          "numbers_checked": 37,
+          "citations_checked": 31,
           "violations": 0
         }
       },

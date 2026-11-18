@@ -107,7 +107,8 @@
           ],
           "kind": "data",
           "topic": "client",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -136,7 +137,8 @@
           ],
           "kind": "data",
           "topic": "profile",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -164,7 +166,8 @@
           ],
           "kind": "calc",
           "topic": "confidence",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         }
       ],
       "gaps": [
@@ -212,7 +215,8 @@
           ],
           "kind": "calc",
           "topic": "history",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#2",
@@ -222,7 +226,8 @@
           ],
           "kind": "calc",
           "topic": "usage_latest",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#3",
@@ -233,7 +238,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#4",
@@ -243,7 +249,8 @@
           ],
           "kind": "calc",
           "topic": "utilisation_peak",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:usage_trend#5",
@@ -254,7 +261,8 @@
           ],
           "kind": "calc",
           "topic": "over_included",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         }
       ],
       "gaps": [
@@ -361,7 +369,8 @@
           ],
           "kind": "data",
           "topic": "held_products",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:whitespace#1",
@@ -372,7 +381,8 @@
           ],
           "kind": "calc",
           "topic": "whitespace_summary",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:whitespace#2",
@@ -383,7 +393,8 @@
           ],
           "kind": "calc",
           "topic": "peer_group",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "product:WIDGETS",
@@ -395,7 +406,8 @@
           ],
           "kind": "data",
           "topic": "whitespace",
-          "signal": "opportunity"
+          "signal": "opportunity",
+          "reported_text": ""
         },
         {
           "id": "product:STATS_ARCHIVE",
@@ -407,7 +419,8 @@
           ],
           "kind": "data",
           "topic": "whitespace",
-          "signal": "opportunity"
+          "signal": "opportunity",
+          "reported_text": ""
         },
         {
           "id": "product:ODDS_LIVE",
@@ -417,7 +430,8 @@
           ],
           "kind": "data",
           "topic": "whitespace",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "product:FAN_INSIGHTS",
@@ -427,7 +441,8 @@
           ],
           "kind": "data",
           "topic": "whitespace",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "product:INTEGRITY",
@@ -437,7 +452,8 @@
           ],
           "kind": "data",
           "topic": "whitespace",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "product:ODDS_PRE",
@@ -447,7 +463,8 @@
           ],
           "kind": "data",
           "topic": "whitespace",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "product:STREAM",
@@ -457,7 +474,8 @@
           ],
           "kind": "data",
           "topic": "whitespace",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         }
       ],
       "gaps": [
@@ -669,7 +687,8 @@
           ],
           "kind": "data",
           "topic": "closed_opportunity",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "opp:O-0004",
@@ -679,7 +698,8 @@
           ],
           "kind": "reported",
           "topic": "closed_opportunity",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         }
       ],
       "gaps": [],
@@ -723,7 +743,8 @@
           ],
           "kind": "data",
           "topic": "contract",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0006",
@@ -733,7 +754,8 @@
           ],
           "kind": "data",
           "topic": "renewal",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         },
         {
           "id": "calc:contract_status#1",
@@ -743,7 +765,8 @@
           ],
           "kind": "calc",
           "topic": "renewal",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "calc:contract_status#2",
@@ -753,7 +776,8 @@
           ],
           "kind": "calc",
           "topic": "renewal",
-          "signal": "neutral"
+          "signal": "neutral",
+          "reported_text": ""
         },
         {
           "id": "contracts:K-0006",
@@ -764,7 +788,8 @@
           ],
           "kind": "data",
           "topic": "contract_lines",
-          "signal": ""
+          "signal": "",
+          "reported_text": ""
         }
       ],
       "gaps": [
@@ -911,8 +936,8 @@
     "calls": [
       {
         "model": "claude-haiku-5-5",
-        "input_tokens": 3741,
-        "output_tokens": 4201,
+        "input_tokens": 3792,
+        "output_tokens": 5454,
         "stop_reason": "end_turn"
       }
     ],
@@ -921,23 +946,23 @@
   "verification": {
     "first_pass": {
       "ok": true,
-      "numbers_checked": 27,
-      "citations_checked": 35,
+      "numbers_checked": 37,
+      "citations_checked": 31,
       "violations": [],
-      "uncited_lines": 0
+      "uncited_lines": 1
     },
     "final": {
       "ok": true,
-      "numbers_checked": 27,
-      "citations_checked": 35,
+      "numbers_checked": 37,
+      "citations_checked": 31,
       "violations": [],
-      "uncited_lines": 0
+      "uncited_lines": 1
     }
   },
   "trace": {
     "model": "claude-haiku-5-5",
-    "total_seconds": 16.68,
-    "total_cost_usd": 0.002475,
+    "total_seconds": 21.55,
+    "total_cost_usd": 0.003106,
     "steps": [
       {
         "name": "plan",
@@ -989,7 +1014,7 @@
       {
         "name": "usage_trend",
         "kind": "tool",
-        "seconds": 0.001,
+        "seconds": 0.0,
         "detail": {
           "status": "partial",
           "facts": 5,
@@ -1059,11 +1084,11 @@
       {
         "name": "first_draft",
         "kind": "model",
-        "seconds": 16.669,
+        "seconds": 21.54,
         "detail": {
-          "input_tokens": 3741,
-          "output_tokens": 4201,
-          "cost_usd": 0.002475,
+          "input_tokens": 3792,
+          "output_tokens": 5454,
+          "cost_usd": 0.003106,
           "stop_reason": "end_turn"
         }
       },
@@ -1072,8 +1097,8 @@
         "kind": "verify",
         "seconds": 0.006,
         "detail": {
-          "numbers_checked": 27,
-          "citations_checked": 35,
+          "numbers_checked": 37,
+          "citations_checked": 31,
           "violations": 0
         }
       },

@@ -179,7 +179,7 @@ the report. Checks are automatic:
 
 **Result of the last run** (`eval/report.md`, model `claude-haiku-5-5`): 77 of 77
 checks passed over 11 briefings. The verifier flagged a line in 3 of the 11 first
-drafts; the single repair attempt fixed all three. About 100,000 input and 54,000
+drafts; the single repair attempt fixed all three. About 103,000 input and 58,000
 output tokens for the whole run, roughly 4 US cents.
 
 The runs in order, failures included, because they are the more useful story:
@@ -190,7 +190,8 @@ The runs in order, failures included, because they are the more useful story:
 | 2 | 68 of 77 (11 cases) | All 9 failures were the evaluation not recognising the new citable gap IDs. Verifier: 4 first drafts flagged, all repaired. | Fixed the evaluation. Between runs 1 and 2 the verifier was made stricter after an independent review (see "How I built it"). |
 | 3 | 77 of 77 | none | |
 | 4 | 76 of 77 | Re-run on the final code. `halden_renewal`: "Risks to the renewal" came before "Usage against what they pay for". The same case passed in run 3, so this is the model varying between runs. | Section order is now set in code (`order_sections` in `pipeline.py`), with tests, instead of being left to the prompt. |
-| 5 | 77 of 77 | none | Re-run after the fix of run 4. `outputs/` and `eval/report.md` are this run. |
+| 5 | 77 of 77 | none | Re-run after the fix of run 4. Passing, but an independent review of the repository then showed what these checks do not see: a figure from a note passed without attribution (merging facts with one ID lost the "reported" label), "surged 40.0%" passed against a fact of -40.0%, and one sample briefing said a notice period was not in the data when it was. All three fixed in code with tests; the writer is now also told who the reader is. |
+| 6 | 77 of 77 | none | Re-run on the stricter verifier. `outputs/` and `eval/report.md` are this run. |
 
 What the verifier caught across the runs, all in first drafts: a figure on a line
 without a citation, "44.8 million" for a figure whose unit is "impressions
