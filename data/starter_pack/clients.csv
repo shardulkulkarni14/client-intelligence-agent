@@ -1,0 +1,26 @@
+client_id,client_name,segment,country,account_owner,customer_since,tier
+C001,Halden Bet,Sportsbook,GB,Maya Lindgren,2021-02-01,Strategic
+C002,Corvane Media,Broadcaster,DE,Jonas Weber,2022-06-01,Strategic
+C003,Brenmoor Football League,League/Federation,NL,Tomas Ferreira,2020-08-01,Core
+C004,Quillon Esports,Fantasy & Gaming,ES,Elif Aydin,2026-09-01,Growth
+C005,Marrowfield Sports Network,Broadcaster,IT,Grace Okafor,2019-11-01,Core
+C006,Tidewell Fantasy,Fantasy & Gaming,IE,Elif Aydin,2023-03-01,Core
+C007,Varrow Racing Authority,League/Federation,FR,Tomas Ferreira,2021-10-01,Core
+C008,Greyhaven Sports TV,Broadcaster,GB,Maya Lindgren,2020-04-01,Strategic
+C009,Pellucid Odds,Sportsbook,MT,Grace Okafor,2022-01-01,Strategic
+C010,Saltmarsh Gaming,Sportsbook,SE,Jonas Weber,2021-07-01,Core
+C011,Oakhurst Cricket Board,League/Federation,GB,Maya Lindgren,2022-02-01,Core
+C012,Redfern Wagers,Sportsbook,PT,Grace Okafor,2023-09-01,Growth
+C013,Sablecrest Media,Broadcaster,FR,Jonas Weber,2021-05-01,Core
+C014,Thornbury Athletics Federation,League/Federation,NO,Tomas Ferreira,2022-10-01,Growth
+C015,Umbra Stats Lab,Data & Tech Platform,CH,Elif Aydin,2023-01-01,Growth
+C016,Velmont Casino & Sport,Sportsbook,AT,Jonas Weber,2022-03-01,Core
+C017,Wexley Athletic FC,Club,GB,Maya Lindgren,2023-07-01,Growth
+C018,Yarrowby Basketball League,League/Federation,LT,Tomas Ferreira,2022-09-01,Growth
+C019,Zephyr Fantasy Sports,Fantasy & Gaming,NL,Elif Aydin,2022-08-01,Core
+C020,Lumen Arc Sport,Broadcaster,ES,Grace Okafor,2021-03-01,Core
+C021,Ridgeway Sport Channel,Broadcaster,PL,Jonas Weber,2023-02-01,Growth
+C022,Castellan Rugby Club,Club,FR,Tomas Ferreira,2024-01-01,Growth
+C023,Brightfold Play,Data & Tech Platform,DK,Elif Aydin,2022-11-01,Core
+C024,Novaterra Bet,Sportsbook,DE,Maya Lindgren,2021-11-01,Strategic
+C025,Harrowgate Tennis Tour,League/Federation,GB,Grace Okafor,2023-04-01,Growth

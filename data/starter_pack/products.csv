@@ -1,0 +1,9 @@
+product_id,product_name,category,usage_unit,list_price_from_eur,typical_segments,description,often_bought_with
+LIVE_DATA,Live Match Data Feed,Data feeds,API calls (thousands),60000,Sportsbook;Broadcaster;Fantasy & Gaming;Data & Tech Platform,"Real-time scores, events and statistics delivered by API and push feed.",ODDS_LIVE;WIDGETS
+ODDS_PRE,Pre-match Odds Feed,Odds,markets priced (thousands),45000,Sportsbook;Data & Tech Platform,Pre-match prices and market suggestions across supported sports.,ODDS_LIVE
+ODDS_LIVE,In-play Odds Feed,Odds,markets priced (thousands),75000,Sportsbook,Live prices updated during play. Requires the Live Match Data Feed.,LIVE_DATA;STREAM
+STREAM,Live Streaming,Streaming,streamed hours,55000,Sportsbook;Broadcaster;League/Federation,"Licensed live video streams for web, app and broadcast.",WIDGETS;FAN_INSIGHTS
+STATS_ARCHIVE,Historical Stats Archive,Data feeds,queries (thousands),20000,Broadcaster;League/Federation;Fantasy & Gaming;Club;Data & Tech Platform,"Historical results, player and team statistics with query API.",WIDGETS
+WIDGETS,Match Visualisation Widgets,Fan engagement,widget impressions (millions),30000,Broadcaster;Fantasy & Gaming;Club;Sportsbook;Data & Tech Platform,"Embeddable live match trackers, line-ups and stat widgets for second-screen and web.",LIVE_DATA;STATS_ARCHIVE
+FAN_INSIGHTS,Fan Engagement Analytics,Analytics,active dashboard users,17500,League/Federation;Club;Broadcaster,Dashboards on audience and fan behaviour across digital channels.,WIDGETS
+INTEGRITY,Integrity Monitoring,Integrity,matches monitored,25000,League/Federation;Sportsbook,"Monitoring of betting markets for suspicious patterns, with alerts and reports.",ODDS_PRE

@@ -1,0 +1,12 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+# local working notes and the candidate brief are not part of the submission
+notes/
+case/
+# ad-hoc runs; the evaluation's sample outputs live in outputs/ and are committed
+runs/

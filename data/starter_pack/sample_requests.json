@@ -1,0 +1,32 @@
+[
+  {
+    "request_id": "R1",
+    "client": "Halden Bet",
+    "trigger": "at_risk",
+    "rep_context": "Usage feels down and they have been complaining. How worried should I be?"
+  },
+  {
+    "request_id": "R2",
+    "client": "Corvane Media",
+    "trigger": "upsell",
+    "rep_context": "Seeing their head of digital next week. What could we grow?"
+  },
+  {
+    "request_id": "R3",
+    "client": "Brenmoor League",
+    "trigger": "meeting_prep",
+    "rep_context": "Lunch with their commercial director to close the renewal."
+  },
+  {
+    "request_id": "R4",
+    "client": "Oakhurst Cricket Board",
+    "trigger": "renewal",
+    "rep_context": "Renewal proposal goes out this month."
+  },
+  {
+    "request_id": "R5",
+    "client": "C009",
+    "trigger": "upsell",
+    "rep_context": "They are growing fast. What should I pitch?"
+  }
+]

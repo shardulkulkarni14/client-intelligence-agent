@@ -1,0 +1,290 @@
+ticket_id,client_id,product_id,opened_date,closed_date,status,priority,category,subject,csat_score
+T-0001,C016,ODDS_PRE,2024-11-01,2024-11-05,closed,P2,Billing,PO number missing on invoice,4
+T-0002,C022,FAN_INSIGHTS,2024-11-05,2024-11-15,closed,P4,Billing,Request for usage breakdown,
+T-0003,C024,ODDS_LIVE,2024-11-05,2024-11-08,closed,P3,Integration,New environment onboarding,
+T-0004,C012,ODDS_PRE,2024-11-06,2024-11-17,closed,P4,Integration,New environment onboarding,5
+T-0005,C002,STREAM,2024-11-08,2024-11-11,closed,P2,Outage,Stream endpoint returning errors,4
+T-0006,C023,STATS_ARCHIVE,2024-11-09,2024-11-13,closed,P3,Feature request,Ask about custom alert thresholds,4
+T-0007,C019,LIVE_DATA,2024-11-14,2024-11-18,closed,P2,Latency,Increased response times on API,
+T-0008,C024,ODDS_PRE,2024-11-17,2024-11-24,closed,P3,Access,Reset API key,4
+T-0009,C007,LIVE_DATA,2024-11-19,2024-11-23,closed,P3,Data accuracy,Score correction not propagated,3
+T-0010,C020,WIDGETS,2024-11-27,2024-11-30,closed,P4,Integration,SDK version upgrade question,5
+T-0011,C015,STATS_ARCHIVE,2024-12-04,2024-12-10,closed,P3,Latency,Slow push updates on weekend matches,4
+T-0012,C005,STREAM,2024-12-14,2024-12-16,closed,P2,Latency,Slow push updates on weekend matches,5
+T-0013,C020,LIVE_DATA,2024-12-15,2024-12-27,closed,P3,Billing,Request for usage breakdown,4
+T-0014,C012,ODDS_PRE,2024-12-17,2024-12-29,closed,P4,Integration,SDK version upgrade question,
+T-0015,C022,WIDGETS,2024-12-20,2024-12-23,closed,P4,Integration,SDK version upgrade question,
+T-0016,C023,ODDS_PRE,2024-12-23,2025-01-04,closed,P4,Feature request,Request for additional league coverage,5
+T-0017,C007,LIVE_DATA,2024-12-26,2024-12-26,closed,P1,Latency,Slow push updates on weekend matches,3
+T-0018,C018,INTEGRITY,2025-01-02,2025-01-13,closed,P3,Feature request,Request for CSV export,
+T-0019,C010,LIVE_DATA,2025-01-05,2025-01-16,closed,P4,Feature request,Request for CSV export,
+T-0020,C024,INTEGRITY,2025-01-05,2025-01-08,closed,P1,Outage,Partial outage on secondary region,4
+T-0021,C013,WIDGETS,2025-01-07,2025-01-09,closed,P2,Outage,Feed unavailable for 20 minutes,
+T-0022,C009,WIDGETS,2025-01-09,2025-01-21,closed,P4,Latency,Increased response times on API,4
+T-0023,C002,STREAM,2025-01-11,2025-01-14,closed,P3,Access,Reset API key,4
+T-0024,C003,STREAM,2025-01-11,2025-01-14,closed,P2,Access,New user accounts needed,4
+T-0025,C021,STREAM,2025-01-12,2025-01-23,closed,P3,Integration,New environment onboarding,4
+T-0026,C010,STREAM,2025-01-18,2025-01-20,closed,P2,Integration,SDK version upgrade question,5
+T-0027,C022,WIDGETS,2025-01-18,2025-01-26,closed,P3,Access,Reset API key,
+T-0028,C003,STATS_ARCHIVE,2025-01-19,2025-01-22,closed,P2,Feature request,Ask about custom alert thresholds,4
+T-0029,C008,STREAM,2025-01-20,2025-01-25,closed,P3,Data accuracy,Score correction not propagated,
+T-0030,C003,INTEGRITY,2025-01-23,2025-02-04,closed,P3,Billing,PO number missing on invoice,5
+T-0031,C009,LIVE_DATA,2025-01-24,2025-01-25,closed,P2,Integration,Help with webhook authentication,4
+T-0032,C020,WIDGETS,2025-01-27,2025-01-28,closed,P3,Billing,Request for usage breakdown,
+T-0033,C022,FAN_INSIGHTS,2025-02-02,2025-02-02,closed,P2,Outage,Partial outage on secondary region,
+T-0034,C003,INTEGRITY,2025-02-04,2025-02-06,closed,P2,Access,Reset API key,4
+T-0035,C007,INTEGRITY,2025-02-05,2025-02-09,closed,P3,Latency,Slow push updates on weekend matches,
+T-0036,C019,LIVE_DATA,2025-02-07,2025-02-15,closed,P3,Latency,Feed delay during peak fixtures,4
+T-0037,C010,ODDS_LIVE,2025-02-11,2025-02-11,closed,P1,Outage,Feed unavailable for 20 minutes,
+T-0038,C023,WIDGETS,2025-02-12,2025-02-15,closed,P2,Integration,SDK version upgrade question,5
+T-0039,C020,LIVE_DATA,2025-02-16,2025-02-22,closed,P4,Access,Reset API key,4
+T-0040,C024,STREAM,2025-02-17,2025-02-28,closed,P3,Access,New user accounts needed,4
+T-0041,C010,ODDS_PRE,2025-02-18,2025-02-27,closed,P4,Latency,Slow push updates on weekend matches,
+T-0042,C014,FAN_INSIGHTS,2025-02-18,2025-02-24,closed,P3,Latency,Feed delay during peak fixtures,4
+T-0043,C001,ODDS_PRE,2025-02-21,2025-03-04,closed,P3,Billing,Request for usage breakdown,
+T-0044,C016,ODDS_PRE,2025-02-23,2025-03-06,closed,P3,Feature request,Ask about custom alert thresholds,5
+T-0045,C023,ODDS_PRE,2025-03-02,2025-03-04,closed,P3,Integration,SDK version upgrade question,5
+T-0046,C015,LIVE_DATA,2025-03-03,2025-03-15,closed,P3,Billing,Request for usage breakdown,
+T-0047,C012,LIVE_DATA,2025-03-05,2025-03-09,closed,P2,Data accuracy,Player stat mismatch vs official,4
+T-0048,C019,STATS_ARCHIVE,2025-03-05,2025-03-10,closed,P3,Billing,PO number missing on invoice,4
+T-0049,C019,STATS_ARCHIVE,2025-03-09,2025-03-10,closed,P3,Latency,Feed delay during peak fixtures,5
+T-0050,C002,STATS_ARCHIVE,2025-03-16,2025-03-16,closed,P1,Outage,Stream endpoint returning errors,4
+T-0051,C017,WIDGETS,2025-03-19,2025-03-19,closed,P1,Billing,PO number missing on invoice,4
+T-0052,C020,WIDGETS,2025-03-19,2025-03-21,closed,P3,Integration,New environment onboarding,
+T-0053,C008,STREAM,2025-03-22,2025-03-25,closed,P3,Feature request,Request for additional league coverage,4
+T-0054,C010,STREAM,2025-03-25,2025-04-06,closed,P3,Billing,Request for usage breakdown,5
+T-0055,C021,STREAM,2025-03-25,2025-03-31,closed,P3,Data accuracy,Incorrect lineup in match feed,
+T-0056,C013,WIDGETS,2025-03-26,2025-03-31,closed,P3,Data accuracy,Score correction not propagated,5
+T-0057,C024,INTEGRITY,2025-03-26,2025-04-01,closed,P3,Data accuracy,Player stat mismatch vs official,5
+T-0058,C016,ODDS_LIVE,2025-03-27,2025-04-01,closed,P3,Latency,Slow push updates on weekend matches,4
+T-0059,C003,STATS_ARCHIVE,2025-04-03,2025-04-11,closed,P3,Data accuracy,Score correction not propagated,
+T-0060,C005,LIVE_DATA,2025-04-03,2025-04-06,closed,P3,Data accuracy,Score correction not propagated,5
+T-0061,C025,STATS_ARCHIVE,2025-04-05,2025-04-17,closed,P3,Data accuracy,Score correction not propagated,5
+T-0062,C017,FAN_INSIGHTS,2025-04-07,2025-04-08,closed,P4,Billing,PO number missing on invoice,
+T-0063,C003,STATS_ARCHIVE,2025-04-08,2025-04-12,closed,P3,Data accuracy,Player stat mismatch vs official,
+T-0064,C025,STATS_ARCHIVE,2025-04-15,2025-04-21,closed,P3,Integration,SDK version upgrade question,3
+T-0065,C009,LIVE_DATA,2025-04-16,2025-04-27,closed,P3,Feature request,Request for additional league coverage,3
+T-0066,C008,STREAM,2025-04-17,2025-04-27,closed,P4,Latency,Feed delay during peak fixtures,5
+T-0067,C023,WIDGETS,2025-04-17,2025-04-18,closed,P2,Access,Reset API key,5
+T-0068,C019,WIDGETS,2025-04-23,2025-05-05,closed,P3,Integration,Help with webhook authentication,
+T-0069,C016,LIVE_DATA,2025-04-24,2025-04-27,closed,P2,Feature request,Ask about custom alert thresholds,4
+T-0070,C019,WIDGETS,2025-04-24,2025-05-03,closed,P3,Feature request,Request for CSV export,4
+T-0071,C005,WIDGETS,2025-05-01,2025-05-06,closed,P3,Data accuracy,Score correction not propagated,4
+T-0072,C024,STREAM,2025-05-02,2025-05-12,closed,P3,Integration,New environment onboarding,4
+T-0073,C013,LIVE_DATA,2025-05-03,2025-05-05,closed,P1,Data accuracy,Player stat mismatch vs official,4
+T-0074,C008,FAN_INSIGHTS,2025-05-06,2025-05-07,closed,P3,Feature request,Request for CSV export,4
+T-0075,C020,STREAM,2025-05-07,2025-05-08,closed,P3,Data accuracy,Score correction not propagated,4
+T-0076,C003,STATS_ARCHIVE,2025-05-08,2025-05-18,closed,P3,Feature request,Request for additional league coverage,
+T-0077,C009,ODDS_LIVE,2025-05-08,2025-05-09,closed,P4,Billing,Question on overage invoice,3
+T-0078,C023,ODDS_PRE,2025-05-10,2025-05-15,closed,P4,Latency,Increased response times on API,
+T-0079,C006,STATS_ARCHIVE,2025-05-11,2025-05-19,closed,P3,Billing,PO number missing on invoice,
+T-0080,C024,STREAM,2025-05-17,2025-05-19,closed,P1,Integration,Help with webhook authentication,5
+T-0081,C005,STREAM,2025-05-18,2025-05-18,closed,P2,Outage,Partial outage on secondary region,
+T-0082,C006,STATS_ARCHIVE,2025-05-24,2025-06-02,closed,P3,Feature request,Ask about custom alert thresholds,
+T-0083,C001,STREAM,2025-05-25,2025-05-28,closed,P3,Latency,Feed delay during peak fixtures,
+T-0084,C011,INTEGRITY,2025-05-27,2025-05-30,closed,P4,Integration,SDK version upgrade question,
+T-0085,C015,LIVE_DATA,2025-05-27,2025-05-28,closed,P4,Latency,Feed delay during peak fixtures,4
+T-0086,C002,STATS_ARCHIVE,2025-06-01,2025-06-01,closed,P1,Integration,SDK version upgrade question,4
+T-0087,C020,LIVE_DATA,2025-06-06,2025-06-09,closed,P4,Latency,Increased response times on API,4
+T-0088,C016,WIDGETS,2025-06-07,2025-06-11,closed,P3,Integration,SDK version upgrade question,4
+T-0089,C008,STREAM,2025-06-09,2025-06-10,closed,P3,Billing,PO number missing on invoice,4
+T-0090,C017,WIDGETS,2025-06-09,2025-06-21,closed,P3,Access,SSO configuration question,
+T-0091,C006,STATS_ARCHIVE,2025-06-10,2025-06-10,closed,P2,Feature request,Request for CSV export,3
+T-0092,C008,LIVE_DATA,2025-06-13,2025-06-14,closed,P3,Feature request,Request for CSV export,
+T-0093,C007,LIVE_DATA,2025-06-16,2025-06-20,closed,P3,Feature request,Request for CSV export,
+T-0094,C005,STREAM,2025-06-18,2025-06-19,closed,P1,Billing,PO number missing on invoice,4
+T-0095,C018,STATS_ARCHIVE,2025-06-19,2025-06-23,closed,P2,Integration,New environment onboarding,
+T-0096,C008,LIVE_DATA,2025-06-22,2025-06-25,closed,P3,Billing,Request for usage breakdown,5
+T-0097,C002,STATS_ARCHIVE,2025-06-25,2025-06-27,closed,P2,Outage,Stream endpoint returning errors,4
+T-0098,C010,LIVE_DATA,2025-07-01,2025-07-04,closed,P2,Latency,Increased response times on API,5
+T-0099,C002,LIVE_DATA,2025-07-04,2025-07-09,closed,P3,Integration,SDK version upgrade question,5
+T-0100,C005,STATS_ARCHIVE,2025-07-04,2025-07-07,closed,P4,Feature request,Ask about custom alert thresholds,4
+T-0101,C024,ODDS_PRE,2025-07-04,2025-07-06,closed,P2,Integration,SDK version upgrade question,5
+T-0102,C005,LIVE_DATA,2025-07-05,2025-07-09,closed,P3,Access,Reset API key,5
+T-0103,C002,STREAM,2025-07-08,2025-07-15,closed,P3,Feature request,Request for additional league coverage,
+T-0104,C010,ODDS_PRE,2025-07-10,2025-07-14,closed,P3,Latency,Increased response times on API,3
+T-0105,C008,STREAM,2025-07-11,2025-07-17,closed,P3,Latency,Feed delay during peak fixtures,5
+T-0106,C012,ODDS_PRE,2025-07-14,2025-07-15,closed,P4,Feature request,Request for CSV export,5
+T-0107,C009,LIVE_DATA,2025-07-15,2025-07-20,closed,P4,Data accuracy,Player stat mismatch vs official,
+T-0108,C012,LIVE_DATA,2025-08-05,2025-08-09,closed,P2,Outage,Feed unavailable for 20 minutes,
+T-0109,C020,WIDGETS,2025-08-06,2025-08-10,closed,P2,Integration,SDK version upgrade question,4
+T-0110,C023,ODDS_PRE,2025-08-06,2025-08-12,closed,P3,Integration,SDK version upgrade question,4
+T-0111,C005,STREAM,2025-08-08,2025-08-12,closed,P2,Data accuracy,Player stat mismatch vs official,5
+T-0112,C009,LIVE_DATA,2025-08-08,2025-08-09,closed,P4,Billing,Question on overage invoice,
+T-0113,C007,INTEGRITY,2025-08-13,2025-08-14,closed,P2,Outage,Feed unavailable for 20 minutes,
+T-0114,C013,WIDGETS,2025-08-25,2025-08-27,closed,P3,Billing,Request for usage breakdown,
+T-0115,C002,STATS_ARCHIVE,2025-09-04,2025-09-08,closed,P2,Integration,New environment onboarding,4
+T-0116,C021,WIDGETS,2025-09-04,2025-09-07,closed,P1,Integration,New environment onboarding,
+T-0117,C024,STREAM,2025-09-10,2025-09-21,closed,P4,Feature request,Ask about custom alert thresholds,4
+T-0118,C007,INTEGRITY,2025-09-12,2025-09-14,closed,P4,Integration,SDK version upgrade question,5
+T-0119,C003,INTEGRITY,2025-09-17,2025-09-18,closed,P4,Feature request,Request for additional league coverage,
+T-0120,C005,STREAM,2025-09-17,2025-09-18,closed,P4,Data accuracy,Score correction not propagated,4
+T-0121,C020,WIDGETS,2025-09-21,2025-09-22,closed,P3,Integration,New environment onboarding,5
+T-0122,C020,LIVE_DATA,2025-09-23,2025-09-26,closed,P2,Access,New user accounts needed,3
+T-0123,C002,STREAM,2025-09-27,2025-10-08,closed,P3,Data accuracy,Player stat mismatch vs official,4
+T-0124,C015,LIVE_DATA,2025-10-02,2025-10-12,closed,P4,Integration,New environment onboarding,
+T-0125,C005,WIDGETS,2025-10-04,2025-10-10,closed,P3,Integration,SDK version upgrade question,
+T-0126,C022,WIDGETS,2025-10-09,2025-10-15,closed,P3,Data accuracy,Incorrect lineup in match feed,
+T-0127,C018,STATS_ARCHIVE,2025-10-10,2025-10-16,closed,P4,Data accuracy,Player stat mismatch vs official,
+T-0128,C023,LIVE_DATA,2025-10-10,2025-10-14,closed,P3,Latency,Slow push updates on weekend matches,
+T-0129,C024,ODDS_LIVE,2025-10-10,2025-10-22,closed,P4,Integration,Help with webhook authentication,5
+T-0130,C009,WIDGETS,2025-10-11,2025-10-22,closed,P4,Data accuracy,Score correction not propagated,5
+T-0131,C021,STREAM,2025-10-12,2025-10-13,closed,P3,Access,SSO configuration question,
+T-0132,C011,FAN_INSIGHTS,2025-10-16,2025-10-17,closed,P3,Integration,Help with webhook authentication,5
+T-0133,C006,LIVE_DATA,2025-10-18,2025-10-27,closed,P3,Integration,Help with webhook authentication,
+T-0134,C020,LIVE_DATA,2025-10-19,2025-10-29,closed,P4,Feature request,Ask about custom alert thresholds,
+T-0135,C016,ODDS_LIVE,2025-10-22,2025-10-30,closed,P4,Latency,Slow push updates on weekend matches,5
+T-0136,C011,FAN_INSIGHTS,2025-10-23,2025-10-30,closed,P3,Integration,New environment onboarding,5
+T-0137,C003,INTEGRITY,2025-10-26,2025-10-28,closed,P3,Billing,PO number missing on invoice,
+T-0138,C011,FAN_INSIGHTS,2025-10-26,2025-11-02,closed,P3,Data accuracy,Player stat mismatch vs official,4
+T-0139,C003,FAN_INSIGHTS,2025-10-27,2025-10-28,closed,P2,Integration,SDK version upgrade question,
+T-0140,C021,WIDGETS,2025-11-17,2025-11-19,closed,P2,Outage,Partial outage on secondary region,4
+T-0141,C022,WIDGETS,2025-11-20,2025-11-21,closed,P2,Feature request,Request for additional league coverage,
+T-0142,C003,STREAM,2025-11-21,2025-11-30,closed,P3,Integration,SDK version upgrade question,5
+T-0143,C009,ODDS_LIVE,2025-11-21,2025-12-02,closed,P3,Feature request,Request for CSV export,
+T-0144,C010,LIVE_DATA,2025-11-23,2025-12-01,closed,P3,Latency,Increased response times on API,5
+T-0145,C002,STATS_ARCHIVE,2025-11-24,2025-11-25,closed,P2,Integration,Help with webhook authentication,4
+T-0146,C003,STREAM,2025-11-24,2025-11-26,closed,P2,Latency,Increased response times on API,
+T-0147,C019,WIDGETS,2025-11-24,2025-11-24,closed,P1,Data accuracy,Score correction not propagated,5
+T-0148,C017,STATS_ARCHIVE,2025-12-01,2025-12-04,closed,P2,Outage,Feed unavailable for 20 minutes,4
+T-0149,C002,LIVE_DATA,2025-12-03,2025-12-11,closed,P3,Integration,Help with webhook authentication,5
+T-0150,C010,STREAM,2025-12-08,2025-12-16,closed,P3,Latency,Feed delay during peak fixtures,
+T-0151,C001,LIVE_DATA,2025-12-10,2025-12-14,closed,P1,Integration,SDK version upgrade question,5
+T-0152,C008,STATS_ARCHIVE,2025-12-16,2025-12-25,closed,P4,Integration,Help with webhook authentication,5
+T-0153,C021,STATS_ARCHIVE,2025-12-16,2025-12-23,closed,P4,Integration,SDK version upgrade question,
+T-0154,C016,WIDGETS,2025-12-17,2025-12-20,closed,P3,Latency,Increased response times on API,
+T-0155,C008,FAN_INSIGHTS,2025-12-21,2025-12-31,closed,P3,Feature request,Request for CSV export,4
+T-0156,C009,WIDGETS,2025-12-22,2026-01-01,closed,P3,Data accuracy,Player stat mismatch vs official,4
+T-0157,C013,FAN_INSIGHTS,2025-12-23,2025-12-28,closed,P3,Feature request,Ask about custom alert thresholds,5
+T-0158,C024,ODDS_PRE,2025-12-26,2025-12-26,closed,P1,Outage,Stream endpoint returning errors,
+T-0159,C010,STREAM,2026-01-06,2026-01-15,closed,P3,Feature request,Request for CSV export,
+T-0160,C023,STATS_ARCHIVE,2026-01-06,2026-01-10,closed,P2,Billing,Request for usage breakdown,
+T-0161,C017,FAN_INSIGHTS,2026-01-09,2026-01-15,closed,P4,Billing,Request for usage breakdown,
+T-0162,C012,LIVE_DATA,2026-01-11,2026-01-15,closed,P1,Outage,Stream endpoint returning errors,
+T-0163,C024,STREAM,2026-01-13,2026-01-17,closed,P3,Access,SSO configuration question,
+T-0164,C005,STATS_ARCHIVE,2026-01-14,2026-01-25,closed,P3,Integration,SDK version upgrade question,
+T-0165,C017,STATS_ARCHIVE,2026-01-16,2026-01-20,closed,P2,Integration,New environment onboarding,
+T-0166,C022,FAN_INSIGHTS,2026-01-18,2026-01-30,closed,P3,Billing,PO number missing on invoice,
+T-0167,C005,WIDGETS,2026-01-19,2026-01-20,closed,P4,Integration,New environment onboarding,5
+T-0168,C007,INTEGRITY,2026-01-22,2026-01-27,closed,P3,Feature request,Ask about custom alert thresholds,4
+T-0169,C001,ODDS_PRE,2026-01-23,2026-01-25,closed,P2,Feature request,Ask about custom alert thresholds,3
+T-0170,C025,INTEGRITY,2026-01-23,2026-01-27,closed,P3,Integration,Help with webhook authentication,
+T-0171,C019,LIVE_DATA,2026-01-24,2026-01-25,closed,P2,Data accuracy,Score correction not propagated,
+T-0172,C021,STREAM,2026-01-27,2026-01-30,closed,P3,Latency,Feed delay during peak fixtures,5
+T-0173,C011,STATS_ARCHIVE,2026-02-01,2026-02-03,closed,P3,Feature request,Request for additional league coverage,5
+T-0174,C013,FAN_INSIGHTS,2026-02-02,2026-02-04,closed,P2,Integration,SDK version upgrade question,5
+T-0175,C003,STATS_ARCHIVE,2026-02-04,2026-02-09,closed,P4,Latency,Feed delay during peak fixtures,
+T-0176,C010,ODDS_LIVE,2026-02-07,2026-02-07,closed,P1,Feature request,Request for additional league coverage,4
+T-0177,C015,STATS_ARCHIVE,2026-02-07,2026-02-13,closed,P3,Integration,Help with webhook authentication,5
+T-0178,C020,STREAM,2026-02-07,2026-02-17,closed,P4,Feature request,Request for CSV export,
+T-0179,C007,LIVE_DATA,2026-02-09,2026-02-17,closed,P4,Integration,New environment onboarding,5
+T-0180,C020,LIVE_DATA,2026-02-09,2026-02-09,closed,P1,Integration,New environment onboarding,5
+T-0181,C005,WIDGETS,2026-02-11,2026-02-15,closed,P3,Access,New user accounts needed,4
+T-0182,C009,INTEGRITY,2026-02-14,2026-02-21,closed,P4,Feature request,Request for additional league coverage,5
+T-0183,C015,STATS_ARCHIVE,2026-02-17,2026-02-26,closed,P4,Feature request,Request for CSV export,
+T-0184,C019,LIVE_DATA,2026-02-18,2026-02-18,closed,P1,Outage,Partial outage on secondary region,4
+T-0185,C023,ODDS_PRE,2026-02-22,2026-02-23,closed,P3,Feature request,Request for CSV export,
+T-0186,C006,STATS_ARCHIVE,2026-02-27,2026-03-01,closed,P3,Data accuracy,Player stat mismatch vs official,
+T-0187,C002,STREAM,2026-03-08,2026-03-09,closed,P3,Data accuracy,Score correction not propagated,
+T-0188,C014,STATS_ARCHIVE,2026-03-08,2026-03-08,closed,P2,Integration,New environment onboarding,
+T-0189,C011,INTEGRITY,2026-03-10,2026-03-19,closed,P3,Feature request,Ask about custom alert thresholds,
+T-0190,C013,LIVE_DATA,2026-03-10,2026-03-13,closed,P3,Latency,Increased response times on API,
+T-0191,C003,STREAM,2026-03-16,2026-03-18,closed,P3,Feature request,Ask about custom alert thresholds,4
+T-0192,C008,STATS_ARCHIVE,2026-03-17,2026-03-21,closed,P2,Outage,Partial outage on secondary region,4
+T-0193,C025,FAN_INSIGHTS,2026-03-18,2026-03-22,closed,P3,Access,SSO configuration question,
+T-0194,C005,LIVE_DATA,2026-03-20,2026-03-24,closed,P1,Outage,Feed unavailable for 20 minutes,5
+T-0195,C007,STATS_ARCHIVE,2026-03-21,2026-03-22,closed,P3,Data accuracy,Score correction not propagated,
+T-0196,C022,FAN_INSIGHTS,2026-03-24,2026-04-05,closed,P4,Integration,SDK version upgrade question,3
+T-0197,C006,WIDGETS,2026-03-27,2026-04-06,closed,P3,Integration,SDK version upgrade question,5
+T-0198,C009,INTEGRITY,2026-04-01,2026-04-10,closed,P4,Feature request,Ask about custom alert thresholds,
+T-0199,C015,LIVE_DATA,2026-04-04,2026-04-14,closed,P3,Integration,SDK version upgrade question,4
+T-0200,C002,LIVE_DATA,2026-04-05,2026-04-13,closed,P4,Data accuracy,Score correction not propagated,
+T-0201,C018,STATS_ARCHIVE,2026-04-05,2026-04-17,closed,P3,Integration,New environment onboarding,3
+T-0202,C005,LIVE_DATA,2026-04-08,2026-04-17,closed,P3,Billing,March usage statement missing from portal,3
+T-0203,C001,ODDS_LIVE,2026-04-14,2026-04-15,closed,P2,Access,Reset API key,3
+T-0204,C011,STATS_ARCHIVE,2026-04-15,2026-04-22,closed,P3,Access,Reset API key,4
+T-0205,C019,WIDGETS,2026-04-15,2026-04-23,closed,P3,Data accuracy,Incorrect lineup in match feed,5
+T-0206,C020,WIDGETS,2026-04-15,2026-04-20,closed,P3,Integration,Help with webhook authentication,3
+T-0207,C017,STATS_ARCHIVE,2026-04-19,2026-04-23,closed,P2,Billing,Request for usage breakdown,
+T-0208,C002,STATS_ARCHIVE,2026-04-20,2026-04-22,closed,P4,Feature request,Ask about custom alert thresholds,5
+T-0209,C020,LIVE_DATA,2026-04-20,2026-04-28,closed,P3,Feature request,Ask about custom alert thresholds,4
+T-0210,C002,STREAM,2026-04-22,2026-04-26,closed,P3,Billing,Question on streaming overage charges,4
+T-0211,C008,STATS_ARCHIVE,2026-04-23,2026-04-23,closed,P2,Feature request,Request for CSV export,
+T-0212,C002,LIVE_DATA,2026-04-26,2026-05-04,closed,P3,Latency,Slow push updates on weekend matches,4
+T-0213,C003,FAN_INSIGHTS,2026-04-27,2026-05-06,closed,P3,Integration,Help with webhook authentication,5
+T-0214,C008,FAN_INSIGHTS,2026-04-27,2026-05-08,closed,P3,Data accuracy,Incorrect lineup in match feed,3
+T-0215,C005,STATS_ARCHIVE,2026-05-01,2026-05-11,closed,P3,Latency,Increased response times on API,
+T-0216,C012,ODDS_PRE,2026-05-01,2026-05-04,closed,P4,Feature request,Ask about custom alert thresholds,
+T-0217,C022,WIDGETS,2026-05-01,2026-05-04,closed,P3,Integration,Help with webhook authentication,5
+T-0218,C023,ODDS_PRE,2026-05-02,2026-05-05,closed,P2,Access,New user accounts needed,4
+T-0219,C024,INTEGRITY,2026-05-04,2026-05-06,closed,P3,Access,SSO configuration question,
+T-0220,C014,STATS_ARCHIVE,2026-05-06,2026-05-15,closed,P3,Latency,Feed delay during peak fixtures,4
+T-0221,C008,FAN_INSIGHTS,2026-05-11,2026-05-15,closed,P3,Data accuracy,Player stat mismatch vs official,4
+T-0222,C003,STREAM,2026-05-14,2026-05-16,closed,P2,Outage,Stream buffering on mobile app for second-division matches,3
+T-0223,C002,STREAM,2026-05-19,2026-05-30,closed,P4,Integration,New environment onboarding,5
+T-0224,C008,LIVE_DATA,2026-05-19,2026-05-20,closed,P3,Access,Reset API key,4
+T-0225,C016,ODDS_LIVE,2026-05-19,2026-05-26,closed,P3,Feature request,Ask about custom alert thresholds,4
+T-0226,C006,STATS_ARCHIVE,2026-05-22,2026-05-25,closed,P3,Billing,Question on overage invoice,4
+T-0227,C016,ODDS_LIVE,2026-06-03,2026-06-09,closed,P4,Integration,SDK version upgrade question,5
+T-0228,C025,FAN_INSIGHTS,2026-06-15,2026-06-19,closed,P3,Latency,Increased response times on API,4
+T-0229,C003,STATS_ARCHIVE,2026-06-18,2026-06-27,closed,P4,Feature request,Ask about custom alert thresholds,4
+T-0230,C018,STREAM,2026-06-22,2026-07-01,closed,P3,Access,Reset API key,4
+T-0231,C019,LIVE_DATA,2026-06-23,2026-06-27,closed,P3,Integration,New environment onboarding,5
+T-0232,C010,ODDS_PRE,2026-06-24,2026-06-26,closed,P3,Integration,Help with webhook authentication,5
+T-0233,C003,STATS_ARCHIVE,2026-06-27,2026-06-29,closed,P3,Integration,Help with webhook authentication,4
+T-0234,C021,STREAM,2026-06-27,2026-07-01,closed,P3,Latency,Slow push updates on weekend matches,4
+T-0235,C005,LIVE_DATA,2026-07-02,2026-07-10,closed,P3,Feature request,Request for CSV export,4
+T-0236,C016,ODDS_LIVE,2026-07-05,2026-07-08,closed,P2,Access,SSO configuration question,4
+T-0237,C001,ODDS_LIVE,2026-07-06,2026-07-09,closed,P2,Latency,In-play price updates lagging 8-10 seconds,2
+T-0238,C009,LIVE_DATA,2026-07-06,2026-07-14,closed,P4,Billing,Request for usage breakdown,4
+T-0239,C006,LIVE_DATA,2026-07-07,2026-07-16,closed,P3,Latency,Slow push updates on weekend matches,
+T-0240,C020,LIVE_DATA,2026-07-10,2026-07-16,closed,P4,Feature request,Ask about custom alert thresholds,
+T-0241,C020,WIDGETS,2026-07-12,2026-07-17,closed,P3,Data accuracy,Score correction not propagated,3
+T-0242,C001,LIVE_DATA,2026-07-19,2026-07-23,closed,P2,Data accuracy,Delayed goal events on second-tier leagues,2
+T-0243,C003,STATS_ARCHIVE,2026-07-19,2026-07-20,closed,P2,Outage,Feed unavailable for 20 minutes,
+T-0244,C025,INTEGRITY,2026-07-21,2026-07-31,closed,P3,Integration,SDK version upgrade question,
+T-0245,C008,STREAM,2026-07-22,2026-07-25,closed,P2,Feature request,Request for additional league coverage,
+T-0246,C017,WIDGETS,2026-07-26,2026-07-27,closed,P3,Integration,Help with webhook authentication,
+T-0247,C002,STREAM,2026-08-04,2026-08-07,closed,P1,Outage,Partial outage on secondary region,4
+T-0248,C013,LIVE_DATA,2026-08-07,2026-08-12,closed,P3,Integration,New environment onboarding,
+T-0249,C001,ODDS_LIVE,2026-08-09,2026-08-10,closed,P1,Latency,In-play odds feed stalled during peak fixtures,1
+T-0250,C002,LIVE_DATA,2026-08-09,2026-08-11,closed,P4,Integration,Help with webhook authentication,5
+T-0251,C014,STATS_ARCHIVE,2026-08-15,2026-08-15,closed,P2,Access,Reset API key,
+T-0252,C002,STREAM,2026-08-19,2026-08-29,closed,P3,Access,Reset API key,5
+T-0253,C019,STATS_ARCHIVE,2026-08-20,2026-08-21,closed,P1,Outage,Feed unavailable for 20 minutes,
+T-0254,C011,INTEGRITY,2026-08-21,2026-08-26,closed,P3,Data accuracy,Incorrect lineup in match feed,
+T-0255,C001,ODDS_LIVE,2026-08-23,2026-08-23,closed,P1,Outage,In-play feed unavailable for 35 minutes,1
+T-0256,C012,ODDS_PRE,2026-08-24,2026-09-03,closed,P3,Integration,SDK version upgrade question,4
+T-0257,C016,ODDS_PRE,2026-08-24,2026-08-27,closed,P1,Outage,Partial outage on secondary region,5
+T-0258,C003,STREAM,2026-08-28,2026-09-02,closed,P3,Integration,Request to pause streams for cup matches moved to free-to-air partner,4
+T-0259,C001,LIVE_DATA,2026-09-02,2026-09-08,closed,P3,Billing,Query on price increase applied at last renewal,2
+T-0260,C016,LIVE_DATA,2026-09-02,2026-09-07,closed,P3,Feature request,Request for additional league coverage,5
+T-0261,C002,WIDGETS,2026-09-03,2026-09-10,closed,P4,Feature request,Do you offer embeddable live match trackers for our second-screen app?,5
+T-0262,C011,STREAM,2026-09-04,2026-09-08,closed,P2,Data accuracy,Score correction not propagated,
+T-0263,C011,STATS_ARCHIVE,2026-09-05,2026-09-15,closed,P3,Latency,Increased response times on API,
+T-0264,C010,STREAM,2026-09-07,2026-09-17,closed,P3,Feature request,Request for CSV export,
+T-0265,C010,STREAM,2026-09-08,2026-09-13,closed,P4,Access,SSO configuration question,5
+T-0266,C020,LIVE_DATA,2026-09-08,2026-09-13,closed,P3,Data accuracy,Incorrect lineup in match feed,5
+T-0267,C005,LIVE_DATA,2026-09-13,2026-09-23,closed,P3,Feature request,Ask about custom alert thresholds,4
+T-0268,C020,STREAM,2026-09-13,2026-09-18,closed,P3,Billing,Question on overage invoice,
+T-0269,C001,ODDS_LIVE,2026-09-14,2026-09-16,closed,P1,Latency,Repeat: in-play latency above contractual threshold,1
+T-0270,C010,ODDS_LIVE,2026-09-20,2026-09-24,closed,P2,Latency,Feed delay during peak fixtures,3
+T-0271,C002,STREAM,2026-09-24,2026-10-01,closed,P4,Latency,Slow push updates on weekend matches,4
+T-0272,C013,FAN_INSIGHTS,2026-09-25,2026-09-28,closed,P3,Data accuracy,Incorrect lineup in match feed,
+T-0273,C001,ODDS_LIVE,2026-09-30,2026-10-05,closed,P2,Latency,Suspension delays on live markets,
+T-0274,C008,LIVE_DATA,2026-10-03,2026-10-12,closed,P3,Latency,Slow push updates on weekend matches,4
+T-0275,C021,STREAM,2026-10-03,2026-10-06,closed,P3,Integration,SDK version upgrade question,3
+T-0276,C007,LIVE_DATA,2026-10-05,2026-10-08,closed,P3,Access,Confirm feed access continues while renewal is in legal review,4
+T-0277,C006,STATS_ARCHIVE,2026-10-09,2026-10-12,closed,P2,Data accuracy,Incorrect lineup in match feed,4
+T-0278,C019,STATS_ARCHIVE,2026-10-11,2026-10-18,closed,P4,Integration,Help with webhook authentication,3
+T-0279,C001,LIVE_DATA,2026-10-12,,open,P2,Data accuracy,Missing corner and card events in live feed,
+T-0280,C014,STATS_ARCHIVE,2026-10-15,2026-10-25,closed,P3,Access,Reset API key,5
+T-0281,C010,ODDS_LIVE,2026-10-18,2026-10-23,closed,P3,Access,New user accounts needed,5
+T-0282,C020,LIVE_DATA,2026-10-18,2026-10-22,closed,P3,Latency,Feed delay during peak fixtures,5
+T-0283,C018,STREAM,2026-10-19,2026-10-25,closed,P3,Integration,Help with webhook authentication,
+T-0284,C001,ODDS_LIVE,2026-10-21,,open,P1,Latency,In-play latency spike during evening fixtures,
+T-0285,C009,ODDS_LIVE,2026-10-22,2026-10-25,closed,P4,Access,New user accounts needed,
+T-0286,C024,ODDS_LIVE,2026-10-22,,open,P4,Access,New user accounts needed,
+T-0287,C025,INTEGRITY,2026-10-26,2026-10-29,closed,P4,Access,SSO configuration question,
+T-0288,C008,STATS_ARCHIVE,2026-10-27,2026-10-28,closed,P4,Data accuracy,Score correction not propagated,3
+T-0281,C010,ODDS_LIVE,2026-10-18,2026-10-23,closed,P3,Access,New user accounts needed,5
