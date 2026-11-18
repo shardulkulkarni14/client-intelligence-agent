@@ -71,7 +71,7 @@ points (command, API, UI) cannot drift apart. The port is set with
 ### 4. Tests and evaluation
 
 ```bash
-uv run pytest                           #  tests, no model calls
+uv run pytest                           # 266 tests, no model calls
 uv run ruff check .
 uv run python eval/run_eval.py          # the evaluation, with the model
 uv run python eval/run_eval.py --no-llm # same cases on tool output only, free
@@ -219,7 +219,7 @@ Done after the six must-haves were complete and evaluated:
 |---|---|
 | New trigger through configuration only | Done; see "Adding a trigger". |
 | Note-versus-data conflicts | Done as the `claim_check` tool; the conflict reaches the briefing as a cited fact and a gap. It is not yet phrased as a question for the rep by code; the writer does that. |
-| Unit tests and a repeatable regression run |  tests; `eval/run_eval.py` re-runs the cases after any prompt change. |
+| Unit tests and a repeatable regression run | 266 tests; `eval/run_eval.py` re-runs the cases after any prompt change. |
 | Parallel tools with a trace | Tools run in a thread pool with the result order kept stable. `evidence.json` has a `trace`: every step with seconds, and tokens and cost for model calls. A tool that raises becomes a visible `tool_error` gap, not a failed run. These are parallel deterministic tools, not parallel model specialists. |
 | Portfolio view | `--portfolio` ranks all clients by renewal risk and by growth without a model. The score is a sum of fixed points; every point carries the fact and citation that earned it. It is an ordering aid, not a probability: the data has no churn history to fit weights to, and only a handful of clients carry real risk signals. |
 | Small UI | A FastAPI service (`api.py`, four endpoints) and a Next.js page in `ui/` that calls it. Run a briefing, click any citation to see the evidence behind it, see the trace, browse the portfolio. The API is a thin layer over the same `run()` function; it loads the data once and runs the pipeline in a worker thread. It is a local, single-user service: no authentication, no job queue for the 20 to 60 second runs, no rate limiting. |
