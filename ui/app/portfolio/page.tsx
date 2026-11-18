@@ -5,7 +5,9 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { errorMessage } from "@/lib/errors";
 import type { PortfolioResponse, Reason, Score } from "@/lib/types";
 
-const eur = new Intl.NumberFormat("en-GB", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+// Same form as in the briefings ("EUR 752,000"), so a figure reads the same everywhere.
+const eurNumber = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 });
+const eur = { format: (value: number) => `EUR ${eurNumber.format(value)}` };
 
 /** The tool prints "Y" / "N" (or nothing when no contract is in force); accept a boolean too. */
 function yesNo(value: boolean | string | null | undefined): string {
@@ -125,10 +127,10 @@ export default function PortfolioPage() {
                 <td>
                   {c.segment}, {c.tier}
                 </td>
-                <td className="n">{typeof c.arr_eur === "number" ? eur.format(c.arr_eur) : "unknown"}</td>
+                <td className="n">{typeof c.arr_eur === "number" ? eur.format(c.arr_eur) : "none in force"}</td>
                 <td>
                   {c.contract_end ?? "none in force"}{" "}
-                  {c.contract_id ? <span className="muted small">{c.contract_id}</span> : null}
+                  {c.contract_id ? <span className="muted small" style={{ whiteSpace: "nowrap" }}>{c.contract_id}</span> : null}
                 </td>
                 <td className="n">{c.days_to_end ?? ""}</td>
                 <td>{yesNo(c.auto_renew)}</td>
