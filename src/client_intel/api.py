@@ -17,7 +17,7 @@ import os
 from collections.abc import AsyncIterator, Callable
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Annotated, Any
+from typing import Annotated, Any, Literal
 
 from fastapi import Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -69,6 +69,9 @@ class BriefingRequest(BaseModel):
     trigger: str = Field(min_length=1)
     context: str = Field(default="", max_length=CONTEXT_MAX_CHARS)
     use_model: bool = True
+    # "structured": the model selects facts and comments, code writes every sentence
+    # with a figure. Without a model the mode makes no difference.
+    mode: Literal["prose", "structured"] = "prose"
 
     @field_validator("context")
     @classmethod
@@ -121,7 +124,7 @@ def _brief(dataset: db.Dataset, body: BriefingRequest, factory: WriterFactory,
            out_dir: Path) -> dict[str, Any]:
     """One whole run, including the file writes; called in a worker thread."""
     writer = factory() if body.use_model else None
-    result = run(dataset, body.client, body.trigger, body.context, writer)
+    result = run(dataset, body.client, body.trigger, body.context, writer, mode=body.mode)
     write_run_files(result, out_dir)
     return run_payload(result)
 

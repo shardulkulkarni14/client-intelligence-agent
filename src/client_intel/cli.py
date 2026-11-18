@@ -101,6 +101,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--db", default=str(db.DEFAULT_DB), help="path to client_intel.db")
     parser.add_argument("--no-llm", action="store_true",
                         help="facts-only briefing without calling a model")
+    parser.add_argument("--mode", choices=("prose", "structured"), default="prose",
+                        help="structured: the model selects facts and comments, code writes "
+                             "every sentence with a figure")
     parser.add_argument("--json", action="store_true",
                         help="print the run as one JSON object instead of the briefing text")
     mode = parser.add_mutually_exclusive_group()
@@ -130,7 +133,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         dataset = db.load(args.db)
         writer = None if args.no_llm else AnthropicWriter()
-        result = run(dataset, args.client, args.trigger, args.context, writer)
+        result = run(dataset, args.client, args.trigger, args.context, writer, mode=args.mode)
     except (RequestError, ModelError, FileNotFoundError) as exc:
         return _fail(str(exc), args.json)
 

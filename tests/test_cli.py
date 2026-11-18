@@ -2,7 +2,10 @@
 
 import json
 
+import pytest
+
 from client_intel import cli
+from client_intel.pipeline import make_plan
 
 RUN_KEYS = {"ok", "error", "client_id", "client_name", "trigger", "briefing", "evidence",
             "flagged", "repaired"}
@@ -98,3 +101,38 @@ def test_missing_client_or_trigger_is_a_usage_error(capsys):
 def test_missing_database_is_exit_code_2(tmp_path, capsys):
     assert cli.main(["--list", "--db", str(tmp_path / "none.db")]) == 2
     assert "Database not found" in capsys.readouterr().err
+
+
+def structured_writer(system: str, user: str) -> str:
+    """A model answer in structured mode: real headings, one real fact, no figures."""
+    sections = [{"heading": heading, "items": []} for heading in make_plan("renewal").sections]
+    sections[0]["items"].append({"say": "The contract is the anchor of this conversation.",
+                                 "facts": ["contracts:K-0002"], "show": True})
+    return json.dumps({"sections": sections})
+
+
+def test_structured_mode_reaches_the_pipeline_and_code_writes_the_fact(tmp_path, capsys,
+                                                                       monkeypatch):
+    monkeypatch.setattr(cli, "AnthropicWriter", lambda: structured_writer)
+    code = cli.main(["--client", "C001", "--trigger", "renewal", "--mode", "structured",
+                     "--json", "--out", str(tmp_path)])
+    payload = json.loads(capsys.readouterr().out)
+    assert code in (0, 1)
+    writer = payload["evidence"]["writer"]
+    assert writer["mode"] == "structured"
+    assert writer["fallback"] is False
+    assert writer["structured"]["sections"][0]["items"][0]["facts"] == ["contracts:K-0002"]
+    texts = [f["text"] for r in payload["evidence"]["results"] for f in r["facts"]
+             if f["id"] == "contracts:K-0002"]
+    assert texts
+    assert all(text in payload["briefing"] for text in texts)
+
+
+def test_mode_defaults_to_prose_and_rejects_other_values(tmp_path, capsys, monkeypatch):
+    monkeypatch.setattr(cli, "AnthropicWriter", lambda: lambda system, user: "## Bottom line")
+    cli.main(["--client", "C001", "--trigger", "renewal", "--json", "--out", str(tmp_path)])
+    assert json.loads(capsys.readouterr().out)["evidence"]["writer"]["mode"] == "model"
+
+    with pytest.raises(SystemExit) as stop:
+        cli.main(["--client", "C001", "--trigger", "renewal", "--no-llm", "--mode", "poetry"])
+    assert stop.value.code == 2

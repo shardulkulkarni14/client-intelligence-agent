@@ -141,6 +141,25 @@ def test_empty_client_and_missing_trigger_are_422_with_the_error_shape(client):
     assert "client:" in payload["error"] and "trigger:" in payload["error"]
 
 
+def test_unknown_mode_is_422_with_the_error_shape(client, out_dir):
+    response = client.post("/api/briefings", json={
+        "client": "C001", "trigger": "renewal", "mode": "poetry", "use_model": False})
+    assert response.status_code == 422
+    payload = response.json()
+    assert_error_shape(payload)
+    assert payload["error"].startswith("Invalid request: mode:")
+    assert not out_dir.exists()
+
+
+def test_structured_mode_without_a_model_is_the_offline_briefing(client):
+    request = {"client": "C001", "trigger": "renewal", "use_model": False}
+    default = client.post("/api/briefings", json=request)
+    structured = client.post("/api/briefings", json={**request, "mode": "structured"})
+    assert default.status_code == structured.status_code == 200
+    assert structured.json()["evidence"]["writer"]["mode"] == "offline"
+    assert structured.json()["briefing"] == default.json()["briefing"]
+
+
 def test_model_error_from_the_writer_factory_is_502(client, out_dir):
     def no_key() -> None:
         raise ModelError("ANTHROPIC_API_KEY is not set.")

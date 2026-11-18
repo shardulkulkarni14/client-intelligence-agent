@@ -681,3 +681,138 @@ def test_citation_with_a_marker_inside_the_bracket_is_still_a_citation():
 def test_unknown_id_with_a_marker_inside_the_bracket_is_flagged(facts):
     report = verify("The client said so [note:N-999, reported].", facts)
     assert [v.kind for v in report.violations] == ["unknown_citation"]
+
+
+SUBJECTS = {
+    "ODDS_LIVE": "In-play Odds Feed",
+    "STREAM": "Live Streaming",
+    "WIDGETS": "Match Visualisation Widgets",
+}
+ODDS_TREND = "calc:usage_trend#10"
+STREAM_TREND = "calc:usage_trend#11"
+
+
+@pytest.fixture
+def product_facts() -> dict[str, Fact]:
+    items = [
+        Fact(
+            id=ODDS_TREND,
+            text="ODDS_LIVE (In-play Odds Feed) API calls changed -40.0% from 2026-07 to 2026-10.",
+            rows=["usage:U-00500"],
+            kind=CALC,
+        ),
+        Fact(
+            id=STREAM_TREND,
+            text="Usage changed +5.0% between 2026-07 and 2026-10.",
+            rows=["usage:U-00600", "product:STREAM"],
+            kind=CALC,
+        ),
+    ]
+    return {f.id: f for f in items}
+
+
+def test_wrong_product_by_name_is_flagged(product_facts):
+    line = f"Live Streaming usage fell -40.0% [{ODDS_TREND}]."
+    report = verify(line, product_facts, subjects=SUBJECTS)
+    assert report.violations == [
+        Violation(
+            line_no=1,
+            line=line,
+            kind="subject_not_in_cited_evidence",
+            token="Live Streaming",
+            detail="Live Streaming is named on this line, but no fact cited here is about it",
+        )
+    ]
+    # the full name is matched in any case
+    lower = verify(f"live streaming usage fell -40.0% [{ODDS_TREND}].", product_facts,
+                   subjects=SUBJECTS)
+    assert kinds(lower) == [(1, "subject_not_in_cited_evidence", "live streaming")]
+
+
+def test_wrong_product_by_id_is_flagged(product_facts):
+    report = verify(f"STREAM usage fell -40.0% [{ODDS_TREND}].", product_facts, subjects=SUBJECTS)
+    assert kinds(report) == [(1, "subject_not_in_cited_evidence", "STREAM")]
+    assert report.violations[0].detail == (
+        "STREAM is named on this line, but no fact cited here is about it"
+    )
+    # an id is a whole token in exact case: the ordinary word is not the product
+    assert verify(f"The stream of calls fell -40.0% [{ODDS_TREND}].", product_facts,
+                  subjects=SUBJECTS).ok is True
+    assert verify(f"UPSTREAM calls fell -40.0% [{ODDS_TREND}].", product_facts,
+                  subjects=SUBJECTS).ok is True
+
+
+def test_right_product_passes(product_facts):
+    for line in (
+        f"In-play Odds Feed usage fell -40.0% [{ODDS_TREND}].",
+        f"ODDS_LIVE usage fell -40.0% [{ODDS_TREND}].",
+        # the fact names the product only through its rows
+        f"Live Streaming usage rose +5.0% [{STREAM_TREND}].",
+        # the product row itself is cited next to the calculation
+        f"Widgets (WIDGETS) usage fell -40.0% [{ODDS_TREND}][product:WIDGETS].",
+    ):
+        facts = dict(product_facts)
+        facts["product:WIDGETS"] = Fact(
+            id="product:WIDGETS", text="Catalogue entry.", rows=["product:WIDGETS"], kind=DATA
+        )
+        assert verify(line, facts, subjects=SUBJECTS).ok is True, line
+
+
+def test_line_naming_two_products_with_facts_for_both_passes(product_facts):
+    line = (
+        f"In-play Odds Feed fell -40.0% while Live Streaming rose +5.0% "
+        f"[{ODDS_TREND}][{STREAM_TREND}]."
+    )
+    report = verify(line, product_facts, subjects=SUBJECTS)
+    assert report.ok is True
+    assert report.numbers_checked == 2
+
+
+def test_second_product_without_a_cited_fact_is_flagged_once(product_facts):
+    line = (
+        f"ODDS_LIVE fell -40.0%, and Live Streaming (STREAM) fell by the same -40.0% "
+        f"[{ODDS_TREND}]."
+    )
+    report = verify(line, product_facts, subjects=SUBJECTS)
+    assert kinds(report) == [(1, "subject_not_in_cited_evidence", "Live Streaming")]
+
+
+def test_line_without_numbers_is_not_subject_checked(product_facts):
+    report = verify(f"Live Streaming usage is falling [{ODDS_TREND}].", product_facts,
+                    subjects=SUBJECTS)
+    assert report.ok is True
+    # nor is a line whose only citation is unknown: that is already a violation
+    unknown = verify("Live Streaming usage fell -40.0% [calc:nope#1].", product_facts,
+                     subjects=SUBJECTS)
+    assert [v.kind for v in unknown.violations] == [
+        "unknown_citation",
+        "number_not_in_cited_evidence",
+    ]
+
+
+def test_without_subjects_the_wrong_product_still_passes(product_facts):
+    line = f"Live Streaming usage fell -40.0% [{ODDS_TREND}]."
+    assert verify(line, product_facts).ok is True
+    assert verify(line, product_facts, subjects=None).ok is True
+    assert verify(line, product_facts, subjects={}).ok is True
+
+
+def test_subject_violation_is_flagged_in_the_text_and_in_the_repair(product_facts):
+    line = f"- Live Streaming usage fell -40.0% [{ODDS_TREND}]."
+    report = verify(line, product_facts, subjects=SUBJECTS)
+    out = apply_policy(line, report)
+    assert out.splitlines()[0] == (
+        f"{line} **[UNVERIFIED: Live Streaming is not the subject of the cited evidence]**"
+    )
+    assert (
+        f'- "{line}": Live Streaming is named on this line, but no fact cited here is '
+        "about it (subject_not_in_cited_evidence)"
+    ) in out
+    assert repair_instructions(report).splitlines()[1] == (
+        "- Line 1 (subject_not_in_cited_evidence): Live Streaming is named on this line, "
+        "but no fact cited here is about it"
+    )
+    # re-verifying the flagged text does not add a second violation
+    assert kinds(verify(out.split("## Verification")[0], product_facts, subjects=SUBJECTS)) == [
+        (1, "subject_not_in_cited_evidence", "Live Streaming")
+    ]

@@ -2,6 +2,8 @@
 
     uv run python eval/run_eval.py            # with the model (uses the API key)
     uv run python eval/run_eval.py --no-llm   # tool output only, free
+    uv run python eval/run_eval.py --mode structured   # model selects, code writes figures;
+                                              # writes eval/report_structured.md
 
 Checks per case, all automatic:
   grounded      every number in the model's text appears in the tool outputs of
@@ -15,6 +17,13 @@ Checks per case, all automatic:
                 and appear in the "Data gaps and confidence" section.
   must_cite     rows a useful briefing for this case has to refer to.
   length        the model's text stays near one page.
+
+Only with --mode structured (the model returns claims, code renders the figures):
+  no_own_figures  no comment written by the model contains a figure. Its own simple
+                  pattern, independent of the verifier.
+  facts_verbatim  every fact the model chose to show appears word for word.
+  no_fallback     the model's output could be read; the facts-only briefing was
+                  not used instead.
 """
 
 from __future__ import annotations
@@ -35,6 +44,10 @@ MAX_WORDS = 650
 _NUMBER = re.compile(r"\d[\d,]*(?:\.\d+)?")
 _BRACKET = re.compile(r"\[[^\]]*\]")
 _ID = re.compile(r"\b[A-Z]+-?\d+\b|\b[A-Z][A-Z_]+\b")
+STRUCTURED_CHECKS = ["no_own_figures", "facts_verbatim", "no_fallback"]
+# Row and client identifiers (T-0284, K-0002, C001, P1) carry digits but are not figures.
+_IDENTIFIER = re.compile(r"\b[A-Za-z_]+:[\w#-]+|\b[A-Z][A-Z_]*-?\d+\b")
+_FIGURE = re.compile(r"\d[\d.,]*%?")
 
 
 def numbers_in(text: str) -> set[str]:
@@ -93,9 +106,47 @@ def check_case(case: dict, result) -> dict[str, tuple[bool, str]]:
     }
 
 
+def check_structured(result) -> dict[str, tuple[bool, str]]:
+    """The three checks that only make sense when the model returned claims."""
+    writer = result.evidence["writer"]
+    fallback = writer.get("fallback") is True
+    checks = {"no_fallback": (not fallback, "facts-only briefing used" if fallback else "")}
+    document = writer.get("structured")
+    if not document:
+        # Nothing to inspect is not a pass: the two properties were not shown to hold.
+        missing = (False, "no structured document in the evidence")
+        return {"no_own_figures": missing, "facts_verbatim": missing, **checks}
+
+    texts: dict[str, list[str]] = {}
+    for tool in result.evidence["results"]:
+        for fact in tool["facts"]:
+            texts.setdefault(fact["id"], []).append(fact["text"])
+    figures: list[str] = []
+    absent: list[str] = []
+    for section in document.get("sections", []):
+        for item in section.get("items", []):
+            say = _IDENTIFIER.sub(" ", _BRACKET.sub(" ", item.get("say") or ""))
+            figures += _FIGURE.findall(say)
+            if not item.get("show"):
+                continue
+            for fact_id in item.get("facts", []):
+                if fact_id not in texts:
+                    absent.append(f"{fact_id} (unknown ID)")
+                elif any(text not in result.briefing for text in texts[fact_id]):
+                    absent.append(fact_id)
+    return {
+        "no_own_figures": (not figures, f"figures in comments: {figures}" if figures else ""),
+        "facts_verbatim": (not absent, f"not word for word: {absent}" if absent else ""),
+        **checks,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--no-llm", action="store_true")
+    parser.add_argument("--mode", choices=("prose", "structured"), default="prose",
+                        help="structured: the model selects facts and comments, code writes "
+                             "every sentence with a figure")
     parser.add_argument("--only", default="", help="comma-separated case ids")
     args = parser.parse_args()
     cases = json.loads((ROOT / "eval" / "cases.json").read_text())
@@ -106,18 +157,25 @@ def main() -> int:
     if args.no_llm:
         # Sections, must_cite and length judge the model's writing; offline there is none.
         names = ["grounded", "verifier", "citations", "gaps"]
+    structured = args.mode == "structured"
+    # Offline there is no model output to judge, so the extra columns show n/a and
+    # are not counted.
+    extra = STRUCTURED_CHECKS if structured else []
+    counted = names + ([] if args.no_llm else extra)
+    suffix = "_structured" if structured else ""
 
     rows, failures, tokens = [], [], [0, 0]
     for case in cases:
         writer = None if args.no_llm else AnthropicWriter()
         try:
-            result = run(ds, case["client"], case["trigger"], case.get("context", ""), writer)
+            result = run(ds, case["client"], case["trigger"], case.get("context", ""), writer,
+                         mode=args.mode)
         except (ModelError, RequestError) as exc:
             rows.append(f"| {case['id']} | {case['trigger']} | ERROR | {exc} |")
             failures.append(f"- **{case['id']}**: did not run: {exc}")
             continue
         # Offline runs go elsewhere so they never overwrite the model's sample outputs.
-        out = ROOT / ("runs/eval_offline" if args.no_llm else "outputs") / case["id"]
+        out = ROOT / (("runs/eval_offline" if args.no_llm else "outputs") + suffix) / case["id"]
         out.mkdir(parents=True, exist_ok=True)
         (out / "briefing.md").write_text(result.briefing)
         (out / "evidence.json").write_text(json.dumps(result.evidence, indent=2))
@@ -125,30 +183,36 @@ def main() -> int:
             tokens[0] += int(call["input_tokens"])
             tokens[1] += int(call["output_tokens"])
         checks = check_case(case, result)
-        marks = " | ".join("pass" if checks[n][0] else "FAIL" for n in names)
+        if structured and not args.no_llm:
+            checks |= check_structured(result)
+        marks = " | ".join(
+            "n/a" if n not in counted else "pass" if checks[n][0] else "FAIL"
+            for n in names + extra)
         first = len(result.first_report.violations)
         rows.append(f"| {case['id']} | {case['trigger']} | {marks} | {first} | "
                     f"{'yes' if result.repaired else 'no'} |")
-        for n in names:
+        for n in counted:
             if not checks[n][0]:
                 failures.append(f"- **{case['id']}** / {n}: {checks[n][1]}")
         print(f"{case['id']}: {marks}", file=sys.stderr)
 
-    total = len(cases) * len(names)
+    total = len(cases) * len(counted)
     failed = len(failures)
     mode = "offline (no model)" if args.no_llm else "with model"
+    if structured:
+        mode += ", structured (the model selects facts and comments, code writes the figures)"
     report = [
         "# Evaluation report", "",
         f"Mode: {mode}. Cases: {len(cases)}. Checks passed: {total - failed} of {total}.",
         "" if args.no_llm else f"Tokens: {tokens[0]:,} in, {tokens[1]:,} out.", "",
-        f"| case | trigger | {' | '.join(names)} | flagged on first draft | repaired |",
-        "|" + "---|" * (len(names) + 4),
+        f"| case | trigger | {' | '.join(names + extra)} | flagged on first draft | repaired |",
+        "|" + "---|" * (len(names + extra) + 4),
         *rows, "", "## Failures", "",
         *(failures or ["None."]), "",
         "## What each case is for", "",
         *[f"- **{c['id']}** ({c['client']}, {c['trigger']}): {c['why']}" for c in cases], "",
     ]
-    name = "report_offline.md" if args.no_llm else "report.md"
+    name = f"report{'_offline' if args.no_llm else ''}{suffix}.md"
     (ROOT / "eval" / name).write_text("\n".join(report))
     print(f"wrote eval/{name}: {total - failed} of {total} checks passed", file=sys.stderr)
     return 0 if not failures else 1

@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from client_intel import structured
 from client_intel import verify as verifier
 from client_intel.db import Dataset
 from client_intel.evidence import REPORTED, Fact, Gap, ToolResult
@@ -52,6 +53,12 @@ ALWAYS: dict[str, Tool] = {
     "client_profile": get_client_profile,
     "data_quality": check_data_quality,
 }
+
+
+# How the model takes part in writing. "prose": it writes the sentences and the
+# verifier checks them. "structured": it selects facts and comments on them, and
+# code writes every sentence that contains a figure (see structured.py).
+MODES = ("prose", "structured")
 
 
 class RequestError(ValueError):
@@ -303,8 +310,10 @@ def _verify_detail(report: verifier.VerificationReport) -> dict[str, Any]:
 
 
 def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
-        writer: Writer | None = None) -> RunResult:
+        writer: Writer | None = None, mode: str = "prose") -> RunResult:
     """Produce one briefing. `writer=None` gives the offline, model-free briefing."""
+    if mode not in MODES:
+        raise RequestError(f"Unknown mode '{mode}'. Known modes: {', '.join(MODES)}.")
     trace = Trace()
     with trace.step("plan", "plan") as detail:
         plan = make_plan(trigger)
@@ -335,12 +344,15 @@ def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
     # Text the model may echo without a citation: what the request itself said.
     allowed = f"{client_id} {client['client_name']} {ds.as_of.isoformat()}"
 
+    # A line that names a product must cite a fact about that product.
+    subjects = {pid: row["product_name"] for pid, row in ds.products.items()}
+
     def check(text: str, step: str) -> verifier.VerificationReport:
         # A figure the rep typed is not evidence: it passes only on a line that
         # attributes it to the rep. Headings must be the configured ones.
         with trace.step(step, "verify") as detail:
             checked = verifier.verify(text, facts, allowed, context_text=context,
-                                      allowed_headings=plan.sections)
+                                      allowed_headings=plan.sections, subjects=subjects)
             detail.update(_verify_detail(checked))
         return checked
 
@@ -354,9 +366,58 @@ def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
 
     model_calls: list[dict[str, Any]] = []
     repaired = False
+    structured_doc: dict[str, Any] | None = None
+    fallback = False
     if writer is None:
         body = offline_briefing(plan, results)
         first = report = check(body, "verify_offline")
+    elif mode == "structured":
+        system = (PROMPTS / "structured_system.md").read_text()
+        _, user = build_prompt(plan, client, ds, results, context)
+
+        def attempt(raw: str, step: str
+                    ) -> tuple[structured.Rendered, verifier.VerificationReport | None]:
+            rendered = structured.render(raw, plan.sections, facts, allowed)
+            if not rendered.readable:
+                return rendered, None
+            checked = check(rendered.body, step)
+            extra = structured.to_violations(rendered)
+            if extra:
+                checked = verifier.VerificationReport(
+                    ok=False, numbers_checked=checked.numbers_checked,
+                    citations_checked=checked.citations_checked,
+                    violations=[*checked.violations, *extra],
+                    uncited_lines=checked.uncited_lines,
+                )
+            return rendered, checked
+
+        raw = write(system, user, "first_draft")
+        rendered, attempt_report = attempt(raw, "verify_first_draft")
+        first_attempt = attempt_report
+        if attempt_report is None or not attempt_report.ok:
+            problems = structured.repair_text(rendered, attempt_report) if attempt_report \
+                else rendered.problems[0].detail
+            repair = (PROMPTS / "structured_repair.md").read_text().format(
+                problems=problems, briefing=raw
+            )
+            candidate, candidate_report = attempt(
+                write(system, f"{user}\n\n{repair}", "repair"), "verify_repair"
+            )
+            if candidate_report is not None and (
+                attempt_report is None
+                or len(candidate_report.violations) <= len(attempt_report.violations)
+            ):
+                rendered, attempt_report, repaired = candidate, candidate_report, True
+        if attempt_report is None:
+            # Unreadable twice. A rep still gets the facts, and the briefing says why.
+            fallback = True
+            body = ("_The writer's answer could not be read; this is the facts-only "
+                    "briefing._\n\n" + offline_briefing(plan, results))
+            report = check(body, "verify_fallback")
+        else:
+            body, report, structured_doc = rendered.body, attempt_report, rendered.document
+        first = first_attempt or report
+        model_calls = list(getattr(writer, "calls", []))
     else:
         system, user = build_prompt(plan, client, ds, results, context)
         body = write(system, user, "first_draft")
@@ -384,6 +445,8 @@ def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
         detail.update(flagged=len(report.violations), repaired=repaired)
     briefing = "\n\n".join([header.strip(), checked_body, gaps_section(results)]) + "\n"
 
+    writer_mode = "offline" if writer is None else "structured" if mode == "structured" \
+        else "model"
     evidence = {
         "request": {"client_query": client_query, "client_id": client_id,
                     "trigger": trigger, "context": context, "as_of": ds.as_of.isoformat()},
@@ -394,8 +457,8 @@ def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
         # The citable form of every gap, as shown to the writer and in the briefing.
         "gaps": [{"id": gid, "code": g.code, "text": g.text, "rows": g.rows}
                  for gid, g in _all_gaps(results)],
-        "writer": {"mode": "model" if writer else "offline", "calls": model_calls,
-                   "repaired": repaired},
+        "writer": {"mode": writer_mode, "calls": model_calls, "repaired": repaired,
+                   "structured": structured_doc, "fallback": fallback},
         "verification": {"first_pass": first.to_dict(), "final": report.to_dict()},
         "trace": trace.to_dict(writer_model(writer)),
     }

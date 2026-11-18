@@ -43,11 +43,25 @@ Not treated as numbers: citation brackets, row and client IDs (K-0002, C001,
 U-00422, T-0123, O-0001, N-003), priorities and quarter labels (P1, Q3), product
 ids (ODDS_LIVE), ordered-list markers.
 
-Known limits. The verifier checks that each figure exists in a cited fact and that
-its sign or direction agrees. It does NOT check:
-  * that the figure is attached to the right subject: a line fee presented as the
-    contract value passes, and so does a correct percentage attributed to another
-    product when both stand in the cited facts;
+Product subject (only when `subjects`, product id -> product name, is passed):
+  * on a line with at least one figure and at least one valid citation, every
+    product the line names (its id as a whole token, exact case, or its full name
+    in any case) must also be named by a fact cited on that line: in the fact's
+    text or reported text, as `product:<ID>` among its rows or as its id, or by
+    citing `product:<ID>` directly. "Live Streaming usage fell -40.0%" cited to a
+    usage fact about ODDS_LIVE is flagged;
+  * product ids are matched in exact case because some are ordinary words
+    ("STREAM", "WIDGETS", "INTEGRITY").
+
+Known limits. The verifier checks that each figure exists in a cited fact, that
+its sign or direction agrees and, with `subjects`, that a product named on the line
+is named by a cited fact. It does NOT check:
+  * any other subject of a figure: clients, tickets, contracts or the measure
+    itself. A line fee presented as the contract value passes;
+  * which figure belongs to which product when a line names several products and
+    cites facts about each of them;
+  * a product referred to by a shortened or paraphrased name ("the streaming
+    product"): only the id and the full name are recognised;
   * number words ("three open tickets", one..twelve);
   * claims without figures: names, adjectives, causes, recommendations. Lines with
     no figure and no citation are only counted (`uncited_lines`) and the count is
@@ -64,7 +78,7 @@ its sign or direction agrees. It does NOT check:
 from __future__ import annotations
 
 import re
-from collections.abc import Collection
+from collections.abc import Collection, Mapping
 from dataclasses import asdict, dataclass, field
 from decimal import ROUND_HALF_UP, Decimal
 from typing import Any
@@ -76,6 +90,7 @@ NOT_IN_CITED = "number_not_in_cited_evidence"
 NO_CITATION = "number_without_citation"
 ONLY_REPORTED = "number_only_reported"
 DIRECTION = "direction_mismatch"
+SUBJECT = "subject_not_in_cited_evidence"
 
 EUR = "eur"
 PERCENT = "percent"
@@ -367,6 +382,27 @@ class _Evidence:
         return bool(self.matches(fact, token))
 
 
+def _product_patterns(subjects: Mapping[str, str]) -> dict[str, re.Pattern[str]]:
+    """One pattern per product: the id in exact case or the full name in any case.
+
+    Ids stay case-sensitive because some are ordinary words (STREAM, WIDGETS)."""
+    patterns: dict[str, re.Pattern[str]] = {}
+    for product_id, name in subjects.items():
+        alternatives = [rf"(?<![A-Za-z0-9_]){re.escape(product_id)}(?![A-Za-z0-9_])"]
+        if name and name.strip():
+            words = r"\s+".join(re.escape(w) for w in name.split())
+            alternatives.append(rf"(?i:(?<![A-Za-z0-9_]){words}(?![A-Za-z0-9_]))")
+        patterns[product_id] = re.compile("|".join(alternatives))
+    return patterns
+
+
+def _fact_names_product(fact: Fact, product_id: str, pattern: re.Pattern[str]) -> bool:
+    ref = f"product:{product_id}"
+    if fact.id == ref or ref in fact.rows:
+        return True
+    return bool(pattern.search(fact.text) or pattern.search(fact.reported_text or ""))
+
+
 def verify(
     briefing: str,
     facts: dict[str, Fact],
@@ -374,8 +410,10 @@ def verify(
     *,
     context_text: str = "",
     allowed_headings: Collection[str] = (),
+    subjects: Mapping[str, str] | None = None,
 ) -> VerificationReport:
     evidence = _Evidence(facts)
+    products = _product_patterns(subjects) if subjects else {}
     allowed = extract_numbers(allowed_text)
     context = extract_numbers(context_text)
     exempt_headings = {_heading_text(h) for h in allowed_headings}
@@ -492,6 +530,23 @@ def verify(
                 )
                 violations.append(Violation(line_no, line, ONLY_REPORTED, token.raw, detail))
 
+        # A figure can be real and still be about another product. Lines without a
+        # figure or without a valid citation are left to the checks above.
+        if products and scanned and valid:
+            for product_id, pattern in products.items():
+                named = pattern.search(blanked)
+                if not named:
+                    continue
+                if f"product:{product_id}" in valid or any(
+                    _fact_names_product(fact, product_id, pattern) for fact in cited_facts
+                ):
+                    continue
+                detail = (
+                    f"{named.group(0)} is named on this line, "
+                    "but no fact cited here is about it"
+                )
+                violations.append(Violation(line_no, line, SUBJECT, named.group(0), detail))
+
     return VerificationReport(
         ok=not violations,
         numbers_checked=numbers_checked,
@@ -509,6 +564,7 @@ _SHORT_REASON = {
     NO_CITATION: "{token} has no citation",
     ONLY_REPORTED: "{token} is reported, not measured",
     DIRECTION: "{token} has the wrong sign or direction",
+    SUBJECT: "{token} is not the subject of the cited evidence",
 }
 
 
