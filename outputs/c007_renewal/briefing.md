@@ -3,40 +3,42 @@
 _Data as of 2026-11-01. Account owner: Tomas Ferreira._
 
 ## Bottom line
-The renewal is not in force and is not yet on track. Contract K-0011 expired 32 days before 2026-11-01 [calc:contract_status#1], and its replacement, K-0045 at EUR 200,000 a year, is unsigned [contracts:K-0045]. Usage supports that value, but data confidence is low, so treat this view as provisional [calc:data_quality#1].
+The renewal is not on track on paper. No contract is in force: K-0011 expired on 2026-09-30, and its replacement, K-0045, is unsigned [calc:contract_status#1] [contracts:K-0045]. The proposed value is EUR 200,000 a year, +5.8% on EUR 189,000 [calc:contract_status#2]. Confidence is low because the data is incomplete [calc:data_quality#1] [gap:no_contract_in_force#1].
 
 ## Contract and renewal position
-- K-0011 (EUR 189,000 a year) ran 2024-10-01 to 2026-09-30 and is no longer in force [calc:contract_status#1].
-- K-0045 is drafted for 2026-10-01 to 2028-09-30 at EUR 200,000 a year, +5.8% on K-0011, with no signed date [contracts:K-0045] [calc:contract_status#2].
-- Opportunity O-0005 (EUR 200,000) is still at Negotiation, with an expected close of 2026-09-30 [opp:O-0005] [calc:opportunities#2].
-- Note N-009, written by Tomas Ferreira, records that terms were "agreed commercially" and the client's legal team is reviewing the data-rights clause (reported) [note:N-009].
-- The notice period is 90 days before the end date [contracts:K-0045]. The data does not calculate the notice date.
+- K-0011 ran from 2024-10-01 to 2026-09-30 at EUR 189,000 a year, with a 90-day notice period. It ended 32 days before 2026-11-01 [calc:contract_status#1].
+- K-0045 is drafted for 2026-10-01 to 2028-09-30 at EUR 200,000 a year. It has no signed date and a drafted 90-day notice period [contracts:K-0045].
+- The notice window on K-0011 has passed. The K-0045 notice period applies to its end date of 2028-09-30 [calc:contract_status#1] [contracts:K-0045].
+- Reported: the note says "Renewal terms agreed commercially," with legal reviewing the data-rights clause [note:N-009]. The CRM still shows O-0005 at Negotiation, with an expected close of 2026-09-30, which is stale [opp:O-0005] [calc:opportunities#2]. These do not agree.
 
 ## Usage against what they pay for
-- Live Match Data Feed: 9,504 API calls (thousands) in Aug-Oct 2026, +16.9% year on year [calc:usage_trend#10]. Utilisation was 72.6% in Aug-Sep 2026 [calc:usage_trend#12].
-- Integrity Monitoring: 78.1% average utilisation in Aug-Sep 2026 [calc:usage_trend#5]. Its one overage month was Dec 2025 at 101.1% [calc:usage_trend#6].
-- Historical Stats Archive: 73.6% utilisation in Aug-Sep 2026 [calc:usage_trend#19]. No overage months in the period [calc:usage_trend#21].
+- LIVE_DATA is the largest line. It used 9,504 API calls (thousands) in Aug-Oct 2026, +16.9% year on year [calc:usage_trend#10]. Utilisation was 72.6% against 9,000 included in Aug-Sep 2026 [calc:usage_trend#12].
+- INTEGRITY is the tightest line. Utilisation was 78.1% in Aug-Sep 2026 [calc:usage_trend#5]. It was over the included volume in 1 of 11 months, with a peak of 101.1% in Dec 2025 [calc:usage_trend#6] [calc:usage_trend#7].
+- STATS_ARCHIVE used 399 queries (thousands) in Aug-Oct 2026, +3.4% year on year, at 73.6% utilisation in Aug-Sep 2026 [calc:usage_trend#17] [calc:usage_trend#19].
+- Included volumes are blank for October 2026, so October utilisation is not known [gap:blank_included_units#1].
 
 ## Risks to the renewal
-- The client asked for service to continue after 30 September while legal review completes (reported in N-009) [note:N-009].
-- The feed is still in use. Ticket T-0276, opened 2026-10-05, asks to "Confirm feed access continues while renewal is in legal review" [ticket:T-0276].
-- The data holds no record that the interim arrangement assigned to you in N-009 was confirmed [note:N-009].
-- Last meeting was 52 days before 2026-11-01 [calc:meeting_notes#1]. Recent support is light and rated well: 1 ticket in 90 days, CSAT 4.0 [calc:support_summary#7] [calc:support_summary#10].
+- Service continuity is the client's main concern. The note records the client wanting service "to continue without interruption after 30 September while legal review completes" [note:N-009].
+- Ticket T-0276 (P3, LIVE_DATA) asked to "Confirm feed access continues while renewal is in legal review." It was closed after 3 days [ticket:T-0276].
+- The last meeting was 52 days before 2026-11-01 [calc:meeting_notes#1]. The open CRM step is "Legal review of data-rights clause" [opp:O-0005].
 
 ## Room to grow
-- Five of eight catalogue products are not held [calc:whitespace#1].
-- Live Streaming (indicative EUR 55,000 a year) is held by 4 of 5 segment peers [product:STREAM].
-- In-play Odds Feed (indicative EUR 75,000 a year) builds on LIVE_DATA, which is already held [product:ODDS_LIVE].
+- Live Streaming (STREAM) at EUR 55,000 a year is held by 4 of 5 segment peers [product:STREAM].
+- Fan Engagement Analytics (FAN_INSIGHTS) at EUR 17,500 a year is held by 4 of 5 segment peers [product:FAN_INSIGHTS].
+- Pre-match Odds Feed (ODDS_PRE) at EUR 45,000 a year is often bought with INTEGRITY, which they hold [product:ODDS_PRE].
+- These are indicative and should follow, not precede, signing K-0045.
 
 ## Suggested next steps
-1. Confirm in writing the interim service arrangement for feed access. The client asked for service to continue after 30 September (reported in N-009) [note:N-009] [ticket:T-0276].
-2. Push K-0045 to signature and close out the data-rights clause in legal review [contracts:K-0045] [opp:O-0005].
-3. Update O-0005, which is stale at Negotiation with a past close date [calc:opportunities#2].
-4. Work out the notice date from the 90-day notice period in K-0045 [contracts:K-0045].
+- Confirm the interim service arrangement internally, as note N-009 records [note:N-009].
+- Answer ticket T-0276 in writing, confirming feed access while legal review runs [ticket:T-0276].
+- Drive the data-rights legal review to a signed K-0045 and update O-0005, which is still at Negotiation [contracts:K-0045] [opp:O-0005].
+- Obtain the October 2026 included volumes so utilisation can be checked [gap:blank_included_units#1].
 
 ## Verification
 
-All 37 numbers and 31 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
+All 46 numbers and 32 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
+
+1 line carries no figure and no citation; it is interpretation and was not checked.
 
 
 ## Data gaps and confidence

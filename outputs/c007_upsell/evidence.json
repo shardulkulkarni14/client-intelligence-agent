@@ -2207,46 +2207,48 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 7056,
-        "output_tokens": 4533,
+        "output_tokens": 5430,
         "stop_reason": "end_turn"
       },
       {
         "model": "claude-haiku-5-5",
-        "input_tokens": 8596,
-        "output_tokens": 2052,
+        "input_tokens": 8599,
+        "output_tokens": 2175,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": true
+    "repaired": true,
+    "structured": null,
+    "fallback": false
   },
   "verification": {
     "first_pass": {
       "ok": false,
-      "numbers_checked": 37,
-      "citations_checked": 30,
+      "numbers_checked": 34,
+      "citations_checked": 29,
       "violations": [
         {
-          "line_no": 25,
-          "line": "- The client wants service to continue without interruption after 30 September, per the note [note:N-009, reported].",
+          "line_no": 28,
+          "line": "- Confirm the interim service arrangement the client asked for after 30 September, as recorded in N-009 [note:N-009].",
           "kind": "number_only_reported",
           "token": "30",
           "detail": "30 comes only from reported text (note:N-009); say who reported it"
         }
       ],
-      "uncited_lines": 1
+      "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 37,
-      "citations_checked": 30,
+      "numbers_checked": 33,
+      "citations_checked": 29,
       "violations": [],
-      "uncited_lines": 1
+      "uncited_lines": 0
     }
   },
   "trace": {
     "model": "claude-haiku-5-5",
-    "total_seconds": 25.906,
-    "total_cost_usd": 0.004858,
+    "total_seconds": 29.479,
+    "total_cost_usd": 0.005368,
     "steps": [
       {
         "name": "plan",
@@ -2288,7 +2290,7 @@
       {
         "name": "data_quality",
         "kind": "tool",
-        "seconds": 0.0,
+        "seconds": 0.001,
         "detail": {
           "status": "partial",
           "facts": 1,
@@ -2368,42 +2370,42 @@
       {
         "name": "first_draft",
         "kind": "model",
-        "seconds": 18.371,
+        "seconds": 21.168,
         "detail": {
           "input_tokens": 7056,
-          "output_tokens": 4533,
-          "cost_usd": 0.002972,
+          "output_tokens": 5430,
+          "cost_usd": 0.003421,
           "stop_reason": "end_turn"
         }
       },
       {
         "name": "verify_first_draft",
         "kind": "verify",
-        "seconds": 0.008,
+        "seconds": 0.012,
         "detail": {
-          "numbers_checked": 37,
-          "citations_checked": 30,
+          "numbers_checked": 34,
+          "citations_checked": 29,
           "violations": 1
         }
       },
       {
         "name": "repair",
         "kind": "model",
-        "seconds": 7.511,
+        "seconds": 8.279,
         "detail": {
-          "input_tokens": 8596,
-          "output_tokens": 2052,
-          "cost_usd": 0.001886,
+          "input_tokens": 8599,
+          "output_tokens": 2175,
+          "cost_usd": 0.001947,
           "stop_reason": "end_turn"
         }
       },
       {
         "name": "verify_repair",
         "kind": "verify",
-        "seconds": 0.008,
+        "seconds": 0.01,
         "detail": {
-          "numbers_checked": 37,
-          "citations_checked": 30,
+          "numbers_checked": 33,
+          "citations_checked": 29,
           "violations": 0
         }
       },

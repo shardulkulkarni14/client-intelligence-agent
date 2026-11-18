@@ -3,41 +3,39 @@
 _Data as of 2026-11-01. Account owner: Maya Lindgren._
 
 ## Bottom line
-Not on track as things stand. The contract renews automatically unless notice is given, and the notice deadline is 2026-12-02 [calc:contract_status#2]. The open renewal opportunity is EUR 541,500, which is -28.0% against the current annual value of EUR 752,000 [opp:O-0001] [calc:opportunities#1]. Contract and figure confidence is high [calc:data_quality#1], but the client's intent rests on reported notes.
+Not on track as things stand. The contract renews automatically on 2027-01-31 unless notice is given by 2026-12-02, and the open renewal opportunity is at EUR 541,500, against the current EUR 752,000 [calc:contract_status#2] [opp:O-0001] [contracts:K-0002] [calc:opportunities#1]. The underlying figures are high-confidence [calc:data_quality#1], but the likely reduction is tied to a reported request for less in-play scope, so the final value is not yet known.
 
 ## Contract and renewal position
-- Contract K-0002 is in force and ends 2027-01-31, 91 days after 2026-11-01 [contracts:K-0002] [calc:contract_status#1].
-- The notice deadline is 2026-12-02, 31 days after 2026-11-01. Without notice, the contract renews for the same term [calc:contract_status#2] [contracts:K-0002].
-- The opportunity is at Negotiation with an expected close of 2027-01-15, which is after the notice deadline [opp:O-0001] [calc:contract_status#2].
-- The annual value of EUR 752,000 is +8.7% on the previous contract's EUR 692,000 [calc:contract_status#3].
+- K-0002 runs 2025-02-01 to 2027-01-31 at EUR 752,000 a year, up +8.7% on K-0001's EUR 692,000 [contracts:K-0002] [calc:contract_status#3].
+- It renews for the same term unless notice is given 60 days before the end date. The notice deadline is 2026-12-02, 31 days after 2026-11-01 [contracts:K-0002] [calc:contract_status#2].
+- Opportunity O-0001 is in Negotiation, with an expected close of 2027-01-15, which falls after the notice deadline [opp:O-0001] [calc:contract_status#2].
 
 ## Usage against what they pay for
-- In-play usage is falling. ODDS_LIVE is -40.0% year on year for Aug–Oct 2026, with 51.6% utilisation in Oct 2026 [calc:usage_trend#10] [calc:usage_trend#9].
-- LIVE_DATA is -36.3% year on year for Aug–Oct 2026, with 55.3% utilisation in Oct 2026 [calc:usage_trend#3] [calc:usage_trend#2].
-- Pre-match is nearly full. ODDS_PRE reached 89.8% utilisation in Oct 2026 and peaked at 97.0% in Jan 2026 [calc:usage_trend#16] [calc:usage_trend#20].
-- ODDS_LIVE exceeded its included volume in 5 of the last 12 months, but 0 of the last 3 [calc:usage_trend#14].
+- In-play odds (ODDS_LIVE) use is falling: 3,331 markets priced (thousands) in Aug-Oct 2026, -40.0% year on year, and 51.6% utilised in Oct 2026 [calc:usage_trend#10] [calc:usage_trend#9].
+- Live data (LIVE_DATA) is at 55.3% utilisation in Oct 2026, and Aug-Oct 2026 is -36.3% year on year [calc:usage_trend#2] [calc:usage_trend#3].
+- Pre-match odds (ODDS_PRE) is near its cap at 89.8% in Oct 2026, and up +24.2% on May-Jul 2026 [calc:usage_trend#16] [calc:usage_trend#18].
+- ODDS_LIVE was above its included volume in 5 of the last 12 months, peaking at 112.0% in Dec 2025 [calc:usage_trend#14] [calc:usage_trend#13].
 
 ## Risks to the renewal
-- Reported: the head of trading is trialling another in-play odds supplier "for two leagues" [note:N-003].
-- Reported: procurement wants pricing for a reduced in-play scope, and finance reports budget pressure [note:N-003] [opp:O-0001].
-- Support is worsening. There were 7 tickets in the last 90 days versus 2 in the previous 90, with CSAT of 1.3 out of 5 from 4 rated tickets [calc:support_summary#12] [calc:support_summary#10].
-- Two P1/P2 tickets are open: T-0284 (in-play latency, open 11 days) and T-0279 (missing live events, open 20 days) [ticket:T-0284] [ticket:T-0279].
+- Note N-003 (Maya Lindgren, 2026-10-07) reports that the head of trading is trialling another in-play odds supplier "for two leagues" since the summer. This is reported, not verified [note:N-003].
+- Procurement wants pricing for reduced in-play scope, and finance reports budget pressure. The CRM next step reads "Client asked for pricing on reduced in-play scope" [note:N-003] [opp:O-0001].
+- Service is weak: average CSAT is 1.3 out of 5 over the last 90 days, and ticket volume is 7 against 2 in the prior 90 days [calc:support_summary#10] [calc:support_summary#12]. Two P1/P2 tickets are open, including the P1 in-play latency case T-0284 [calc:support_summary#13] [ticket:T-0284].
 
 ## Room to grow
-- Reported: still positive about the live data feed and pre-match odds [note:N-003].
-- Reported: interest in more streaming for lower leagues, "nothing concrete" [note:N-001].
-- WIDGETS is not held, is held by 2 of 5 peers (40.0%), and has an indicative price of EUR 30,000 per year [product:WIDGETS].
-- INTEGRITY is not held, is held by 2 of 5 peers (40.0%), and has an indicative price of EUR 25,000 per year [product:INTEGRITY].
+- Note N-003 reports the client is "still positive about the live data feed and pre-match odds" [note:N-003].
+- The client holds 4 of 8 catalogue products. Match Visualisation Widgets is held by 2 of 5 peers, with an indicative entry price of EUR 30,000 per year, and is often bought with LIVE_DATA and STREAM [calc:whitespace#1] [product:WIDGETS].
+- Integrity Monitoring is held by 2 of 5 peers, with an indicative EUR 25,000 per year, and is often bought with ODDS_PRE [product:INTEGRITY].
+- Note N-001 (2025-11-20) reports interest in more streaming for lower leagues next year, "nothing concrete" [note:N-001].
 
 ## Suggested next steps
-- Prepare renewal options before 2026-12-02. Note N-003 records this as your action [calc:contract_status#2] [note:N-003].
-- Price a reduced in-play scope against the EUR 541,500 opportunity. The current in-play fees are EUR 240,000 for ODDS_LIVE and EUR 192,000 for LIVE_DATA [opp:O-0001] [contracts:K-0002].
-- Clear P1 T-0284 and P2 T-0279 before the renewal conversation [ticket:T-0284] [ticket:T-0279].
-- Check ODDS_PRE capacity, given 89.8% utilisation in Oct 2026 [calc:usage_trend#16].
+- Prepare renewal options before the 2026-12-02 notice deadline, as recorded in N-003 [calc:contract_status#2] [note:N-003].
+- Price a reduced in-play scope option against the EUR 541,500 opportunity, and show the client what is lost on ODDS_LIVE if they reduce scope [opp:O-0001] [calc:usage_trend#9].
+- Close or stabilise the P1 latency ticket T-0284 and the P2 data accuracy ticket T-0279 before the deadline [ticket:T-0284] [ticket:T-0279].
+- Test whether the trial of a rival supplier can be answered with a bundle that includes WIDGETS or INTEGRITY [product:WIDGETS] [product:INTEGRITY].
 
 ## Verification
 
-All 53 numbers and 36 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
+All 49 numbers and 39 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
 
 
 ## Data gaps and confidence

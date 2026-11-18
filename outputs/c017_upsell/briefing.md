@@ -3,39 +3,44 @@
 _Data as of 2026-11-01. Account owner: Maya Lindgren._
 
 ## Bottom line
-Growth is more likely from existing products than from new ones. STATS_ARCHIVE is the strongest signal, at 75.0% of included volume in Oct 2026 [calc:usage_trend#9]. Confidence is moderate: the usage data is solid, but the cross-sell evidence rests on one peer, and the one prior STREAM pitch was lost [gap:small_peer_group#1] [opp:O-0014].
+Growth is most likely from deeper use of Historical Stats Archive and Match Visualisation Widgets, which are well used against their included volumes and still rising. New products are harder: the one pitch on record was lost, and the strongest add-on depends on a product they do not hold. Confidence is moderate, because the peer comparison rests on one client and there are no meeting notes.
 
 ## More of what they already use
-- STATS_ARCHIVE is up +21.3% year on year in Aug-Oct 2026 and +33.7% on the previous three months [calc:usage_trend#10] [calc:usage_trend#11].
-- WIDGETS is at 73.3% of included volume in Oct 2026, with a peak of 77.5% in Dec 2025 [calc:usage_trend#16] [calc:usage_trend#20].
-- FAN_INSIGHTS is flat, at +0.0% year on year, and 62.5% utilised [calc:usage_trend#3] [calc:usage_trend#2]. A seat upsell on FAN_INSIGHTS needs a separate reason.
-- No product was above its included volume in any of the last 12 months [calc:usage_trend#7] [calc:usage_trend#14] [calc:usage_trend#21].
+- Historical Stats Archive is the strongest signal: 45 queries (thousands) used in Oct 2026 against 60 included, and usage up +21.3% year on year. [calc:usage_trend#9] [calc:usage_trend#10]
+- Match Visualisation Widgets: 8.8 widget impressions (millions) used in Oct 2026 against 12.0 included, and usage up +9.6% year on year. [calc:usage_trend#16] [calc:usage_trend#17]
+- Fan Engagement Analytics is flat at +0.0% year on year, with 5 active dashboard users against 8 included in Oct 2026. Growth here needs more adoption, not more volume. [calc:usage_trend#2] [calc:usage_trend#3]
+- No product went over its included volume in the last 12 months, so there is no overage to sell into. [calc:usage_trend#7] [calc:usage_trend#14] [calc:usage_trend#21]
 
 ## Products they do not hold
-- Live Match Data Feed (LIVE_DATA) is the closest fit: indicative EUR 60,000 per year, often bought with held WIDGETS [product:LIVE_DATA].
-- Integrity Monitoring (INTEGRITY) has the lowest entry price at EUR 25,000 per year and no recorded blocker, but it is not typically sold to Club [product:INTEGRITY].
-- Pre-match Odds Feed (ODDS_PRE) is indicative EUR 45,000 per year [product:ODDS_PRE].
-- In-play Odds Feed (ODDS_LIVE) is indicative EUR 75,000 per year but needs LIVE_DATA first [product:ODDS_LIVE].
+- Five of eight catalogue products are not held. [calc:whitespace#1]
+- Live Streaming (STREAM) is indicatively EUR 55,000 per year, and was pitched before and lost under opportunity O-0014 (EUR 25,000). [product:STREAM] [opp:O-0014]
+- Live Match Data Feed (LIVE_DATA) is indicatively EUR 60,000 per year and is often bought with the held WIDGETS. It is also a prerequisite for In-play Odds Feed (ODDS_LIVE, indicatively EUR 75,000 per year). [product:LIVE_DATA] [product:ODDS_LIVE]
+- Integrity Monitoring (EUR 25,000) and Pre-match Odds Feed (EUR 45,000 per year) are not typically sold to Club, and no usage signal points to them. [product:INTEGRITY] [product:ODDS_PRE]
 
 ## What could block the pitch
-- Live Streaming (STREAM) was lost, with the CRM recording "Lost - rights held by league" [opp:O-0014]. This is reported, not measured, so check whether the rights position has changed.
-- Support history: 3 P1/P2 tickets in the last 12 months [calc:support_summary#4], with Integration and Billing at 2 each [calc:support_summary#3]. CSAT is 4.0 from one rated ticket [calc:support_summary#5].
-- Relationship context is unknown because there are no meeting notes [gap:no_meeting_notes#1].
+- The STREAM loss is recorded with the reason "Lost - rights held by league". This is a reported note, not a verified fact. [opp:O-0014]
+- Support friction: 3 P1/P2 tickets in the last 12 months, including the outage ticket T-0148 "Feed unavailable for 20 minutes". [calc:support_summary#4] [ticket:T-0148]
+- Ticket T-0207 asked for a "usage breakdown" on Historical Stats Archive. The reason is not in the data, so it is not known whether this reflects scrutiny of value. [ticket:T-0207]
+- Peer evidence is weak: one peer in segment, so it cannot show what similar clubs buy. [gap:small_peer_group#1]
+- No meeting notes exist, so relationship context is not known. [gap:no_meeting_notes#1]
 
 ## Timing
-- Contract K-0030 ends 2027-06-30 and renews automatically unless notice is given 30 days before [contracts:K-0030].
-- The notice deadline is 2027-05-31, 211 days after 2026-11-01 [calc:contract_status#2].
-- Support has been quiet, with no tickets in the last 90 days [calc:support_summary#7].
+- Contract K-0030 runs to 2027-06-30 and renews automatically unless notice is given. [contracts:K-0030] [calc:contract_status#1]
+- The notice deadline is 2027-05-31, 211 days after 2026-11-01. [calc:contract_status#2]
+- The annual value is EUR 40,500, up +3.8% on the previous contract's EUR 39,000. [calc:contract_status#3]
+- No tickets have been opened in the last 90 days, a calmer period to raise expansion. [calc:support_summary#7]
 
 ## Suggested next steps
-- Build the STATS_ARCHIVE volume conversation now, well before the notice deadline of 2027-05-31 [calc:contract_status#2], citing 75.0% utilisation [calc:usage_trend#9].
-- Lead the new-product pitch with LIVE_DATA alongside WIDGETS, at an indicative EUR 60,000 per year [product:LIVE_DATA].
-- Do not re-pitch STREAM until the league rights position is confirmed [opp:O-0014].
-- Review the open P1/P2 history with the client before the pitch [calc:support_summary#4].
+- Open a volume conversation on Historical Stats Archive and Widgets, using the 75.0% and 73.3% utilisation figures. [calc:usage_trend#9] [calc:usage_trend#16]
+- Before any Streaming re-pitch, confirm the current league rights position, since the only record is a reported loss. [opp:O-0014]
+- Use LIVE_DATA as the entry point if you pursue data products, since ODDS_LIVE depends on it. [product:LIVE_DATA] [product:ODDS_LIVE]
+- Plan the renewal conversation well ahead of the 2027-05-31 notice deadline. [calc:contract_status#2]
 
 ## Verification
 
-All 29 numbers and 29 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
+All 33 numbers and 33 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
+
+1 line carries no figure and no citation; it is interpretation and was not checked.
 
 
 ## Data gaps and confidence

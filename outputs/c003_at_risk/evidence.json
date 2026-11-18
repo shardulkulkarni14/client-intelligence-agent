@@ -2304,32 +2304,34 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 6976,
-        "output_tokens": 4501,
+        "output_tokens": 5423,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": false
+    "repaired": false,
+    "structured": null,
+    "fallback": false
   },
   "verification": {
     "first_pass": {
       "ok": true,
-      "numbers_checked": 32,
-      "citations_checked": 30,
+      "numbers_checked": 34,
+      "citations_checked": 28,
       "violations": [],
-      "uncited_lines": 0
+      "uncited_lines": 1
     },
     "final": {
       "ok": true,
-      "numbers_checked": 32,
-      "citations_checked": 30,
+      "numbers_checked": 34,
+      "citations_checked": 28,
       "violations": [],
-      "uncited_lines": 0
+      "uncited_lines": 1
     }
   },
   "trace": {
     "model": "claude-haiku-5-5",
-    "total_seconds": 19.219,
-    "total_cost_usd": 0.002948,
+    "total_seconds": 22.725,
+    "total_cost_usd": 0.003409,
     "steps": [
       {
         "name": "plan",
@@ -2440,11 +2442,11 @@
       {
         "name": "first_draft",
         "kind": "model",
-        "seconds": 19.206,
+        "seconds": 22.711,
         "detail": {
           "input_tokens": 6976,
-          "output_tokens": 4501,
-          "cost_usd": 0.002948,
+          "output_tokens": 5423,
+          "cost_usd": 0.003409,
           "stop_reason": "end_turn"
         }
       },
@@ -2453,8 +2455,8 @@
         "kind": "verify",
         "seconds": 0.007,
         "detail": {
-          "numbers_checked": 32,
-          "citations_checked": 30,
+          "numbers_checked": 34,
+          "citations_checked": 28,
           "violations": 0
         }
       },

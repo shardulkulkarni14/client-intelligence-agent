@@ -56,6 +56,7 @@ src/client_intel/
   prompts/         the run-time prompts, as plain files
   llm.py           the only module that calls a model
   verify.py        number and citation check, flag policy
+  structured.py    second writing mode: the model selects facts, code writes the figures
   trace.py         timing, tokens and cost per step
   portfolio.py     all clients ranked, no model
   cli.py           the command

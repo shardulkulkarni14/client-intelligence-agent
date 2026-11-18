@@ -3,43 +3,39 @@
 _Data as of 2026-11-01. Account owner: Elif Aydin._
 
 ## Bottom line
-The clearest growth is in new products, not more volume: they used 40.0% of their included volume in Oct 2026 [calc:usage_trend#2] and hold 1 of 8 catalogue products [calc:whitespace#1]. Confidence is low because usage covers only 2 months [calc:usage_trend#1] [gap:short_history#1] and the peer group has just 2 other clients [gap:small_peer_group#1].
+Growth is more likely to come from new products than from more usage. Quillon used 40.0% of its included volume in Oct 2026 and has never gone over it [calc:usage_trend#2][calc:usage_trend#5]. It holds 1 of 8 catalogue products [calc:whitespace#1], and WIDGETS and STATS_ARCHIVE are held by both segment peers [product:WIDGETS][product:STATS_ARCHIVE]. Confidence is low: there are only 2 months of usage history and 2 peers [calc:data_quality#1].
 
 ## More of what they already use
-- Volume is not the lever yet: 800 API calls (thousands) used in Oct 2026 against 2,000 included, a utilisation of 40.0% [calc:usage_trend#2].
-- Usage was above the included volume in 0 of the last 2 months [calc:usage_trend#5].
-- Average utilisation was 33.1% in Sep-Oct 2026, with only 2 months of history [calc:usage_trend#3] [gap:short_history#1].
-- Growth in usage cannot be shown year on year, because there is no comparison period [gap:short_history#1].
+- Oct 2026 usage was 800 API calls (thousands) against 2,000 included, a utilisation of 40.0% [calc:usage_trend#2].
+- Average utilisation for Sep-Oct 2026 was 33.1%, but this covers only 2 months of history [calc:usage_trend#3][gap:short_history#1].
+- Usage did not exceed the included volume in either month, so there is no overage to convert into a volume upgrade [calc:usage_trend#5][contracts:K-0006].
 
 ## Products they do not hold
-- Match Visualisation Widgets (WIDGETS): indicative entry price EUR 30,000 per year, often bought with held LIVE_DATA, typically sold to Fantasy & Gaming, and held by 2 of 2 segment peers [product:WIDGETS].
-- Historical Stats Archive (STATS_ARCHIVE): indicative entry price EUR 20,000 per year, typically sold to Fantasy & Gaming, and held by 2 of 2 segment peers [product:STATS_ARCHIVE].
-- In-play Odds Feed (ODDS_LIVE): indicative entry price EUR 75,000 per year. Its prerequisite, LIVE_DATA, is already held, but it is not typically sold to Fantasy & Gaming [product:ODDS_LIVE].
-- Fan Engagement Analytics EUR 17,500, Integrity Monitoring EUR 25,000, Pre-match Odds Feed EUR 45,000 and Live Streaming EUR 55,000 are not typically sold to the segment, and 0 of 2 segment peers hold them [product:FAN_INSIGHTS] [product:INTEGRITY] [product:ODDS_PRE] [product:STREAM].
+- Match Visualisation Widgets (EUR 30,000 per year): held by 2 of 2 segment peers and often bought with LIVE_DATA [product:WIDGETS].
+- Historical Stats Archive (EUR 20,000 per year): held by 2 of 2 segment peers and typically sold to Fantasy & Gaming [product:STATS_ARCHIVE].
+- In-play Odds Feed (EUR 75,000 per year): often bought with LIVE_DATA, and its prerequisite is already held, but no peer holds it [product:ODDS_LIVE]. This is a pairing pitch, not a peer-proven one.
+- Fan Engagement Analytics (EUR 17,500), Integrity Monitoring (EUR 25,000), Pre-match Odds Feed (EUR 45,000) and Live Streaming (EUR 55,000) are not held by any peer and not typically sold to this segment [product:FAN_INSIGHTS][product:INTEGRITY][product:ODDS_PRE][product:STREAM].
 
 ## What could block the pitch
-- A volume pitch would likely fail while 40.0% of the included volume is unused [calc:usage_trend#2].
-- Peer adoption is weak evidence: the group is too small for a reliable comparison [gap:small_peer_group#1] [product:WIDGETS].
-- No meeting notes exist, so the relationship and the client's stated priorities are not known [gap:no_meeting_notes#1].
-- No support tickets are recorded. This means no ticket data, not that the client has no problems [gap:no_support_tickets#1].
+- Peer evidence is thin: only 2 other clients in the segment, so peer adoption is a weak argument [calc:whitespace#2][gap:small_peer_group#1].
+- A volume-led pitch is unlikely to land, since usage is well below included volume [calc:usage_trend#2].
+- The account is new, with the customer since 2026-09-01 [client:C004], so there is no year-on-year trend to show [gap:short_history#1].
+- No meeting notes or support tickets exist, so relationship context and problem signals are unknown [gap:no_meeting_notes#1][gap:no_support_tickets#1].
 
 ## Timing
 - Contract K-0006 runs 2026-09-01 to 2027-08-31 at an annual value of EUR 48,000 [contracts:K-0006].
-- It renews automatically unless notice is given. The notice deadline is 2027-08-01 [contracts:K-0006] [calc:contract_status#2].
-- Opportunity O-0004 closed won at EUR 48,000 [opp:O-0004]. Its CRM next step reads "Signed" (reported) [opp:O-0004].
-- Whether the client is ready for another purchase soon is not known.
+- It renews automatically unless notice is given, and the notice deadline is 2027-08-01 [contracts:K-0006][calc:contract_status#2].
+- The CRM next step on the LIVE_DATA deal reads "Signed" (reported), which agrees with the Closed Won stage [opp:O-0004].
 
 ## Suggested next steps
-- Lead the pitch with WIDGETS at EUR 30,000 per year, the product most often bought with LIVE_DATA [product:WIDGETS].
-- Do not propose extra volume while utilisation sits at 40.0% [calc:usage_trend#2].
-- Before pitching, find out what the client's contact wants from the service, since no meeting notes exist [gap:no_meeting_notes#1].
-- Put the K-0006 notice deadline of 2027-08-01 in the diary and plan the renewal conversation ahead of it [calc:contract_status#2].
+- Lead with WIDGETS as the first product conversation, since both peers hold it and it is often bought with LIVE_DATA [product:WIDGETS].
+- Treat ODDS_LIVE (EUR 75,000 per year) as a later pairing proposal, and say plainly that no peer holds it [product:ODDS_LIVE].
+- Before the notice deadline of 2027-08-01, review usage again once more months of data exist [calc:contract_status#2][gap:short_history#1].
+- Add a meeting note so the relationship context is recorded [gap:no_meeting_notes#1].
 
 ## Verification
 
-All 37 numbers and 31 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
-
-1 line carries no figure and no citation; it is interpretation and was not checked.
+All 32 numbers and 34 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
 
 
 ## Data gaps and confidence

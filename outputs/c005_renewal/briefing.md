@@ -3,41 +3,41 @@
 _Data as of 2026-11-01. Account owner: Grace Okafor._
 
 ## Bottom line
-The renewal is not on track on the data we hold. The notice deadline of 2026-10-01 has passed with no record of notice either way, so K-0008 will roll over for another 12 months from 2026-12-01 [calc:contract_status#3]. The current annual value is EUR 363,000 [contracts:K-0008], but no renewal value is recorded. Confidence is medium because there is no renewal opportunity on file and March usage is missing [calc:data_quality#1].
+Contract K-0008 ends on 2026-11-30 and auto-renews for 12 months at EUR 363,000 a year unless notice was given [contracts:K-0008] [calc:contract_status#1]. The notice deadline of 2026-10-01 has passed, and the data holds no record of notice either way, so whether the contract rolls over cannot be confirmed [calc:contract_status#3]. Usage and support look sound, so the main risks are the unconfirmed notice position and the lack of a renewal opportunity. Confidence is medium [calc:data_quality#1].
 
 ## Contract and renewal position
-- K-0008 ends on 2026-11-30, 29 days after 2026-11-01 [calc:contract_status#1].
-- The notice deadline was 2026-10-01 and passed 31 days before 2026-11-01 [calc:contract_status#2].
-- Annual value is EUR 363,000, a change of +4.3% versus EUR 348,000 on K-0007 [calc:contract_status#4].
-- No renewal opportunity is recorded; the contract auto-renews [gap:no_renewal_opportunity#1].
+- K-0008 runs 2025-12-01 to 2026-11-30 at an annual value of EUR 363,000, up +4.3% on EUR 348,000 for K-0007 [contracts:K-0008] [calc:contract_status#4]
+- The term shortened from 24 months on K-0007 to 12 months on K-0008 [calc:contract_status#5]
+- The notice deadline passed 31 days before 2026-11-01 [calc:contract_status#2]
+- No renewal opportunity is recorded in CRM [gap:no_renewal_opportunity#1]
 
 ## Usage against what they pay for
-- WIDGETS is the only product over its included volume: 101.8% utilised in Oct 2026, with 44.8 widget impressions (millions) against 44.0 included [calc:usage_trend#23]. It exceeded the included volume in 2 of the 12 months [calc:usage_trend#28].
-- The WIDGETS overage is indicatively EUR 240, but there is no billing data to confirm it was charged [calc:usage_trend#29].
-- STREAM is at 79.4% in Oct 2026 [calc:usage_trend#16] and peaked at 88.9% in Sep 2026 [calc:usage_trend#20].
-- LIVE_DATA is at 76.8% in Oct 2026 [calc:usage_trend#2]. Aug-Oct 2026 usage is +25.7% on the prior three months, not seasonally adjusted [calc:usage_trend#4].
+- Widgets used 44.8 widget impressions (millions) in Oct 2026 against 44.0 included, a utilisation of 101.8% [calc:usage_trend#23]
+- Widgets exceeded the included volume in 2 of 12 months, including 1 of 3 in Aug-Oct 2026 [calc:usage_trend#28]
+- Live Streaming peaked at 88.9% in Sep 2026 [calc:usage_trend#20]
+- Live Match Data Feed used 4,223 API calls (thousands) in Oct 2026 against 5,500 included, a utilisation of 76.8% [calc:usage_trend#2]
 
 ## Risks to the renewal
-- The term fell from 24 months on K-0007 to 12 months on K-0008 [calc:contract_status#5].
-- A note reports: "They could not find their March usage statement in the portal; support ticket raised." [note:N-010] (reported). Whether this links to the missing March usage rows is not known [gap:missing_month#1].
-- The last meeting was 2026-05-20, 165 days before 2026-11-01 [calc:meeting_notes#1].
-- Support is steady: no open tickets [calc:support_summary#13] and average CSAT of 4.2 over 12 months [calc:support_summary#5]. The March P1 outage was closed in 4 days [ticket:T-0194].
+- A note reports: "They could not find their March usage statement in the portal; support ticket raised." [note:N-010]
+- The same note records an open action on the missing statement, with no status given [note:N-010]
+- The last meeting was 2026-05-20, 165 days before 2026-11-01 [calc:meeting_notes#1]
+- Widgets overage of about EUR 240 is indicative only and there is no billing data to confirm it was charged [calc:usage_trend#29]
 
 ## Room to grow
-- FAN_INSIGHTS is not held. It is held by 2 of 5 segment peers (40.0%), is often bought with STREAM and WIDGETS, which the client already holds, and has an indicative entry price of EUR 17,500 per year [product:FAN_INSIGHTS].
-- ODDS_LIVE has its prerequisite, LIVE_DATA, already held. Its indicative entry price is EUR 75,000 per year, but no peer holds it [product:ODDS_LIVE].
-- A note reports: "Widgets performing well on their website." [note:N-010] (reported).
+- The client holds 4 of 8 catalogue products [calc:whitespace#1]
+- In-play Odds Feed (ODDS_LIVE) has an indicative entry price of EUR 75,000 per year; its prerequisite, LIVE_DATA, is already held [product:ODDS_LIVE]
+- Fan Engagement Analytics (FAN_INSIGHTS) has an indicative entry price of EUR 17,500 per year and is often bought with STREAM and WIDGETS, both held [product:FAN_INSIGHTS]
 
 ## Suggested next steps
-- Confirm today whether any notice on K-0008 was sent, since the data holds no record [calc:contract_status#3].
-- Create a renewal opportunity in CRM, as none is on file [gap:no_opportunities#1].
-- Chase the March usage statement you noted you would chase [note:N-010] (reported).
-- Check whether the indicative EUR 240 WIDGETS overage was billed [calc:usage_trend#29].
-- Before the 2026-11-30 end date [calc:contract_status#1], agree renewal terms, including whether the current term and annual value stand [contracts:K-0008].
+- Confirm from the contract records whether notice was given before 2026-10-01; the data cannot show it [calc:contract_status#3]
+- Record a renewal opportunity in CRM, since none exists for the 2026-11-30 end date [gap:no_opportunities#1] [contracts:K-0008] [calc:contract_status#1]
+- Close the open action in N-010 on the missing March usage statement, and confirm whether the support ticket was resolved [note:N-010]
+- Check with billing whether the indicative EUR 240 widgets overage was charged [calc:usage_trend#29]
+- Use the renewal conversation to position FAN_INSIGHTS, given its fit with STREAM and WIDGETS [product:FAN_INSIGHTS]
 
 ## Verification
 
-All 43 numbers and 30 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
+All 39 numbers and 27 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
 
 
 ## Data gaps and confidence

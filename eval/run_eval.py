@@ -121,6 +121,9 @@ def check_structured(result) -> dict[str, tuple[bool, str]]:
     for tool in result.evidence["results"]:
         for fact in tool["facts"]:
             texts.setdefault(fact["id"], []).append(fact["text"])
+    # A gap is citable evidence too, under its own ID.
+    for gap in result.evidence.get("gaps", []):
+        texts.setdefault(gap["id"], []).append(gap["text"])
     figures: list[str] = []
     absent: list[str] = []
     for section in document.get("sections", []):

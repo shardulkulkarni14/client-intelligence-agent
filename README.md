@@ -32,6 +32,7 @@ next to its `evidence.json`.
 | `--trigger` | `renewal`, `meeting_prep`, `upsell`, `at_risk` |
 | `--context "..."` | free text from the rep |
 | `--no-llm` | facts-only briefing without any model call; needs no key |
+| `--mode structured` | the model selects facts and comments; code writes every sentence that contains a figure (see "Two ways of writing") |
 | `--out DIR` | output folder (default `runs`) |
 | `--portfolio` | rank all clients by renewal risk and growth, no model; add `--out DIR` to save it |
 | `--json`, `--list` | machine-readable output |
@@ -71,7 +72,7 @@ points (command, API, UI) cannot drift apart. The port is set with
 ### 4. Tests and evaluation
 
 ```bash
-uv run pytest                           # 273 tests, no model calls
+uv run pytest                           # 295 tests, no model calls
 uv run ruff check .
 uv run python eval/run_eval.py          # the evaluation, with the model
 uv run python eval/run_eval.py --no-llm # same cases on tool output only, free
@@ -161,6 +162,24 @@ lead = ["risk", "notes"]
 `uv run client-intel --client C001 --trigger qbr` then works. A new analysis is a
 function `(Dataset, client_id) -> ToolResult` registered in `pipeline.TOOLS`.
 
+### Two ways of writing
+
+| | `prose` (default) | `structured` |
+|---|---|---|
+| The model returns | the briefing text, with figures and citations | JSON: per section, fact IDs plus a comment in its own words |
+| Who writes a figure | the model, by copying | code: it prints the tool's own sentence for each chosen fact |
+| What can still go wrong | a correct figure next to the wrong subject or measure | the comment can misread the fact printed next to it; no figure can be wrong |
+| Checked after writing | every number, sign and citation; products named on the line | the comment contains no figure; fact IDs exist; then the same verifier |
+| Reads | like a colleague wrote it; files of 570 to 720 words with the code-written sections | stiffer and longer; files of 660 to 940 words |
+
+`prose` came first and is the evaluated default. `structured` (`structured.py`,
+`prompts/structured_*.md`) was added at the end, after an independent review
+showed that the verifier cannot tell what a figure is about. It removes that
+class of error by construction, at the cost of readability and length. Which
+one a sales team should get is a question for them: a rep who forwards figures
+to a client needs `structured`; a rep who wants a quick read before a call may
+prefer `prose`.
+
 ## Evaluation
 
 `eval/cases.json` holds 11 cases over 7 clients and all four triggers; four
@@ -179,7 +198,7 @@ the report. Checks are automatic:
 
 **Result of the last run** (`eval/report.md`, model `claude-haiku-5-5`): 77 of 77
 checks passed over 11 briefings. The verifier flagged a line in 3 of the 11 first
-drafts; the single repair attempt fixed all three. About 103,000 input and 58,000
+drafts; the single repair attempt fixed all three. About 104,000 input and 62,000
 output tokens for the whole run, roughly 4 US cents.
 
 The runs in order, failures included, because they are the more useful story:
@@ -191,7 +210,23 @@ The runs in order, failures included, because they are the more useful story:
 | 3 | 77 of 77 | none | |
 | 4 | 76 of 77 | Re-run on the final code. `halden_renewal`: "Risks to the renewal" came before "Usage against what they pay for". The same case passed in run 3, so this is the model varying between runs. | Section order is now set in code (`order_sections` in `pipeline.py`), with tests, instead of being left to the prompt. |
 | 5 | 77 of 77 | none | Re-run after the fix of run 4. Passing, but an independent review of the repository then showed what these checks do not see: a figure from a note passed without attribution (merging facts with one ID lost the "reported" label), "surged 40.0%" passed against a fact of -40.0%, and one sample briefing said a notice period was not in the data when it was. All three fixed in code with tests; the writer is now also told who the reader is. |
-| 6 | 77 of 77 | none | Re-run on the stricter verifier. `outputs/` and `eval/report.md` are this run. |
+| 6 | 77 of 77 | none | Re-run on the stricter verifier. |
+| 7 | 77 of 77 | none | Re-run after adding the product check (a line that names a product must cite a fact about it). `outputs/` and `eval/report.md` are this run. |
+
+**Structured mode, one run** (`eval/report_structured.md`, samples in
+`outputs_structured/`): 105 of 110 checks, the same seven checks plus three of its
+own (no figure in the model's own words, every shown fact printed word for word,
+no fall-back to the facts-only briefing). The five failures:
+
+- 3 were again my evaluation, not the briefing: the word-for-word check did not
+  know that a gap is citable. Fixed; re-scored from the saved run, all three pass.
+  The report file is left as the run produced it.
+- 2 are real: two briefings exceed the length limit (700 and 777 words against
+  650). Fact sentences written by the tools are longer than what the model would
+  write. That is the price of this mode and it is not solved.
+
+The model returned valid JSON in all 11 cases, put a figure into its own words in
+one first draft (repaired), and never needed the fall-back.
 
 What the verifier caught across the runs, all in first drafts: a figure on a line
 without a citation, "44.8 million" for a figure whose unit is "impressions
@@ -220,7 +255,7 @@ Done after the six must-haves were complete and evaluated:
 |---|---|
 | New trigger through configuration only | Done; see "Adding a trigger". |
 | Note-versus-data conflicts | Done as the `claim_check` tool; the conflict reaches the briefing as a cited fact and a gap. It is not yet phrased as a question for the rep by code; the writer does that. |
-| Unit tests and a repeatable regression run | 273 tests; `eval/run_eval.py` re-runs the cases after any prompt change. |
+| Unit tests and a repeatable regression run | 295 tests; `eval/run_eval.py` re-runs the cases after any prompt change. |
 | Parallel tools with a trace | Tools run in a thread pool with the result order kept stable. `evidence.json` has a `trace`: every step with seconds, and tokens and cost for model calls. A tool that raises becomes a visible `tool_error` gap, not a failed run. These are parallel deterministic tools, not parallel model specialists. |
 | Portfolio view | `--portfolio` ranks all clients by renewal risk and by growth without a model. The score is a sum of fixed points; every point carries the fact and citation that earned it. It is an ordering aid, not a probability: the data has no churn history to fit weights to, and only a handful of clients carry real risk signals. |
 | Small UI | A FastAPI service (`api.py`, four endpoints) and a Next.js page in `ui/` that calls it. Run a briefing, click any citation to see the evidence behind it, see the trace, browse the portfolio. The API is a thin layer over the same `run()` function; it loads the data once and runs the pipeline in a worker thread. It is a local, single-user service: no authentication, no job queue for runs of up to a minute, no rate limiting. |
@@ -232,8 +267,12 @@ Done after the six must-haves were complete and evaluated:
   the cited fact with the right sign. What it does not prove, each confirmed by an
   independent review with crafted lines:
   - that the figure is attached to the right subject or unit ("752,000 active
-    users" passes next to a contract worth EUR 752,000, and a figure for one
-    product passes in a sentence about another);
+    users" passes next to a contract worth EUR 752,000). Since the last change a
+    line that names a product must cite a fact about that product, so a figure
+    for one product no longer passes in a sentence about another; other subjects
+    (a measure, a client, a contract) are still not tied. `--mode structured`
+    closes this for all figures, with the costs described under "Two ways of
+    writing";
   - identifiers in prose ("ticket T-9999" next to a valid citation);
   - number words ("halved", "four of five");
   - any sentence without figures. One sample briefing from an earlier run said a
@@ -266,8 +305,10 @@ Done after the six must-haves were complete and evaluated:
 
 1. A labelled evaluation set owned by sales operations, run on every prompt or
    model change, with a rep rating usefulness, which no automatic check covers.
-2. Tie each figure to its subject: have the writer emit structured claims
-   (fact ID plus sentence) so the verifier can check the pairing, not only the number.
+2. Make structured mode good enough to be the default: shorter fact sentences
+   written for a reader (the tools' sentences are written for a verifier), a
+   check that the comment is about the facts next to it, and a rep's verdict on
+   which mode they would rather read.
 3. Put the API behind authentication, move the runs of up to a minute to a job
    queue with status polling, and add rate limits. Read from the warehouse through reviewed SQL views instead of a file, with data
    freshness in the header and row-level access by account owner.
@@ -345,6 +386,7 @@ src/client_intel/
   pipeline.py           the sequence
   prompts/              run-time prompts
   llm.py                the only model call
+  structured.py         structured mode: parse the model's JSON, render the facts
   verify.py             verifier and flag policy
   trace.py              step timing and cost
   portfolio.py          ranking of all clients

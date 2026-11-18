@@ -3,35 +3,36 @@
 _Data as of 2026-11-01. Account owner: Tomas Ferreira._
 
 ## Bottom line
-Yes, the account is at risk, mainly through the renewal and the Live Streaming (STREAM) line. Contract K-0005 ends on 2026-12-31 unless a new contract is signed [calc:contract_status#1] [contracts:K-0005]. Confidence is moderate: the usage and contract data are high quality [calc:data_quality#1], but the "basically agreed" renewal rests on a note, and the measured STREAM decline contradicts that note.
+The account is at real risk of shrinking, and the timing is tight. Contract K-0005 ends on 2026-12-31, 60 days after 2026-11-01 [contracts:K-0005] [calc:contract_status#1], and no renewal is signed. Confidence is medium: the contract and usage figures are measured [calc:data_quality#1], but the "basically agreed" renewal rests on a reported claim that the measured STREAM data contradicts.
 
 ## Warning signs
-- The contract does not renew automatically, and the notice deadline of 2026-10-02 has already passed [contracts:K-0005] [calc:contract_status#2].
-- The renewal is unsigned. Opportunity O-0003 is at Proposal, expected to close 2026-12-15, and the CRM reads "Awaiting client board approval" (reported) [opp:O-0003].
-- STREAM usage fell -22.6% year on year in Aug-Oct 2026 [calc:usage_trend#24]. Your note of 2026-09-18 says the commercial director reported usage "up massively" (reported) [note:N-006]. The measured data conflicts with this [calc:claim_check#1].
-- Ticket T-0258 asks to pause streams for cup matches moved to a free-to-air partner [ticket:T-0258]. The facts do not show how much of the STREAM decline this explains.
+- The notice deadline of 2026-10-02 passed 30 days before 2026-11-01, and K-0005 does not renew automatically [calc:contract_status#2] [contracts:K-0005].
+- STREAM usage fell: 1,292 streamed hours in Aug-Oct 2026 versus 1,669 in Aug-Oct 2025, a change of -22.6% year on year [calc:usage_trend#24]. STREAM is a EUR 110,000 line in K-0005 [contracts:K-0005].
+- Ticket T-0258 (2026-08-28) asks to "pause streams for cup matches moved to free-to-air partner" [ticket:T-0258].
+- Note N-006 (written by Tomas Ferreira, 2026-09-18) reports "up massively" streaming usage, but this conflicts with the measured -22.6% [note:N-006] [calc:claim_check#1].
 
 ## Signs of health
-- Other lines grew year on year: FAN_INSIGHTS +8.0% [calc:usage_trend#3], STATS_ARCHIVE +6.3% [calc:usage_trend#17], INTEGRITY +3.0% [calc:usage_trend#10].
-- INTEGRITY is the most heavily used line at 87.3% of included volume in Oct 2026 [calc:usage_trend#9]. The note says integrity alerts are valued (reported) [note:N-006].
-- There are no open tickets at 2026-11-01 [calc:support_summary#13]. Ticket volume fell to 1 in the last 90 days from 4 in the previous 90 [calc:support_summary#12]. Average CSAT over 12 months is 4.1 out of 5 [calc:support_summary#5].
+- No open tickets at 2026-11-01, and ticket volume is down: 1 opened in the last 90 days versus 4 in the previous 90 days [calc:support_summary#13] [calc:support_summary#12].
+- Usage is up year on year on three other products: FAN_INSIGHTS +8.0% [calc:usage_trend#3], INTEGRITY +3.0% [calc:usage_trend#10], STATS_ARCHIVE +6.3% [calc:usage_trend#17].
+- Renewal opportunity O-0003 is open at EUR 258,500, +10.0% on the K-0005 annual value [opp:O-0003] [calc:opportunities#1].
+- Average CSAT is 4.1 out of 5 from 7 rated tickets over 12 months [calc:support_summary#5].
 
 ## What we do not know
-- Whether the board will approve, and at what value. The +10% is reported, not agreed [note:N-006]. The renewal opportunity is +10.0% against EUR 235,000 [calc:opportunities#1].
-- Whether the STREAM decline is lasting or caused by the free-to-air move. The data does not show this [calc:claim_check#1].
-- How the two cases escalated to the league disciplinary panel (reported) affect the relationship [note:N-007]. The facts do not say.
-- The last meeting was 44 days before 2026-11-01 [calc:meeting_notes#1].
+- Whether the league board will approve the renewal. The CRM next step reads "Awaiting client board approval" [opp:O-0003], and N-006 records the renewal as "basically agreed" pending the board [note:N-006].
+- Why STREAM fell. Ticket T-0258 points to cup matches moved to a free-to-air partner, but the data does not confirm this as the cause.
+- How the last renewal changed the annual value. K-0005 is the only signed contract on file [gap:no_previous_contract#1].
 
 ## Suggested next steps
-- Get the board decision in writing before the expected close of 2026-12-15 [opp:O-0003].
-- Confirm with the commercial director which second-division matches moved to free-to-air, and test the "up massively" claim against the -22.6% measured decline [calc:usage_trend#24] [note:N-006].
-- Size the STREAM line to actual use. STREAM was 435 streamed hours used against 600 included in Oct 2026 [calc:usage_trend#23], on a EUR 110,000 annual fee [contracts:K-0005].
-- Set a follow-up meeting, since the last one was 44 days ago [calc:meeting_notes#1].
-- If no signed renewal exists before 2026-12-31, plan for the contract ending that day [calc:contract_status#1].
+- Send the renewal paperwork recorded as your action in N-006 [note:N-006], and push for a board decision before the expected close of 2026-12-15 [opp:O-0003].
+- Before the board meets, confirm with the league which matches moved to the free-to-air partner, to explain the -22.6% STREAM decline [calc:usage_trend#24] [ticket:T-0258].
+- Size the STREAM volume in the renewal against actual use: 435 streamed hours in Oct 2026 against 600 included [calc:usage_trend#23].
+- Correct the CRM record so the "basically agreed" claim is marked as unverified against the STREAM data [note:N-006] [calc:claim_check#1].
 
 ## Verification
 
-All 32 numbers and 30 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
+All 34 numbers and 28 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
+
+1 line carries no figure and no citation; it is interpretation and was not checked.
 
 
 ## Data gaps and confidence

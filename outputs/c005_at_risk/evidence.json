@@ -2248,32 +2248,34 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 6859,
-        "output_tokens": 4822,
+        "output_tokens": 6003,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": false
+    "repaired": false,
+    "structured": null,
+    "fallback": false
   },
   "verification": {
     "first_pass": {
       "ok": true,
-      "numbers_checked": 25,
-      "citations_checked": 30,
+      "numbers_checked": 31,
+      "citations_checked": 28,
       "violations": [],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 25,
-      "citations_checked": 30,
+      "numbers_checked": 31,
+      "citations_checked": 28,
       "violations": [],
       "uncited_lines": 0
     }
   },
   "trace": {
     "model": "claude-haiku-5-5",
-    "total_seconds": 20.311,
-    "total_cost_usd": 0.003097,
+    "total_seconds": 27.054,
+    "total_cost_usd": 0.003687,
     "steps": [
       {
         "name": "plan",
@@ -2384,11 +2386,11 @@
       {
         "name": "first_draft",
         "kind": "model",
-        "seconds": 20.296,
+        "seconds": 27.041,
         "detail": {
           "input_tokens": 6859,
-          "output_tokens": 4822,
-          "cost_usd": 0.003097,
+          "output_tokens": 6003,
+          "cost_usd": 0.003687,
           "stop_reason": "end_turn"
         }
       },
@@ -2397,8 +2399,8 @@
         "kind": "verify",
         "seconds": 0.008,
         "detail": {
-          "numbers_checked": 25,
-          "citations_checked": 30,
+          "numbers_checked": 31,
+          "citations_checked": 28,
           "violations": 0
         }
       },

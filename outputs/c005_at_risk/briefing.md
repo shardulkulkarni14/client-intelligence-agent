@@ -3,36 +3,35 @@
 _Data as of 2026-11-01. Account owner: Grace Okafor._
 
 ## Bottom line
-The main risk is contractual, not behavioural. Contract K-0008 ends on 2026-11-30 and auto-renews unless notice is given, and the notice deadline of 2026-10-01 has already passed with no record of notice either way [calc:contract_status#1] [calc:contract_status#2] [calc:contract_status#3]. Usage is growing, so the data shows no sign of shrinkage [calc:usage_trend#3] [calc:usage_trend#17]. Confidence is medium: the data cannot show the client's intent, and there is no renewal opportunity and no meeting since 2026-05-20 [calc:opportunities#1] [calc:meeting_notes#1].
+The main risk is contract timing, not visible decline. Contract K-0008 ends 2026-11-30, 29 days after 2026-11-01 [calc:contract_status#1], and its notice deadline passed 31 days before 2026-11-01 with no record of notice either way [calc:contract_status#2][calc:contract_status#3]. Usage and support data show no measured sign of shrinking, but a reported complaint and the lack of recent contact leave the renewal position unclear. Confidence is medium: the dates are firm, but whether notice was given and the client's intent are not in the data [calc:data_quality#1].
 
 ## Warning signs
-- Contract K-0008 ends on 2026-11-30, 29 days after 2026-11-01 [calc:contract_status#1].
-- It renews automatically for 12 months from 2026-12-01 unless notice is given [contracts:K-0008] [calc:contract_status#3].
-- No renewal opportunity is recorded in the CRM [calc:opportunities#1].
-- Reported in a note: "They could not find their March usage statement in the portal; support ticket raised." (N-010, 2026-05-20, reported) [note:N-010].
+- K-0008 renews automatically for the same 12-month term unless notice is given [contracts:K-0008] [calc:contract_status#3].
+- The notice window closed on 2026-10-01, and nothing on record shows whether notice was sent [calc:contract_status#2].
+- The term shortened from 24 months on K-0007 to 12 months on K-0008 [calc:contract_status#5].
+- Reported by Grace Okafor on 2026-05-20: the client "could not find their March usage statement in the portal; support ticket raised" [note:N-010].
 
 ## Signs of health
-- Live Match Data Feed usage rose +6.8% year on year in Aug-Oct 2026 [calc:usage_trend#3].
-- Widget usage was 101.8% of included volume in Oct 2026, an indicative EUR 240 overage that is not confirmed as billed [calc:usage_trend#23] [calc:usage_trend#29].
-- No tickets were open at 2026-11-01 [calc:support_summary#13]. The P1 outage T-0194 closed in 4 days with CSAT 5 out of 5 [ticket:T-0194].
-- Reported in the same note: "Widgets performing well on their website." (N-010, reported) [note:N-010].
+- No open tickets at 2026-11-01, and 1 ticket in the last 90 days versus 1 in the previous 90 days [calc:support_summary#13] [calc:support_summary#12].
+- Average CSAT is 4.2 out of 5 over the last 12 months [calc:support_summary#5].
+- Year-on-year usage is up on Live Match Data Feed (+6.8%) and Live Streaming (+3.9%) [calc:usage_trend#3] [calc:usage_trend#17]. Historical Stats Archive is down (-5.9%) [calc:usage_trend#10].
+- Widget use reached 101.8% of included volume in Oct 2026 [calc:usage_trend#23]. The estimated overage of EUR 240 is indicative only and no billing data confirms it was charged [calc:usage_trend#29].
 
 ## What we do not know
-- Whether the client plans to renew, shrink or leave. No notice record, no renewal opportunity and no meeting since 2026-05-20 [calc:contract_status#3] [gap:no_renewal_opportunity#1] [calc:meeting_notes#1].
-- Whether the March statement problem was resolved. March 2026 usage is missing for all four products, so it is unknown, not zero [gap:missing_month#1].
-- Why Stats Archive usage fell -5.9% year on year [calc:usage_trend#10]. The data does not say.
-- Whether the EUR 240 overage was billed [calc:usage_trend#29]. Data confidence is medium [calc:data_quality#1].
+- Whether notice was given on or before the deadline. No record exists either way [calc:contract_status#3].
+- Whether any renewal opportunity exists. None is recorded [gap:no_renewal_opportunity#1]. The last meeting was 165 days before 2026-11-01 [calc:meeting_notes#1].
+- Usage for 2026-03 is missing on all four usage lines. Those months are unknown, not zero [gap:missing_month#1].
+- Whether the March statement issue was resolved, or whether the commitment to chase it was completed [note:N-010].
 
 ## Suggested next steps
-- Check the contract file and correspondence to confirm whether notice was given for K-0008 by 2026-10-01. The data holds no record [calc:contract_status#3].
-- Agree renewal terms with the client before 2026-11-30, when the contract auto-renews [calc:contract_status#1].
-- Log a renewal opportunity in the CRM, since none exists [calc:opportunities#1].
-- Chase the missing March usage statement that note N-010 assigns to you [note:N-010].
-- Confirm whether the indicative EUR 240 widget overage was billed before raising any expansion conversation [calc:usage_trend#29].
+- Check whether a notice was sent for K-0008 by the 2026-10-01 deadline, since the record cannot show it [calc:contract_status#2].
+- With 29 days left before the end date, open a renewal conversation and record it as an opportunity, since none is on file [calc:contract_status#1] [gap:no_opportunities#1].
+- Close out the March usage statement issue you committed to chase in the 2026-05-20 note [note:N-010].
+- Confirm with billing whether the widget overage was charged before raising it with the client, given the term change to 12 months [calc:usage_trend#29] [calc:contract_status#5].
 
 ## Verification
 
-All 25 numbers and 30 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
+All 31 numbers and 28 citations were matched to the facts cited on their lines. The check covers figures, their signs and citation IDs; it does not judge the wording around them.
 
 
 ## Data gaps and confidence

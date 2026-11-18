@@ -2517,53 +2517,48 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 7608,
-        "output_tokens": 4453,
+        "output_tokens": 4634,
         "stop_reason": "end_turn"
       },
       {
         "model": "claude-haiku-5-5",
-        "input_tokens": 9364,
-        "output_tokens": 1880,
+        "input_tokens": 9145,
+        "output_tokens": 1832,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": true
+    "repaired": true,
+    "structured": null,
+    "fallback": false
   },
   "verification": {
     "first_pass": {
       "ok": false,
-      "numbers_checked": 45,
-      "citations_checked": 29,
+      "numbers_checked": 39,
+      "citations_checked": 25,
       "violations": [
         {
-          "line_no": 32,
-          "line": "- Before the 2026-11-30 end date [calc:contract_status#1], agree renewal terms, including whether the 12-month term and the EUR 363,000 value stand.",
+          "line_no": 29,
+          "line": "- Record a renewal opportunity in CRM, since none exists for the 2026-11-30 end date [gap:no_opportunities#1]",
           "kind": "number_not_in_cited_evidence",
-          "token": "12",
-          "detail": "12 is not in the evidence cited on this line; it does appear in contracts:K-0008, calc:contract_status#3, calc:contract_status#5"
-        },
-        {
-          "line_no": 32,
-          "line": "- Before the 2026-11-30 end date [calc:contract_status#1], agree renewal terms, including whether the 12-month term and the EUR 363,000 value stand.",
-          "kind": "number_not_in_cited_evidence",
-          "token": "EUR 363,000",
-          "detail": "EUR 363,000 is not in the evidence cited on this line; it does appear in contracts:K-0008, calc:contract_status#4"
+          "token": "2026-11-30",
+          "detail": "2026-11-30 is not in the evidence cited on this line; it does appear in contracts:K-0008, calc:contract_status#1, calc:contract_status#2"
         }
       ],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 43,
-      "citations_checked": 30,
+      "numbers_checked": 39,
+      "citations_checked": 27,
       "violations": [],
       "uncited_lines": 0
     }
   },
   "trace": {
     "model": "claude-haiku-5-5",
-    "total_seconds": 25.319,
-    "total_cost_usd": 0.004863,
+    "total_seconds": 25.269,
+    "total_cost_usd": 0.004909,
     "steps": [
       {
         "name": "plan",
@@ -2605,7 +2600,7 @@
       {
         "name": "data_quality",
         "kind": "tool",
-        "seconds": 0.001,
+        "seconds": 0.0,
         "detail": {
           "status": "partial",
           "facts": 1,
@@ -2685,42 +2680,42 @@
       {
         "name": "first_draft",
         "kind": "model",
-        "seconds": 18.815,
+        "seconds": 19.107,
         "detail": {
           "input_tokens": 7608,
-          "output_tokens": 4453,
-          "cost_usd": 0.002987,
+          "output_tokens": 4634,
+          "cost_usd": 0.003078,
           "stop_reason": "end_turn"
         }
       },
       {
         "name": "verify_first_draft",
         "kind": "verify",
-        "seconds": 0.008,
+        "seconds": 0.007,
         "detail": {
-          "numbers_checked": 45,
-          "citations_checked": 29,
-          "violations": 2
+          "numbers_checked": 39,
+          "citations_checked": 25,
+          "violations": 1
         }
       },
       {
         "name": "repair",
         "kind": "model",
-        "seconds": 6.477,
+        "seconds": 6.143,
         "detail": {
-          "input_tokens": 9364,
-          "output_tokens": 1880,
-          "cost_usd": 0.001876,
+          "input_tokens": 9145,
+          "output_tokens": 1832,
+          "cost_usd": 0.001831,
           "stop_reason": "end_turn"
         }
       },
       {
         "name": "verify_repair",
         "kind": "verify",
-        "seconds": 0.009,
+        "seconds": 0.006,
         "detail": {
-          "numbers_checked": 43,
-          "citations_checked": 30,
+          "numbers_checked": 39,
+          "citations_checked": 27,
           "violations": 0
         }
       },
