@@ -78,9 +78,15 @@ class RunResult:
 
 
 def load_triggers(path: Path = TRIGGERS_FILE) -> dict[str, Plan]:
-    raw = tomllib.loads(path.read_text())
+    try:
+        raw = tomllib.loads(path.read_text())
+    except tomllib.TOMLDecodeError as exc:
+        raise RequestError(f"{path.name} is not valid TOML: {exc}") from exc
     plans: dict[str, Plan] = {}
     for name, cfg in raw.items():
+        missing = [k for k in ("question", "tools", "sections") if k not in cfg]
+        if missing:
+            raise RequestError(f"Trigger '{name}' in {path.name} lacks: {', '.join(missing)}")
         unknown = [t for t in cfg["tools"] if t not in TOOLS]
         if unknown:
             raise RequestError(f"Trigger '{name}' names unknown tools: {unknown}")
@@ -116,6 +122,9 @@ def index_facts(results: list[ToolResult]) -> dict[str, Fact]:
             # A row is only "reported" if nothing measured was said about it.
             if seen.kind == REPORTED and fact.kind != REPORTED:
                 seen.kind = fact.kind
+    # A gap is evidence too: the writer may say "March 2026 is missing" and cite it.
+    for gap_id, gap in _all_gaps(results):
+        index[gap_id] = Fact(id=gap_id, text=gap.text, rows=list(gap.rows), topic="gap")
     return index
 
 
@@ -124,22 +133,31 @@ def _fact_lines(results: list[ToolResult]) -> str:
     for result in results:
         lines.append(f"# from {result.tool} (status: {result.status})")
         for fact in result.facts:
-            tags = ", ".join(t for t in (fact.kind, fact.signal) if t)
+            tags = ", ".join(t for t in (fact.kind, fact.topic, fact.signal) if t)
             lines.append(f"[{fact.id}] ({tags}) {fact.text}")
     return "\n".join(lines)
 
 
-def _all_gaps(results: list[ToolResult]) -> list[Gap]:
-    """Several tools notice the same problem (for example a missing month), so a
-    gap is listed once per code and set of rows."""
+def _all_gaps(results: list[ToolResult]) -> list[tuple[str, Gap]]:
+    """Every gap once, each with a citable ID such as gap:missing_month#1.
+
+    The data-quality tool and the specialised tools notice the same problems. The
+    specialised tool's wording is kept because it names the product and rows.
+    """
+    specific = {g.code for r in results if r.tool != "data_quality" for g in r.gaps}
     seen: set[tuple[str, tuple[str, ...]]] = set()
-    gaps: list[Gap] = []
+    counts: dict[str, int] = {}
+    gaps: list[tuple[str, Gap]] = []
     for result in results:
         for gap in result.gaps:
+            if result.tool == "data_quality" and gap.code in specific:
+                continue
             key = (gap.code, tuple(sorted(gap.rows)) or (gap.text,))
-            if key not in seen:
-                seen.add(key)
-                gaps.append(gap)
+            if key in seen:
+                continue
+            seen.add(key)
+            counts[gap.code] = counts.get(gap.code, 0) + 1
+            gaps.append((f"gap:{gap.code}#{counts[gap.code]}", gap))
     return gaps
 
 
@@ -157,7 +175,7 @@ def build_prompt(plan: Plan, client: dict[str, Any], ds: Dataset, results: list[
         sections="\n".join(f"- {s}" for s in plan.sections),
         lead=", ".join(plan.lead) or "nothing in particular",
         facts=_fact_lines(results),
-        gaps="\n".join(f"- ({g.code}) {g.text}" for g in gaps) or "- none found",
+        gaps="\n".join(f"[{gid}] {g.text}" for gid, g in gaps) or "- none found",
     )
     return system, user
 
@@ -193,9 +211,9 @@ def gaps_section(results: list[ToolResult]) -> str:
     gaps = _all_gaps(results)
     if not gaps:
         lines.append("- No gaps found in the data used for this briefing.")
-    for gap in gaps:
+    for gap_id, gap in gaps:
         cites = "".join(f"[{row}]" for row in gap.rows[:6])
-        lines.append(f"- {gap.text} {cites}".rstrip())
+        lines.append(f"- {gap.text} [{gap_id}]{cites}")
     empty = [r.tool for r in results if r.status == "no_data"]
     if empty:
         lines.append(f"- Tools that found no data for this client: {', '.join(empty)}.")
@@ -225,17 +243,23 @@ def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
 
     facts = index_facts(results)
     # Text the model may echo without a citation: what the request itself said.
-    allowed = f"{client_id} {client['client_name']} {ds.as_of.isoformat()} {context}"
+    allowed = f"{client_id} {client['client_name']} {ds.as_of.isoformat()}"
+
+    def check(text: str) -> verifier.VerificationReport:
+        # A figure the rep typed is not evidence: it passes only on a line that
+        # attributes it to the rep. Headings must be the configured ones.
+        return verifier.verify(text, facts, allowed, context_text=context,
+                               allowed_headings=plan.sections)
 
     model_calls: list[dict[str, Any]] = []
     repaired = False
     if writer is None:
         body = offline_briefing(plan, results)
-        first = report = verifier.verify(body, facts, allowed)
+        first = report = check(body)
     else:
         system, user = build_prompt(plan, client, ds, results, context)
         body = writer(system, user)
-        first = report = verifier.verify(body, facts, allowed)
+        first = report = check(body)
         if not report.ok:
             # One repair attempt, then stop: a second failure is flagged in the text
             # rather than hidden, so the reader always sees what could not be backed up.
@@ -243,7 +267,7 @@ def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
                 problems=verifier.repair_instructions(report), briefing=body
             )
             candidate = writer(system, f"{user}\n\n{repair}")
-            candidate_report = verifier.verify(candidate, facts, allowed)
+            candidate_report = check(candidate)
             if len(candidate_report.violations) <= len(report.violations):
                 body, report, repaired = candidate, candidate_report, True
         model_calls = list(getattr(writer, "calls", []))

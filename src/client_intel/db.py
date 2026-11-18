@@ -83,6 +83,20 @@ class Dataset:
     def for_client(self, table: str, client_id: str) -> list[Row]:
         return [r for r in getattr(self, table) if r.get("client_id") == client_id]
 
+    def contract_in_force(self, client_id: str) -> Row | None:
+        """The one definition of "in force" for every tool: status active and the
+        extract date inside the term (end date inclusive). A pending or expired
+        contract is never in force. If several qualify, the latest start wins."""
+        live = [
+            c
+            for c in self.for_client("contracts", client_id)
+            if c["status"] == "active"
+            and c["start_date"] is not None
+            and c["end_date"] is not None
+            and c["start_date"] <= self.as_of <= c["end_date"]
+        ]
+        return max(live, key=lambda c: c["start_date"]) if live else None
+
     def lines_for(self, contract_id: str) -> list[Row]:
         return [r for r in self.contract_lines if r["contract_id"] == contract_id]
 

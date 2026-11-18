@@ -13,6 +13,8 @@ from client_intel.db import Dataset, Row
 from client_intel.evidence import NO_DATA, OK, PARTIAL, FactBuilder, ToolResult, cite, fmt_date
 
 _ID = re.compile(r"^C\d+$", re.IGNORECASE)
+# An ID standing on its own inside a longer request: "Client C001", "c001 please".
+_ID_INSIDE = re.compile(r"(?<![A-Za-z0-9])C\d+(?![A-Za-z0-9])", re.IGNORECASE)
 # "&" and "and" are dropped so "Velmont Casino and Sport" equals "Velmont Casino & Sport".
 _IGNORED_WORDS = {"and"}
 
@@ -46,6 +48,19 @@ def _match(ds: Dataset, query: str) -> tuple[str, list[Row]]:
 
     q_set = set(q_words)
     names = {c["client_id"]: _words(c["client_name"]) for c in clients}
+
+    # A valid client ID inside the request: "Client C001", "client c001 please".
+    ids = sorted({m.upper() for m in _ID_INSIDE.findall(query)} & set(ds.clients))
+    if ids:
+        by_id = [ds.clients[i] for i in ids]
+        # A different client named in full next to the ID is a contradiction, not a hit.
+        named = [
+            c
+            for c in clients
+            if set(names[c["client_id"]]) <= q_set and c["client_id"] not in ids
+        ]
+        return "id_in_query", by_id + named
+
     # Loosest tier, also used to list every plausible candidate when a tier is ambiguous.
     loose = [
         c for c in clients if all(any(w in n for n in names[c["client_id"]]) for w in q_words)
@@ -54,6 +69,10 @@ def _match(ds: Dataset, query: str) -> tuple[str, list[Row]]:
     # Every word typed is a whole word of the name: "Brenmoor League".
     whole = [c for c in clients if q_set <= set(names[c["client_id"]])]
     if len(whole) == 1:
+        # One typed word can be a whole word of one name and the start of a word in
+        # another ("Athletic" FC, "Athletics" Federation); that is not a unique match.
+        if len(q_words) == 1 and len(loose) > 1:
+            return "substring", loose
         return "words", whole
     if whole:
         return "words", loose

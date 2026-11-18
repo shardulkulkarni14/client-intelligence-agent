@@ -17,7 +17,7 @@ import re
 from client_intel.db import Dataset
 from client_intel.evidence import OK, FactBuilder, ToolResult, fmt_pct
 from client_intel.tools.notes import get_meeting_notes
-from client_intel.tools.usage import get_usage_trend
+from client_intel.tools.usage import get_usage_trend, month_label
 
 UP_WORDS = ("up ", "up.", "growing", "growth", "grew", "increas", "record", "success", "rising")
 DOWN_WORDS = ("down ", "down.", "drop", "declin", "fell", "falling", "less ", "reduc", "shrink")
@@ -94,8 +94,16 @@ def check_claims(ds: Dataset, client_id: str) -> ToolResult:
                 said = f': "{sentence}"' if not re.search(r"\d", sentence) else ""
                 base = (f"Note {note['note_id']} of {note['meeting_date']} reports {pid} usage "
                         f"as going {direction}{said}")
+                recent, year_ago = measured["recent_months"], measured["year_ago_months"]
                 measured_text = (f"measured {pid} usage changed {fmt_pct(yoy)} year on year "
-                                 "over the last three complete months")
+                                 "over the last three complete months "
+                                 f"({month_label(recent)} versus {month_label(year_ago)})")
+                # A note written before the window describes an earlier period: the
+                # verdict stands as a comparison, but the reader must know the timing.
+                predates = note["meeting_date"].isoformat()[:7] < min(recent)
+                if predates:
+                    measured_text += "; the note predates this period"
+                checked[-1]["note_predates_window"] = predates
                 if verdict == "conflict":
                     fb.calc(f"{base} This conflicts with the data: {measured_text}.",
                             [cite_note, *rows], topic="source_conflict", signal="risk")

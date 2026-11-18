@@ -1,8 +1,12 @@
 """Meeting notes: what people wrote after meetings, quoted, never measured.
 
-Everything from a note is kind "reported". A figure inside a note ("+10%", "up
-massively") is a person's claim; the usage and contract tools hold the measurements.
-Extraction is a plain keyword filter so the same note always yields the same quotes.
+Every statement quoted from a note is kind "reported". A figure inside a note ("+10%",
+"up massively") is a person's claim; the usage and contract tools hold the measurements.
+Only the note's header (date, author, title) is recorded metadata and so a data fact.
+
+Every statement of a note is kept, in the order written: dropping the ones without a
+keyword used to lose the positive remarks. Keywords only name the topic, so the same
+note always yields the same quotes.
 """
 
 from __future__ import annotations
@@ -23,7 +27,8 @@ from client_intel.evidence import (
 
 TOOL = "meeting_notes"
 
-MAX_QUOTES_PER_NOTE = 6
+MAX_QUOTES_PER_NOTE = 12
+OTHER_TOPIC = "other"  # a statement that matches no keyword group is still quoted
 
 # Checked in this order; the first matching group names the fact's topic. Each entry is
 # matched at the start of a word, case-insensitively ("complain" matches "Complaints").
@@ -60,10 +65,20 @@ KEYWORDS: dict[str, tuple[str, ...]] = {
         "asked whether",
         "asked about",
         "larger",
+    ),
+    # Last, so a statement that also names a risk or a commercial topic keeps that topic.
+    "positive": (
+        "positive",
+        "satisfied",
+        "happy",
+        "delighted",
+        "pleased",
+        "good feedback",
         "success",
     ),
 }
 RISK_TOPICS = ("competitor", "complaint")
+OPPORTUNITY_TOPICS = ("positive",)
 
 # Header lines of the note file that repeat the index and are not statements.
 _HEADER_RE = re.compile(r"^(#|date:|author:|attendees:)", re.I)
@@ -87,14 +102,20 @@ def split_statements(body: str) -> list[str]:
     return statements
 
 
-def classify(statement: str) -> str | None:
-    """The first keyword group the statement matches, or None if it is not kept."""
+def classify(statement: str) -> str:
+    """The first keyword group the statement matches, or "other". Nothing is dropped."""
     if _NO_ACTION_RE.match(statement):
-        return None
+        return OTHER_TOPIC  # "Actions: none." records that nothing was promised
     for topic, pattern in _PATTERNS.items():
         if pattern.search(statement):
             return topic
-    return None
+    return OTHER_TOPIC
+
+
+def _signal(topic: str) -> str:
+    if topic in RISK_TOPICS:
+        return "risk"
+    return "opportunity" if topic in OPPORTUNITY_TOPICS else "neutral"
 
 
 def get_meeting_notes(ds: Dataset, client_id: str) -> ToolResult:
@@ -131,7 +152,8 @@ def get_meeting_notes(ds: Dataset, client_id: str) -> ToolResult:
     for note in notes:
         note_cite = cite("note", note["note_id"])
         body = note.get("body") or ""
-        fb.reported(
+        # Date, author and title are recorded fields of the note, not anyone's claim.
+        fb.data(
             note_cite,
             f"Note {note['note_id']}: \"{note.get('title') or 'untitled'}\" on "
             f"{fmt_date(note['meeting_date'])}, written by {note.get('author') or 'unknown'}.",
@@ -141,19 +163,24 @@ def get_meeting_notes(ds: Dataset, client_id: str) -> ToolResult:
         quotes: list[dict[str, str]] = []
         if not body.strip():
             fb.gap("empty_note", f"Note {note['note_id']} has no text.", [note_cite])
-        for statement in split_statements(body):
-            if len(quotes) >= MAX_QUOTES_PER_NOTE:
-                break
+        statements = split_statements(body)
+        if len(statements) > MAX_QUOTES_PER_NOTE:
+            fb.gap(
+                "note_truncated",
+                f"Note {note['note_id']} has {fmt_num(len(statements))} statements; only the "
+                f"first {fmt_num(MAX_QUOTES_PER_NOTE)} are quoted, the remaining "
+                f"{fmt_num(len(statements) - MAX_QUOTES_PER_NOTE)} are not.",
+                [note_cite],
+            )
+        for statement in statements[:MAX_QUOTES_PER_NOTE]:
             topic = classify(statement)
-            if topic is None:
-                continue
             quotes.append({"topic": topic, "text": statement})
             fb.reported(
                 note_cite,
                 f"Note {note['note_id']} ({fmt_date(note['meeting_date'])}) says: "
                 f"\"{statement}\"",
                 topic=topic,
-                signal="risk" if topic in RISK_TOPICS else "neutral",
+                signal=_signal(topic),
             )
         notes_data.append(
             {
@@ -162,6 +189,7 @@ def get_meeting_notes(ds: Dataset, client_id: str) -> ToolResult:
                 "author": note.get("author"),
                 "title": note.get("title"),
                 "body": body,
+                "statement_count": len(statements),
                 "quotes": quotes,
             }
         )

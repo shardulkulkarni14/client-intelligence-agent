@@ -3,6 +3,10 @@
 Windows are counted back from the extract date by opened_date. Ticket subjects are
 quoted as reported; many generic subjects in this data do not match their category,
 so the tool never interprets them.
+
+Closed tickets often explain a number elsewhere in the briefing (a client asking to
+pause streams explains a fall in streaming usage), so recent and high-priority tickets
+are listed one by one, not only counted.
 """
 
 from __future__ import annotations
@@ -39,6 +43,9 @@ TOP_CATEGORIES = 3
 MAX_ROWS = 40  # cap on row IDs carried by a calc fact; the full list is in data
 HIGH_PRIORITIES = ("P1", "P2")
 OPEN_STATUS = "open"  # the data has exactly two statuses: open and closed
+NOTABLE_RECENT_DAYS = 90  # every ticket opened in this window is listed
+NOTABLE_HIGH_DAYS = 365  # P1/P2 tickets are listed for this longer window
+MAX_NOTABLE_TICKETS = 10  # cap on per-ticket facts; the full list is in data
 
 
 def _in_window(tickets: list[Row], start: date, end: date) -> list[Row]:
@@ -74,6 +81,47 @@ def _window_stats(tickets: list[Row]) -> dict[str, Any]:
             else None
         ),
     }
+
+
+def _notable(tickets: list[Row], as_of: date) -> list[Row]:
+    """Tickets worth reading one by one, newest first: everything opened recently plus
+    P1/P2 over the last year. Open tickets are left out; they have their own facts."""
+    recent_start = as_of - timedelta(days=NOTABLE_RECENT_DAYS)
+    high_start = as_of - timedelta(days=NOTABLE_HIGH_DAYS)
+    recent = {t["ticket_id"] for t in _in_window(tickets, recent_start, as_of)}
+    high = {
+        t["ticket_id"]
+        for t in _in_window(tickets, high_start, as_of)
+        if t.get("priority") in HIGH_PRIORITIES
+    }
+    picked = [
+        t
+        for t in tickets
+        if t["ticket_id"] in recent | high and t.get("status") != OPEN_STATUS
+    ]
+    return sorted(picked, key=lambda t: (t["opened_date"], t["ticket_id"]), reverse=True)
+
+
+def _notable_text(t: Row) -> str:
+    parts = [
+        f"priority {t.get('priority') or 'unknown'}",
+        f"category {t.get('category') or 'unknown'}",
+        f"product {t.get('product_id') or 'unknown'}",
+        f"opened {fmt_date(t['opened_date'])}",
+    ]
+    if t.get("closed_date") is not None:
+        days = (t["closed_date"] - t["opened_date"]).days
+        parts.append(
+            f"closed {fmt_date(t['closed_date'])} after {fmt_num(days)} "
+            f"{'day' if days == 1 else 'days'}"
+        )
+    if t.get("csat_score") is not None:
+        parts.append(f"CSAT {fmt_num(t['csat_score'])} out of {fmt_num(5)}")
+    return (
+        f"Ticket {t['ticket_id']}: {t.get('status') or 'status unknown'}, "
+        + ", ".join(parts)
+        + f"; subject as written by the client: \"{t.get('subject') or ''}\"."
+    )
 
 
 def get_support_summary(ds: Dataset, client_id: str) -> ToolResult:
@@ -268,5 +316,48 @@ def get_support_summary(ds: Dataset, client_id: str) -> ToolResult:
     data["open_tickets"] = open_data
     data["open_count"] = len(open_tickets)
     data["open_p1_p2_count"] = len(open_high)
+
+    # Recent and high-priority tickets that are no longer open, one fact each.
+    notable = _notable(tickets, as_of)
+    shown = notable[:MAX_NOTABLE_TICKETS]
+    left_out = notable[MAX_NOTABLE_TICKETS:]
+    for t in shown:
+        fb.data(
+            cite("ticket", t["ticket_id"]),
+            _notable_text(t),
+            topic="notable_tickets",
+            signal="neutral",
+        )
+    if left_out:
+        fb.calc(
+            f"{_plural(len(left_out), 'further ticket')} that are no longer open, opened in "
+            f"the last {fmt_num(NOTABLE_RECENT_DAYS)} days or P1/P2 in the last "
+            f"{fmt_num(NOTABLE_HIGH_DAYS)} days, are not listed one by one; only the "
+            f"{fmt_num(len(shown))} most recent are.",
+            rows=_rows(left_out),
+            topic="notable_tickets",
+            signal="neutral",
+        )
+    data["notable_tickets"] = [
+        {
+            "ticket_id": t["ticket_id"],
+            "status": t.get("status"),
+            "priority": t.get("priority"),
+            "category": t.get("category"),
+            "product_id": t.get("product_id"),
+            "opened_date": t["opened_date"],
+            "closed_date": t.get("closed_date"),
+            "days_to_close": (
+                (t["closed_date"] - t["opened_date"]).days
+                if t.get("closed_date") is not None
+                else None
+            ),
+            "csat_score": t.get("csat_score"),
+            "subject": t.get("subject"),
+            "listed": i < MAX_NOTABLE_TICKETS,
+        }
+        for i, t in enumerate(notable)
+    ]
+    data["notable_left_out_count"] = len(left_out)
 
     return fb.result(OK, data=data)

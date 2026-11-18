@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from datetime import date
+from decimal import ROUND_HALF_UP, Decimal
 from typing import Any
 
 # kind of a fact
@@ -106,23 +107,30 @@ class FactBuilder:
 # --- formatting: the only place figures are turned into text -----------------
 
 
+def _round(value: float, decimals: int) -> Decimal:
+    """Round half up, as a reader would. Python's own formatting rounds half to even
+    on binary floats, which turns 1.25 into 1.2."""
+    return Decimal(str(value)).quantize(Decimal(1).scaleb(-decimals), rounding=ROUND_HALF_UP)
+
+
 def fmt_eur(value: float | None) -> str:
     """752000 -> 'EUR 752,000'. Whole euros; the data has no cents that matter."""
-    return "n/a" if value is None else f"EUR {round(value):,}"
+    return "n/a" if value is None else f"EUR {_round(value, 0):,}"
 
 
 def fmt_num(value: float | None, decimals: int = 0) -> str:
     """8631 -> '8,631'; 12.5 with decimals=1 -> '12.5'."""
     if value is None:
         return "n/a"
-    return f"{value:,.{decimals}f}"
+    return f"{_round(value, decimals):,}"
 
 
 def fmt_pct(value: float | None, signed: bool = True) -> str:
     """-28.04 -> '-28.0%'. Input is already in percent, one decimal, sign shown."""
     if value is None:
         return "n/a"
-    return f"{value:+.1f}%" if signed else f"{value:.1f}%"
+    rounded = _round(value, 1) + 0  # adding zero turns -0.0 into 0.0
+    return f"{rounded:+}%" if signed else f"{rounded}%"
 
 
 def fmt_date(value: date | None) -> str:

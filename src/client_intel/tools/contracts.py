@@ -1,8 +1,7 @@
 """Contract position and CRM opportunities for one client.
 
-"In force" is decided by status AND dates together: a filter on status alone misses
-a contract that has run out, and a filter on dates alone would treat an unsigned
-draft as binding. Anything not in force is always labelled as such in the sentence.
+"In force" is decided in one place, Dataset.contract_in_force (status AND dates
+together). Anything not in force is always labelled as such in the sentence.
 """
 
 from __future__ import annotations
@@ -35,17 +34,12 @@ def _k(contract: Row) -> str:
     return cite("contracts", contract["contract_id"])
 
 
-def _split(ds: Dataset, client_id: str) -> tuple[list[Row], list[Row], list[Row]]:
-    """Return (in force, signed and ended, pending signature), each oldest first."""
+def _split(ds: Dataset, client_id: str) -> tuple[Row | None, list[Row], list[Row]]:
+    """Return (in force, signed and ended, pending signature); the lists oldest first."""
     rows = sorted(ds.for_client("contracts", client_id), key=lambda c: c["start_date"])
-    in_force = [
-        c
-        for c in rows
-        if c["status"] == "active" and c["start_date"] <= ds.as_of <= c["end_date"]
-    ]
     pending = [c for c in rows if c["status"] == "pending_signature"]
     ended = [c for c in rows if c["status"] != "pending_signature" and c["end_date"] < ds.as_of]
-    return in_force, sorted(ended, key=lambda c: c["end_date"]), pending
+    return ds.contract_in_force(client_id), sorted(ended, key=lambda c: c["end_date"]), pending
 
 
 def _product_label(ds: Dataset, product_id: str) -> str:
@@ -142,7 +136,7 @@ def get_contract_status(ds: Dataset, client_id: str) -> ToolResult:
     """The contract in force as of ds.as_of, or the labelled alternatives if there is none."""
     fb = FactBuilder("contract_status")
     as_of: date = ds.as_of
-    in_force_all, ended, pending = _split(ds, client_id)
+    current, ended, pending = _split(ds, client_id)
     data: dict[str, Any] = {
         "client_id": client_id,
         "as_of": as_of,
@@ -161,20 +155,11 @@ def get_contract_status(ds: Dataset, client_id: str) -> ToolResult:
         "pending_vs_reference": [],
         "contract_count": len(ds.for_client("contracts", client_id)),
     }
-    if not (in_force_all or ended or pending):
+    if not (current or ended or pending):
         fb.gap("no_contracts", f"No contract of any status is on file for client {client_id}.")
         return fb.result(NO_DATA, data)
 
-    current = in_force_all[-1] if in_force_all else None
     last_expired = ended[-1] if ended else None
-    if len(in_force_all) > 1:
-        ids = ", ".join(c["contract_id"] for c in in_force_all)
-        fb.gap(
-            "multiple_contracts_in_force",
-            f"More than one contract is in force as of {fmt_date(as_of)} ({ids}); the "
-            f"latest, {current['contract_id']}, is reported.",
-            [_k(c) for c in in_force_all],
-        )
 
     if current is not None:
         _in_force_facts(fb, ds, current, data)
@@ -262,7 +247,8 @@ def _in_force_facts(fb: FactBuilder, ds: Dataset, current: Row, data: dict[str, 
     renew_text = (
         "renews automatically for the same term unless notice is given"
         if auto
-        else "does not renew automatically and ends on its end date unless a renewal is signed"
+        else "does not renew automatically and ends on its end date unless a new contract "
+        "is signed"
     )
     fb.data(
         ref,
@@ -272,12 +258,14 @@ def _in_force_facts(fb: FactBuilder, ds: Dataset, current: Row, data: dict[str, 
     )
 
     days_to_end = (current["end_date"] - as_of).days
+    # With automatic renewal a near end date or a passed deadline means the contract
+    # rolls over, so neither is a risk by itself; without it the contract simply ends.
     fb.calc(
         f"Contract {cid} ends on {fmt_date(current['end_date'])}, {fmt_num(days_to_end)} days "
         f"after {fmt_date(as_of)}.",
         [ref],
         topic="renewal",
-        signal="risk" if days_to_end <= NOTICE_RISK_DAYS else "neutral",
+        signal="risk" if days_to_end <= NOTICE_RISK_DAYS and not auto else "neutral",
     )
 
     info = _contract_data(ds, current)
@@ -285,6 +273,7 @@ def _in_force_facts(fb: FactBuilder, ds: Dataset, current: Row, data: dict[str, 
     info["notice_deadline"] = None
     info["days_to_notice_deadline"] = None
     info["notice_deadline_passed"] = None
+    info["auto_renew_next_term_start"] = None
     if notice_days is None:
         fb.gap(
             "no_notice_period",
@@ -312,8 +301,24 @@ def _in_force_facts(fb: FactBuilder, ds: Dataset, current: Row, data: dict[str, 
             text,
             [ref],
             topic="renewal",
-            signal="risk" if days_to_notice <= NOTICE_RISK_DAYS else "neutral",
+            signal="risk"
+            if days_to_notice <= NOTICE_RISK_DAYS and not (auto and passed)
+            else "neutral",
         )
+        if auto and passed:
+            next_start = current["end_date"] + timedelta(days=1)
+            term = current.get("term_months")
+            length = f"another {fmt_num(term)} months" if term is not None else "another term"
+            fb.calc(
+                f"The notice deadline for {cid} passed on {fmt_date(deadline)} and the data "
+                "holds no record of notice either way; with automatic renewal the contract "
+                f"would roll over for {length} from {fmt_date(next_start)} unless notice "
+                "was given.",
+                [ref],
+                topic="renewal",
+                signal="neutral",
+            )
+            info["auto_renew_next_term_start"] = next_start
         info["notice_deadline"] = deadline
         info["days_to_notice_deadline"] = days_to_notice
         info["notice_deadline_passed"] = passed
@@ -393,8 +398,7 @@ def get_opportunities(ds: Dataset, client_id: str) -> ToolResult:
     opps = sorted(ds.for_client("opportunities", client_id), key=lambda o: o["opp_id"])
     open_opps = [o for o in opps if o["stage"] not in CLOSED_STAGES]
     closed_opps = [o for o in opps if o["stage"] in CLOSED_STAGES]
-    in_force_all, ended, _pending = _split(ds, client_id)
-    current = in_force_all[-1] if in_force_all else None
+    current, ended, _pending = _split(ds, client_id)
     reference = current or (ended[-1] if ended else None)
 
     lost = [o for o in closed_opps if o["stage"] == "Closed Lost" and o["product_id"]]
@@ -517,13 +521,22 @@ def get_opportunities(ds: Dataset, client_id: str) -> ToolResult:
         has_renewal = any(o["opp_type"] == "renewal" for o in open_opps)
         if 0 <= days_to_end <= RENEWAL_HORIZON_DAYS and not has_renewal:
             data["no_renewal_opportunity"] = True
+            auto = current.get("auto_renew") == "Y"
+            tail = (
+                "no renewal opportunity is recorded; the contract auto-renews."
+                if auto
+                else "no renewal opportunity is recorded; the contract does not auto-renew "
+                "and ends unless a new one is signed."
+            )
             text = (
                 f"Contract {current['contract_id']} ends on {fmt_date(current['end_date'])}, "
-                f"{fmt_num(days_to_end)} days after {fmt_date(as_of)}, and no open renewal "
-                "opportunity exists in the CRM."
+                f"{fmt_num(days_to_end)} days after {fmt_date(as_of)}, and {tail}"
             )
             fb.gap("no_renewal_opportunity", text, [_k(current)])
-            fb.calc(text, [_k(current)], topic="renewal", signal="risk")
+            # A missing renewal deal only threatens revenue when nothing renews by itself.
+            fb.calc(
+                text, [_k(current)], topic="renewal", signal="neutral" if auto else "risk"
+            )
 
     if not opps:
         fb.gap("no_opportunities", f"No CRM opportunity is on file for client {client_id}.")

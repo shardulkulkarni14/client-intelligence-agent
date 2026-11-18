@@ -13,7 +13,11 @@ from client_intel.pipeline import RequestError, load_triggers, run
 
 
 def main(argv: list[str] | None = None) -> int:
-    triggers = sorted(load_triggers())
+    try:
+        triggers = sorted(load_triggers())
+    except RequestError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
     parser = argparse.ArgumentParser(
         prog="client-intel",
         description="Write a cited client briefing for a sales rep from the data pack.",

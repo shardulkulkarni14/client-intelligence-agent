@@ -1,4 +1,5 @@
 import json
+from dataclasses import replace
 from datetime import date
 
 import pytest
@@ -53,6 +54,10 @@ def test_c001_contract_in_force(ds: Dataset) -> None:
     assert notice.signal == "neutral"  # 31 days away is just outside the 30-day risk window
     assert "renews automatically" in _one(result, "notice period").text
     assert "60 days" in _one(result, "notice period").text
+    # Auto-renew with the deadline still ahead: nothing has rolled over, so no such fact.
+    assert not any("roll over" in t for t in _texts(result))
+    assert data["in_force"]["auto_renew_next_term_start"] is None
+    assert _one(result, "ends on 2027-01-31").signal == "neutral"
 
 
 def test_c001_lines_and_change_at_last_renewal(ds: Dataset) -> None:
@@ -129,7 +134,12 @@ def test_c003_notice_deadline_passed_and_no_previous_contract(ds: Dataset) -> No
     notice = _one(result, "notice deadline")
     assert notice.signal == "risk"
     assert "was 2026-10-02" in notice.text and "passed 30 days before" in notice.text
-    assert "does not renew automatically" in _one(result, "notice period").text
+    assert _one(result, "notice period").text == (
+        "Contract K-0005 does not renew automatically and ends on its end date unless a new "
+        "contract is signed; its notice period is 90 days before the end date."
+    )
+    assert not any("roll over" in t for t in _texts(result))
+    assert info["auto_renew_next_term_start"] is None
     assert result.data["arr_change"] is None
     assert "no_previous_contract" in [g.code for g in result.gaps]
 
@@ -142,6 +152,48 @@ def test_c005_shortened_term_is_a_risk(ds: Dataset) -> None:
     fact = _one(result, "The term changed")
     assert fact.signal == "risk"
     assert fact.rows == ["contracts:K-0007", "contracts:K-0008"]
+
+
+def test_c005_auto_renew_with_passed_deadline_is_stated_not_flagged(ds: Dataset) -> None:
+    # K-0008: ends 2026-11-30, 60 days notice -> deadline 2026-10-01, 31 days before the
+    # extract date. Auto-renew "Y", 12-month term -> next term would start 2026-12-01.
+    result = get_contract_status(ds, "C005")
+    info = result.data["in_force"]
+    assert info["auto_renew"] == "Y"
+    assert info["notice_deadline"] == date(2026, 10, 1)
+    assert info["notice_deadline_passed"] is True
+    assert info["auto_renew_next_term_start"] == date(2026, 12, 1)
+    rollover = _one(result, "roll over")
+    assert rollover.text == (
+        "The notice deadline for K-0008 passed on 2026-10-01 and the data holds no record "
+        "of notice either way; with automatic renewal the contract would roll over for "
+        "another 12 months from 2026-12-01 unless notice was given."
+    )
+    assert rollover.kind == CALC
+    assert rollover.rows == ["contracts:K-0008"]
+    assert (rollover.topic, rollover.signal) == ("renewal", "neutral")
+    ends = _one(result, "ends on 2026-11-30")
+    assert ends.text == "Contract K-0008 ends on 2026-11-30, 29 days after 2026-11-01."
+    assert ends.signal == "neutral"
+    passed = _one(result, "passed 31 days before")
+    assert "was 2026-10-01" in passed.text
+    assert passed.signal == "neutral"
+    # The auto-renew position alone raises no risk; the shortened term still does.
+    assert [f.text for f in result.facts if f.topic == "renewal" and f.signal == "risk"] == []
+
+
+def test_only_c005_has_a_passed_deadline_on_an_auto_renew_contract(ds: Dataset) -> None:
+    rolled = [
+        c for c in ds.clients if any("roll over" in t for t in _texts(get_contract_status(ds, c)))
+    ]
+    assert rolled == ["C005"]
+
+
+def test_in_force_is_the_shared_definition_for_every_client(ds: Dataset) -> None:
+    for client_id in ds.clients:
+        current = ds.contract_in_force(client_id)
+        reported = get_contract_status(ds, client_id).data["in_force_contract_id"]
+        assert reported == (current["contract_id"] if current else None)
 
 
 def test_c022_notice_deadline_exactly_30_days_is_risk(ds: Dataset) -> None:
@@ -303,9 +355,34 @@ def test_c005_no_opportunities_but_renewal_gap_still_raised(ds: Dataset) -> None
     result = get_opportunities(ds, "C005")
     assert result.status == NO_DATA
     assert sorted(g.code for g in result.gaps) == ["no_opportunities", "no_renewal_opportunity"]
-    fact = _one(result, "no open renewal")
+    fact = _one(result, "no renewal opportunity")
+    assert fact.text == (
+        "Contract K-0008 ends on 2026-11-30, 29 days after 2026-11-01, and no renewal "
+        "opportunity is recorded; the contract auto-renews."
+    )
+    assert fact.signal == "neutral"
+    gap = next(g for g in result.gaps if g.code == "no_renewal_opportunity")
+    assert gap.text == fact.text
+
+
+def test_no_renewal_opportunity_is_a_risk_only_without_auto_renew(ds: Dataset) -> None:
+    # Every client flagged on the real data auto-renews, so none of them is a risk.
+    for client_id in ["C005", "C006", "C013", "C016", "C020", "C022"]:
+        fact = _one(get_opportunities(ds, client_id), "no renewal opportunity")
+        assert fact.text.endswith("the contract auto-renews.")
+        assert fact.signal == "neutral"
+    # C003's K-0005 (auto_renew "N", ends 2026-12-31) has renewal opportunity O-0003 in
+    # the pack. Without it the contract ends with nothing lined up.
+    assert "O-0003" in [o["opp_id"] for o in get_opportunities(ds, "C003").data["open"]]
+    assert get_opportunities(ds, "C003").data["no_renewal_opportunity"] is False
+    bare = replace(ds, opportunities=[o for o in ds.opportunities if o["client_id"] != "C003"])
+    fact = _one(get_opportunities(bare, "C003"), "no renewal opportunity")
+    assert fact.text == (
+        "Contract K-0005 ends on 2026-12-31, 60 days after 2026-11-01, and no renewal "
+        "opportunity is recorded; the contract does not auto-renew and ends unless a new "
+        "one is signed."
+    )
     assert fact.signal == "risk"
-    assert "K-0008" in fact.text and "29 days" in fact.text
 
 
 def test_every_opportunity_appears_once_and_serialises(ds: Dataset) -> None:

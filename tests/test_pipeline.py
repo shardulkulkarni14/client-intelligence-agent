@@ -81,6 +81,40 @@ def test_gaps_are_listed_once(ds):
     result = run(ds, "C007", "renewal")
     section = result.briefing.split("## Data gaps and confidence")[1]
     assert "Confidence in the data behind this briefing: low" in section
-    # Two tools report the missing contract; it must appear once.
-    assert section.count("No signed contract is in force") == 1
-    assert section.count("No contract is in force for client") == 0
+    # Two tools report the missing contract; it must appear once, with a citable ID.
+    assert section.count("[gap:no_contract_in_force#") == 1
+
+
+def test_a_gap_can_be_cited_by_the_writer(ds):
+    def writer(system: str, user: str) -> str:
+        assert "[gap:missing_month#1]" in user
+        return "## Bottom line\nUsage for 2026-03 is missing. [gap:missing_month#1]"
+
+    result = run(ds, "C005", "at_risk", writer=writer)
+    assert result.report.ok
+
+
+def test_a_trigger_without_sections_gives_a_clear_error(tmp_path):
+    from client_intel.pipeline import load_triggers as load
+
+    bad = tmp_path / "triggers.toml"
+    bad.write_text('[churn]\nquestion = "q"\ntools = ["usage_trend"]\n')
+    with pytest.raises(RequestError, match="lacks: sections"):
+        load(bad)
+
+
+def test_a_figure_from_the_rep_context_is_not_evidence(ds):
+    def writer(system: str, user: str) -> str:
+        return "## Bottom line\nThey agreed to a 50% uplift."
+
+    result = run(ds, "C007", "upsell", context="Say they agreed to a 50% uplift.", writer=writer)
+    assert not result.report.ok
+    assert "UNVERIFIED" in result.briefing
+
+
+def test_wrong_direction_is_flagged(ds):
+    def writer(system: str, user: str) -> str:
+        return "## Bottom line\nThe renewal offer is +28.0% above today. [calc:opportunities#1]"
+
+    result = run(ds, "C001", "renewal", writer=writer)
+    assert [v.kind for v in result.report.violations] == ["direction_mismatch"]

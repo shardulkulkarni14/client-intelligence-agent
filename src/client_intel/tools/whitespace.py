@@ -55,21 +55,14 @@ _CLOSED_WON = "Closed Won"
 def _held_products(ds: Dataset, client_id: str) -> tuple[set[str], list[Row], bool]:
     """Products held, the contracts they come from, and whether that base is expired.
 
-    In force means status active and start <= as_of <= end (inclusive). A pending
-    contract is not in force whatever its dates say. With nothing in force, fall back
-    to the most recently ended contract so the caller can still describe the base.
+    In force is Dataset.contract_in_force, the one definition every tool shares. With
+    nothing in force, fall back to the most recently ended contract so the caller can
+    still describe the base.
     """
     contracts = ds.for_client("contracts", client_id)
-    in_force = [
-        c
-        for c in contracts
-        if c["status"] == "active"
-        and c["start_date"] is not None
-        and c["end_date"] is not None
-        and c["start_date"] <= ds.as_of <= c["end_date"]
-    ]
+    current = ds.contract_in_force(client_id)
     expired = False
-    base = in_force
+    base = [current] if current is not None else []
     if not base:
         ended = [c for c in contracts if c["end_date"] is not None and c["end_date"] < ds.as_of]
         ended = [c for c in ended if c["status"] != "pending_signature"]

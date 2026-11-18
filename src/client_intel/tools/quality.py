@@ -10,7 +10,6 @@ from client_intel.db import Dataset
 from client_intel.evidence import NO_DATA, OK, PARTIAL, FactBuilder, ToolResult, cite, fmt_num
 from client_intel.tools.usage import (
     MIN_HISTORY_MONTHS,
-    contract_in_force,
     last_complete_month,
     missing_months,
     product_label,
@@ -117,7 +116,7 @@ def check_data_quality(ds: Dataset, client_id: str) -> ToolResult:
 
     # Contract coverage.
     contracts = ds.for_client("contracts", client_id)
-    if contract_in_force(ds, client_id) is None:
+    if ds.contract_in_force(client_id) is None:
         ids = ", ".join(f"{c['contract_id']} ({c['status']})" for c in contracts) or "none"
         fb.gap(
             "no_contract_in_force",

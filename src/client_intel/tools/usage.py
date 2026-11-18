@@ -106,21 +106,9 @@ def missing_months(by_month: dict[str, Row], cutoff: str) -> list[str]:
     return [m for m in month_range(min(by_month), cutoff) if m not in by_month]
 
 
-def contract_in_force(ds: Dataset, client_id: str) -> Row | None:
-    """A signed, active contract whose term covers as_of. Pending signature is not in force."""
-    for contract in ds.for_client("contracts", client_id):
-        if (
-            contract["status"] == "active"
-            and contract["signed_date"] is not None
-            and contract["start_date"] <= ds.as_of <= contract["end_date"]
-        ):
-            return contract
-    return None
-
-
 def relevant_contract(ds: Dataset, client_id: str) -> Row | None:
     """The contract in force, else the most recently ended signed one (for its rates)."""
-    current = contract_in_force(ds, client_id)
+    current = ds.contract_in_force(client_id)
     if current is not None:
         return current
     signed = [
@@ -152,6 +140,16 @@ def _util(used: float, included: float | None) -> float | None:
     if included is None or included == 0:
         return None
     return used / included * 100.0
+
+
+def _window_label(months: list[str], cutoff: str) -> str:
+    """Name the months actually compared. "The last N months" is only true when they
+    are consecutive and end at the last complete month; otherwise say what was used."""
+    count = fmt_num(len(months))
+    first, last = _one(months[0]), _one(months[-1])
+    if months == month_range(months[0], cutoff):
+        return f"the last {count} months ({first} to {last})"
+    return f"the {count} months with data between {first} and {last}"
 
 
 def _yoy_signal(pct: float | None) -> str:
@@ -211,6 +209,7 @@ def _product_trend(
         "latest": None,
         "utilisation_recent_pct": None,
         "utilisation_recent_months": [],
+        "peak": None,
         "months_over_included": None,
         "months_over_compared": 0,
         "recent_months_over_included": None,
@@ -346,9 +345,16 @@ def _product_trend(
         info["utilisation_recent_pct"] = util
         info["utilisation_recent_months"] = months
         if util is not None:
-            low = util < LOW_UTILISATION_RISK_PCT
+            # A product only just switched on has not had time to ramp up, so low
+            # utilisation over a short history is not evidence of a downsell risk.
+            low = util < LOW_UTILISATION_RISK_PCT and not short
             if low:
                 info["signals"].append("low_utilisation_risk")
+            caveat = (
+                f" This figure covers only {fmt_num(len(rows))} months of usage history."
+                if short
+                else ""
+            )
             partial = (
                 ""
                 if len(months) == RECENT_MONTHS
@@ -358,7 +364,7 @@ def _product_trend(
             fb.calc(
                 f"{label}: average utilisation of {fmt_pct(util, signed=False)} in "
                 f"{month_label(months)}{partial}: {num(used)} {unit} used against "
-                f"{num(included)} included.",
+                f"{num(included)} included.{caveat}",
                 _cites(known_recent),
                 topic="utilisation",
                 signal="risk" if low else "neutral",
@@ -366,6 +372,28 @@ def _product_trend(
 
     lookback = [r for r in rows[-OVER_LOOKBACK_MONTHS:] if r["included_units"] is not None]
     if lookback:
+        window = _window_label([r["month"] for r in lookback], cutoff)
+        # The recent average hides a seasonal peak (summer sports peak mid-year), and the
+        # peak is what the included volume has to cover.
+        peak = max(lookback, key=lambda r: _util(r["units_used"], r["included_units"]) or 0.0)
+        peak_util = _util(peak["units_used"], peak["included_units"])
+        if peak_util is not None:
+            info["peak"] = {
+                "month": peak["month"],
+                "units_used": peak["units_used"],
+                "included_units": peak["included_units"],
+                "utilisation_pct": peak_util,
+                "usage_id": peak["usage_id"],
+            }
+            fb.calc(
+                f"{label}: highest utilisation in {window} was "
+                f"{fmt_pct(peak_util, signed=False)} in {_one(peak['month'])}: "
+                f"{num(peak['units_used'])} {unit} used against "
+                f"{num(peak['included_units'])} included.",
+                _cites([peak]),
+                topic="utilisation_peak",
+                signal="neutral",
+            )
         # Numeric comparison on the loader's floats; the raw TEXT columns would mis-order.
         over = [r for r in lookback if r["units_used"] > r["included_units"]]
         recent_over = [r for r in known_recent if r["units_used"] > r["included_units"]]
@@ -377,9 +405,8 @@ def _product_trend(
         if sustained:
             info["signals"].append("sustained_over_included_opportunity")
         fb.calc(
-            f"{label}: usage was above the included volume in {fmt_num(len(over))} of the "
-            f"last {fmt_num(len(lookback))} months with a known included volume "
-            f"({_one(lookback[0]['month'])} to {_one(lookback[-1]['month'])}), including "
+            f"{label}: usage was above the included volume in {fmt_num(len(over))} of "
+            f"{window}, including "
             f"{fmt_num(len(recent_over))} of {fmt_num(len(known_recent))} in "
             f"{month_label([r['month'] for r in known_recent]) if known_recent else 'n/a'}.",
             _cites(lookback),

@@ -114,7 +114,8 @@ def main() -> int:
             rows.append(f"| {case['id']} | {case['trigger']} | ERROR | {exc} |")
             failures.append(f"- **{case['id']}**: did not run: {exc}")
             continue
-        out = ROOT / "outputs" / case["id"]
+        # Offline runs go elsewhere so they never overwrite the model's sample outputs.
+        out = ROOT / ("runs/eval_offline" if args.no_llm else "outputs") / case["id"]
         out.mkdir(parents=True, exist_ok=True)
         (out / "briefing.md").write_text(result.briefing)
         (out / "evidence.json").write_text(json.dumps(result.evidence, indent=2))

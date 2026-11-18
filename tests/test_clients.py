@@ -21,6 +21,11 @@ from client_intel.tools.clients import get_client_profile, resolve_client
         ("Oakhurst Cricket Board", "C011", "exact"),
         ("Halden Bet plc", "C001", "name_in_query"),
         ("Marrow", "C005", "substring"),
+        ("Client C001", "C001", "id_in_query"),
+        ("client c001 please", "C001", "id_in_query"),
+        ("Briefing for C017, thanks", "C017", "id_in_query"),
+        ("Athletics", "C014", "words"),
+        ("Wexley Athletic", "C017", "words"),
     ],
 )
 def test_resolves_one_client(ds: Dataset, query: str, client_id: str, match_type: str) -> None:
@@ -44,6 +49,14 @@ def test_resolves_one_client(ds: Dataset, query: str, client_id: str, match_type
         ("media", ["C002", "C013"]),
         ("League", ["C003", "C018"]),
         ("Fantasy", ["C006", "C019"]),
+        # Whole word of "Wexley Athletic FC", start of a word in "Thornbury Athletics
+        # Federation".
+        ("Athletic", ["C014", "C017"]),
+        ("athletic", ["C014", "C017"]),
+        ("Athlet", ["C014", "C017"]),
+        # Two valid IDs, or an ID next to another client's full name: not guessed.
+        ("C001 and C002", ["C001", "C002"]),
+        ("Halden Bet (C003)", ["C003", "C001"]),
     ],
 )
 def test_ambiguous_name_is_not_guessed(ds: Dataset, query: str, expected: list[str]) -> None:
@@ -65,7 +78,9 @@ def test_ambiguous_candidates_carry_names(ds: Dataset) -> None:
     ]
 
 
-@pytest.mark.parametrize("query", ["Nonexistent Sports Ltd", "C999", "", "   ", "&"])
+@pytest.mark.parametrize(
+    "query", ["Nonexistent Sports Ltd", "C999", "", "   ", "&", "Client C999", "abc001"]
+)
 def test_unknown_client_is_not_found(ds: Dataset, query: str) -> None:
     result = resolve_client(ds, query)
     assert result.status == NO_DATA
@@ -108,3 +123,16 @@ def test_profile_unknown_client(ds: Dataset) -> None:
     assert result.status == NO_DATA
     assert result.facts == []
     assert [g.code for g in result.gaps] == ["client_not_found"]
+
+
+def test_athletic_names_both_candidates(ds: Dataset) -> None:
+    result = resolve_client(ds, "Athletic")
+    assert result.data["match_type"] == "substring"
+    assert result.data["candidates"] == [
+        {"client_id": "C014", "client_name": "Thornbury Athletics Federation"},
+        {"client_id": "C017", "client_name": "Wexley Athletic FC"},
+    ]
+    assert result.gaps[0].text == (
+        '"Athletic" matches several clients and none was chosen: '
+        "Thornbury Athletics Federation (C014), Wexley Athletic FC (C017)."
+    )

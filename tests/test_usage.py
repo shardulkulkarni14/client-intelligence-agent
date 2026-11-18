@@ -161,10 +161,77 @@ def test_c004_short_history_gives_no_year_on_year(ds: Dataset) -> None:
     assert "usage_prior_period" not in topics
     # 800 / 2000 = 40.0% in October; (523 + 800) / 4000 = 33.1% over the two months held.
     assert "a utilisation of 40.0%" in _fact(ds, "C004", "LIVE_DATA", "usage_latest").text
+    # Two months of history is a ramp-up, not a downsell signal: stated, never a risk.
     util = _fact(ds, "C004", "LIVE_DATA", "utilisation")
-    assert "33.1%" in util.text
-    assert util.signal == "risk"
-    assert "low_utilisation_risk" in p["signals"]
+    assert util.text == (
+        "LIVE_DATA (Live Match Data Feed): average utilisation of 33.1% in Sep-Oct 2026 "
+        "(2 of the last 3 months have usage and a known included volume): 1,323 API calls "
+        "(thousands) used against 4,000 included. This figure covers only 2 months of "
+        "usage history."
+    )
+    assert util.signal == "neutral"
+    assert p["signals"] == []
+    assert not [f for f in result.facts if f.signal == "risk"]
+
+
+def test_c011_stream_peak_month_is_june(ds: Dataset) -> None:
+    # C011 STREAM, included 420, Nov 2025-Oct 2026:
+    # 227 148 173 198 237 214 328 390 345 339 299 217 -> peak 390 in Jun 2026 (U-00894),
+    # 390 / 420 = 92.86%. The Aug-Oct average (67.9%) hides this summer peak.
+    p = _product(ds, "C011", "STREAM")
+    assert p["peak"] == {
+        "month": "2026-06",
+        "units_used": 390,
+        "included_units": 420,
+        "utilisation_pct": pytest.approx(92.857, abs=0.001),
+        "usage_id": "U-00894",
+    }
+    fact = _fact(ds, "C011", "STREAM", "utilisation_peak")
+    assert fact.text == (
+        "STREAM (Live Streaming): highest utilisation in the last 12 months (Nov 2025 to "
+        "Oct 2026) was 92.9% in Jun 2026: 390 streamed hours used against 420 included."
+    )
+    assert fact.kind == CALC
+    assert fact.rows == ["usage:U-00894"]
+    assert fact.signal == "neutral"
+    assert "67.9%" in _fact(ds, "C011", "STREAM", "utilisation").text
+
+
+def test_every_product_with_a_known_included_volume_has_one_peak_fact(ds: Dataset) -> None:
+    for client_id in ds.clients:
+        result = get_usage_trend(ds, client_id)
+        peaks = [f for f in result.facts if f.topic == "utilisation_peak"]
+        with_volume = [
+            pid
+            for pid, p in result.data["products"].items()
+            if p["months_over_compared"] > 0
+        ]
+        assert len(peaks) == len(with_volume)
+        assert all(len(f.rows) == 1 for f in peaks)
+
+
+def test_window_label_names_the_months_actually_compared(ds: Dataset) -> None:
+    # Clean series: twelve consecutive months ending at the last complete month.
+    assert "in 10 of the last 12 months (Nov 2025 to Oct 2026), including" in (
+        _fact(ds, "C002", "STREAM", "over_included").text
+    )
+    # C005 has no March 2026 row, so its last 12 rows span 13 calendar months.
+    c005 = _fact(ds, "C005", "STREAM", "over_included")
+    assert c005.text == (
+        "STREAM (Live Streaming): usage was above the included volume in 0 of the 12 months "
+        "with data between Oct 2025 and Oct 2026, including 0 of 3 in Aug-Oct 2026."
+    )
+    assert "the last 12 months" not in c005.text
+    assert "the 12 months with data between Oct 2025 and Oct 2026" in (
+        _fact(ds, "C005", "STREAM", "utilisation_peak").text
+    )
+    # C007's October included volume is blank, so the window stops in September.
+    assert "in 0 of the 11 months with data between Nov 2025 and Sep 2026" in (
+        _fact(ds, "C007", "LIVE_DATA", "over_included").text
+    )
+    assert "in 0 of the last 2 months (Sep 2026 to Oct 2026)" in (
+        _fact(ds, "C004", "LIVE_DATA", "over_included").text
+    )
 
 
 def test_c007_blank_included_units_is_a_gap(ds: Dataset) -> None:
