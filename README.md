@@ -345,7 +345,7 @@ Done after the six must-haves were complete and evaluated:
 
 ## How I built it
 
-**Time.** Timed build on Wednesday 18 November 2026, 09:00 to 13:00, as announced
+**Time.** Timed build on Wednesday 18 November 2026, 09:00 to 13:15, as announced
 by mail at the start. All code, prompts, tests and this README were written in that
 session. The first large commit, a few minutes in, is the output of four sub-agents
 working in parallel against the data contract described below.
