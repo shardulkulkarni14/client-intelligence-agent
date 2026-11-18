@@ -15,7 +15,7 @@ from __future__ import annotations
 import re
 
 from client_intel.db import Dataset
-from client_intel.evidence import NO_DATA, OK, FactBuilder, ToolResult, fmt_pct
+from client_intel.evidence import OK, FactBuilder, ToolResult, fmt_pct
 from client_intel.tools.notes import get_meeting_notes
 from client_intel.tools.usage import get_usage_trend
 
@@ -109,4 +109,5 @@ def check_claims(ds: Dataset, client_id: str) -> ToolResult:
                     fb.calc(f"{base} The data shows no clear change: {measured_text}.",
                             [cite_note, *rows], topic="claim_unclear", signal="neutral")
 
-    return fb.result(OK if checked else NO_DATA, {"client_id": client_id, "checked": checked})
+    # Nothing to compare is a normal outcome here, not missing data.
+    return fb.result(OK, {"client_id": client_id, "checked": checked})

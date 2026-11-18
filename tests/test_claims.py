@@ -26,4 +26,4 @@ def test_claim_about_a_product_without_usage_is_not_judged(ds):
 
 def test_client_without_notes_has_nothing_to_check(ds):
     result = check_claims(ds, "C004")
-    assert result.status == "no_data" and result.facts == []
+    assert result.facts == [] and result.data["checked"] == []

@@ -30,8 +30,10 @@ Style:
   in the given order. No title line.
 - "Bottom line" is two or three sentences that answer the question directly and
   say how confident the answer is.
-- Other sections: short bullets, most important first, at most five per section.
-  One idea per bullet. Leave a section with the single line "Nothing in the data
+- Other sections: short bullets, most important first, at most four per section.
+  One idea per bullet. The whole briefing fits on one page: about 400 words.
+  Leave out facts that do not change what the rep should do.
+- Write dates exactly as they appear in the facts. Leave a section with the single line "Nothing in the data
   for this." if there is nothing to say.
 - Next steps are concrete actions for the rep, each tied to a fact.
 - Plain language. No preamble, no closing remarks.
