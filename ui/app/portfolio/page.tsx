@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Fragment, useEffect, useMemo, useState } from "react";
+import { errorMessage } from "@/lib/errors";
 import type { PortfolioResponse, Reason, Score } from "@/lib/types";
 
 const eur = new Intl.NumberFormat("en-GB", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
@@ -56,7 +57,7 @@ export default function PortfolioPage() {
     fetch("/api/portfolio")
       .then(async (res) => {
         const body = await res.json();
-        if (!res.ok) throw new Error(body.error ?? `HTTP ${res.status}`);
+        if (!res.ok) throw new Error(errorMessage(body, res.status));
         setData(body as PortfolioResponse);
       })
       .catch((e: Error) => setError(`Could not load the portfolio. ${e.message}`));
@@ -64,7 +65,7 @@ export default function PortfolioPage() {
 
   const rows = useMemo(() => {
     const clients = [...(data?.clients ?? [])];
-    // The CLI already ranks by renewal risk; only the growth view needs a re-sort.
+    // The service already ranks by renewal risk; only the growth view needs a re-sort.
     if (byGrowth) clients.sort((a, b) => (b.growth?.score ?? 0) - (a.growth?.score ?? 0));
     return clients;
   }, [data, byGrowth]);
@@ -78,7 +79,7 @@ export default function PortfolioPage() {
     });
   }
 
-  if (error) return <p className="error">{error}</p>;
+  if (error) return <p className="error" role="alert">{error}</p>;
   if (!data) return <p className="muted">Loading the portfolio…</p>;
 
   return (

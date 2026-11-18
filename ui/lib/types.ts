@@ -1,4 +1,11 @@
-// Shapes of the JSON the Python CLI prints. The UI only reads them.
+// Shapes of the JSON the Python service returns. The UI only reads them.
+
+export interface HealthResponse {
+  status: string;
+  as_of: string;
+  model: string;
+  model_key_present: boolean;
+}
 
 export interface ClientRef {
   client_id: string;

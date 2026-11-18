@@ -34,30 +34,44 @@ next to its `evidence.json`.
 | `--no-llm` | facts-only briefing without any model call; needs no key |
 | `--out DIR` | output folder (default `runs`) |
 | `--portfolio` | rank all clients by renewal risk and growth, no model; add `--out DIR` to save it |
-| `--json`, `--list` | machine-readable output, used by the web UI |
+| `--json`, `--list` | machine-readable output |
 
 Exit code: 0 clean, 1 briefing written with flagged lines, 2 request could not be answered.
 
-### 3. Run the web UI (optional)
+### 3. Run the API and the web UI (optional)
 
-The UI is a thin page over the same command. It has no separate backend: its
-server-side routes run `uv run client-intel ...` in this repository, so step 1
-must be done first.
+The same pipeline is also served over HTTP, and a small web UI uses that API.
+Two processes, each in its own terminal, after step 1:
+
+```bash
+uv run client-intel-api       # backend:  http://127.0.0.1:8000  (docs at /docs)
+```
 
 ```bash
 cd ui
 npm install
-npm run dev                   # then open http://localhost:3000
+npm run dev                   # frontend: http://localhost:3000
 ```
+
+| Endpoint | Does |
+|---|---|
+| `GET /api/health` | status, as-of date, model name, whether a key is configured |
+| `GET /api/meta` | clients and triggers |
+| `POST /api/briefings` | body `{"client", "trigger", "context", "use_model"}`; returns the briefing and its evidence. 422 for a request that cannot be answered, 502 for a model problem |
+| `GET /api/portfolio` | all clients ranked |
 
 - **Briefing** page: choose a client and a trigger, run, click any citation to
   see the evidence behind it. Untick "Use the model" for a free, facts-only run.
 - **Portfolio** page (`/portfolio`): all clients ranked, with the reasons.
 
+The API calls the same `run()` function as the command, so the three entry
+points (command, API, UI) cannot drift apart. The port is set with
+`CLIENT_INTEL_API_PORT`; the UI finds the API through `CLIENT_INTEL_API_URL`.
+
 ### 4. Tests and evaluation
 
 ```bash
-uv run pytest                           # 250 tests, no model calls
+uv run pytest                           # 262 tests, no model calls
 uv run ruff check .
 uv run python eval/run_eval.py          # the evaluation, with the model
 uv run python eval/run_eval.py --no-llm # same cases on tool output only, free
@@ -203,10 +217,10 @@ Done after the six must-haves were complete and evaluated:
 |---|---|
 | New trigger through configuration only | Done; see "Adding a trigger". |
 | Note-versus-data conflicts | Done as the `claim_check` tool; the conflict reaches the briefing as a cited fact and a gap. It is not yet phrased as a question for the rep by code; the writer does that. |
-| Unit tests and a repeatable regression run | 250 tests; `eval/run_eval.py` re-runs the cases after any prompt change. |
+| Unit tests and a repeatable regression run | 262 tests; `eval/run_eval.py` re-runs the cases after any prompt change. |
 | Parallel tools with a trace | Tools run in a thread pool with the result order kept stable. `evidence.json` has a `trace`: every step with seconds, and tokens and cost for model calls. A tool that raises becomes a visible `tool_error` gap, not a failed run. These are parallel deterministic tools, not parallel model specialists. |
 | Portfolio view | `--portfolio` ranks all clients by renewal risk and by growth without a model. The score is a sum of fixed points; every point carries the fact and citation that earned it. It is an ordering aid, not a probability: the data has no churn history to fit weights to, and only a handful of clients carry real risk signals. |
-| Small UI | `ui/`, Next.js. A thin view over the command: run a briefing, click any citation to see the evidence behind it, see the trace, browse the portfolio. All logic stays in Python. Local use only, no authentication. |
+| Small UI | A FastAPI service (`api.py`, four endpoints) and a Next.js page in `ui/` that calls it. Run a briefing, click any citation to see the evidence behind it, see the trace, browse the portfolio. The API is a thin layer over the same `run()` function; it loads the data once and runs the pipeline in a worker thread. It is a local, single-user service: no authentication, no job queue for the 30 to 60 second runs, no rate limiting. |
 | LLM-as-judge scoring | Not done. I preferred to spend the time on the verifier; a judge model would rate usefulness, which is the part my automatic checks do not cover, so it is the first thing in "next". |
 
 ## Known limitations
@@ -237,7 +251,8 @@ Done after the six must-haves were complete and evaluated:
    model change, with a rep rating usefulness, which no automatic check covers.
 2. Tie each figure to its subject: have the writer emit structured claims
    (fact ID plus sentence) so the verifier can check the pairing, not only the number.
-3. Read from the warehouse through reviewed SQL views instead of a file, with data
+3. Put the API behind authentication, move the 30 to 60 second runs to a job
+   queue with status polling, and add rate limits. Read from the warehouse through reviewed SQL views instead of a file, with data
    freshness in the header and row-level access by account owner.
 4. Tracing and cost per briefing, an audit log of what was sent to the model, and
    a data-processing review for meeting notes, which contain personal data.
@@ -275,7 +290,9 @@ assistant wrote the code against them.
 5. Three agents fixed its findings in parallel, again by file ownership.
 6. With the must-haves evaluated, two more agents built the stretch goals in
    parallel against a JSON contract I wrote first: one the trace, parallel tools
-   and portfolio in Python, one the web UI in its own folder.
+   and portfolio in Python, one the web UI in its own folder. The UI first ran
+   the command as a child process; I had that replaced by a proper HTTP API,
+   since nobody would deploy the first version.
 
 **What worked.** A written data contract before parallel work: four agents
 produced code that fitted together at the first attempt. Exact-value tests against
@@ -317,7 +334,8 @@ src/client_intel/
   trace.py              step timing and cost
   portfolio.py          ranking of all clients
   cli.py
-ui/                     optional Next.js view over the command
+  api.py                the same pipeline over HTTP (FastAPI)
+ui/                     optional Next.js page that calls the API
 eval/                   cases, runner, reports
 outputs/                sample briefings and evidence from the evaluation
 data/starter_pack/      the provided data, unchanged

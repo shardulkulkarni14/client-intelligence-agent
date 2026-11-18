@@ -187,3 +187,17 @@ tr.expanded td { background: var(--bg); }
   .panel { position: static; max-height: none; }
   .reasons { grid-template-columns: 1fr; }
 }
+
+.api-status { margin-left: auto; text-align: right; }
+.api-status.down { color: var(--err-text); }
+.api-status .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 4px;
+  border-radius: 50%;
+  background: var(--err-text);
+}
+.api-status .dot.up { background: var(--ok); }
+.api-status .dot.warn { background: var(--warn-text); }
+.nokey { color: var(--warn-text); background: var(--warn-bg); padding: 1px 8px; border-radius: 4px; }

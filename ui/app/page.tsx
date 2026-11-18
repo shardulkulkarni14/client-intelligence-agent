@@ -3,7 +3,8 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import BriefingView from "@/components/BriefingView";
-import type { BriefingResponse, ListResponse } from "@/lib/types";
+import { errorMessage } from "@/lib/errors";
+import type { BriefingResponse, HealthResponse, ListResponse } from "@/lib/types";
 
 const MAX_CONTEXT = 500;
 
@@ -14,6 +15,7 @@ function BriefingPage() {
   const [trigger, setTrigger] = useState("");
   const [context, setContext] = useState("");
   const [useModel, setUseModel] = useState(true);
+  const [noKey, setNoKey] = useState(false);
   const [running, setRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<BriefingResponse | null>(null);
@@ -22,7 +24,7 @@ function BriefingPage() {
     fetch("/api/list")
       .then(async (res) => {
         const body = await res.json();
-        if (!res.ok) throw new Error(body.error ?? `HTTP ${res.status}`);
+        if (!res.ok) throw new Error(errorMessage(body, res.status));
         const data = body as ListResponse;
         setList(data);
         const wanted = data.clients.find((c) => c.client_id === preselected);
@@ -31,6 +33,21 @@ function BriefingPage() {
       })
       .catch((e: Error) => setError(`Could not load clients and triggers. ${e.message}`));
   }, [preselected]);
+
+  useEffect(() => {
+    // Without a key a model run can only fail, so the box starts unticked. Best effort:
+    // if the health check itself fails, the header already says the API is down.
+    fetch("/api/health")
+      .then(async (res) => {
+        if (!res.ok) return;
+        const health = (await res.json()) as HealthResponse;
+        if (health.model_key_present === false) {
+          setNoKey(true);
+          setUseModel(false);
+        }
+      })
+      .catch(() => undefined);
+  }, []);
 
   async function run() {
     setRunning(true);
@@ -43,7 +60,7 @@ function BriefingPage() {
         body: JSON.stringify({ client, trigger, context, useModel }),
       });
       const body = (await res.json()) as BriefingResponse;
-      if (!res.ok || !body.ok) setError(body.error ?? `The run failed (HTTP ${res.status}).`);
+      if (!res.ok || !body.ok) setError(errorMessage(body, res.status));
       else setResult(body);
     } catch (e) {
       setError(`The run failed. ${(e as Error).message}`);
@@ -99,6 +116,11 @@ function BriefingPage() {
           <span className="muted small">
             {useModel ? "(written briefing, about 40 seconds, costs a few cents)" : "(facts only, free, instant)"}
           </span>
+          {noKey ? (
+            <span className="small nokey">
+              Off by default: the API reports that no model key is configured, so a model run would fail.
+            </span>
+          ) : null}
         </label>
         <button type="submit" className="primary" disabled={running || !client || !trigger}>
           {running ? "Working…" : "Run"}

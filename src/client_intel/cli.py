@@ -15,7 +15,7 @@ from typing import Any
 
 from client_intel import db
 from client_intel.llm import AnthropicWriter, ModelError
-from client_intel.pipeline import Plan, RequestError, load_triggers, run
+from client_intel.pipeline import Plan, RequestError, RunResult, load_triggers, run
 from client_intel.portfolio import rank_portfolio, render_markdown
 
 DEFAULT_OUT = "runs"
@@ -32,11 +32,36 @@ def _fail(message: str, as_json: bool) -> int:
     still gets exactly one object on stdout."""
     print(f"error: {message}", file=sys.stderr)
     if as_json:
-        _print_json({"ok": False, "error": message, **dict.fromkeys(_RUN_FIELDS)})
+        _print_json(error_payload(message))
     return 2
 
 
-def _listing(dataset: db.Dataset, plans: dict[str, Plan]) -> dict[str, Any]:
+def error_payload(message: str) -> dict[str, Any]:
+    """The object for a request that produced no briefing. Shared with the HTTP API
+    so both callers get one shape."""
+    return {"ok": False, "error": message, **dict.fromkeys(_RUN_FIELDS)}
+
+
+def run_payload(result: RunResult) -> dict[str, Any]:
+    """The object for a finished run, flagged lines or not. Shared with the HTTP API."""
+    return {
+        "ok": True, "error": None, "client_id": result.client_id,
+        "client_name": result.client_name, "trigger": result.trigger,
+        "briefing": result.briefing, "evidence": result.evidence,
+        "flagged": len(result.report.violations), "repaired": result.repaired,
+    }
+
+
+def write_run_files(result: RunResult, out: Path | str) -> Path:
+    """Leave the record of a run: briefing.md and evidence.json in <out>/<client>_<trigger>."""
+    folder = Path(out) / f"{result.client_id}_{result.trigger}"
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / "briefing.md").write_text(result.briefing)
+    (folder / "evidence.json").write_text(json.dumps(result.evidence, indent=2))
+    return folder
+
+
+def listing(dataset: db.Dataset, plans: dict[str, Plan]) -> dict[str, Any]:
     keys = ("client_id", "client_name", "segment", "tier", "account_owner")
     return {
         "as_of": dataset.as_of.isoformat(),
@@ -93,7 +118,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"error: {exc}", file=sys.stderr)
             return 2
         if args.list:
-            _print_json(_listing(dataset, plans))
+            _print_json(listing(dataset, plans))
             return 0
         return _portfolio(dataset, args.out)
 
@@ -109,19 +134,11 @@ def main(argv: list[str] | None = None) -> int:
     except (RequestError, ModelError, FileNotFoundError) as exc:
         return _fail(str(exc), args.json)
 
-    folder = Path(args.out or DEFAULT_OUT) / f"{result.client_id}_{result.trigger}"
-    folder.mkdir(parents=True, exist_ok=True)
-    (folder / "briefing.md").write_text(result.briefing)
-    (folder / "evidence.json").write_text(json.dumps(result.evidence, indent=2))
+    folder = write_run_files(result, args.out or DEFAULT_OUT)
 
     report = result.report
     if args.json:
-        _print_json({
-            "ok": True, "error": None, "client_id": result.client_id,
-            "client_name": result.client_name, "trigger": result.trigger,
-            "briefing": result.briefing, "evidence": result.evidence,
-            "flagged": len(report.violations), "repaired": result.repaired,
-        })
+        _print_json(run_payload(result))
     else:
         print(result.briefing)
     print(f"--- wrote {folder}/briefing.md and evidence.json", file=sys.stderr)
