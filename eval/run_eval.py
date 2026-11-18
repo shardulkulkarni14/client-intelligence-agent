@@ -1,0 +1,152 @@
+"""Run the evaluation cases and write eval/report.md.
+
+    uv run python eval/run_eval.py            # with the model (uses the API key)
+    uv run python eval/run_eval.py --no-llm   # tool output only, free
+
+Checks per case, all automatic:
+  grounded      every number in the model's text appears in the tool outputs of
+                that run. This is a second, deliberately simple implementation,
+                independent of the verifier used inside the pipeline.
+  verifier      the pipeline's own stricter check (number must be in the fact
+                cited on the same line) reports nothing after at most one repair.
+  citations     every citation in the text exists in the evidence.
+  sections      every section the trigger asks for is present, in order.
+  gaps          the data problems known for this case were detected by the tools
+                and appear in the "Data gaps and confidence" section.
+  must_cite     rows a useful briefing for this case has to refer to.
+  length        the model's text stays near one page.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import sys
+from pathlib import Path
+
+from client_intel import db
+from client_intel.llm import AnthropicWriter, ModelError
+from client_intel.pipeline import RequestError, make_plan, run
+from client_intel.verify import extract_citations
+
+ROOT = Path(__file__).resolve().parents[1]
+MAX_WORDS = 650
+_NUMBER = re.compile(r"\d[\d,]*(?:\.\d+)?")
+_BRACKET = re.compile(r"\[[^\]]*\]")
+_ID = re.compile(r"\b[A-Z]+-?\d+\b|\b[A-Z][A-Z_]+\b")
+
+
+def numbers_in(text: str) -> set[str]:
+    """Digits only: separators and trailing zeros dropped, so 8,000 == 8000 == 8000.0."""
+    found: set[str] = set()
+    for raw in _NUMBER.findall(text):
+        value = raw.replace(",", "")
+        if "." in value:
+            value = value.rstrip("0").rstrip(".")
+        found.add(value)
+    return found
+
+
+def model_body(briefing: str) -> str:
+    """The part the model wrote: after the header, before the code-written sections."""
+    body = briefing.split("\n## Verification")[0].split("\n## Data gaps and confidence")[0]
+    return "\n".join(body.splitlines()[3:])
+
+
+def check_case(case: dict, result) -> dict[str, tuple[bool, str]]:
+    body = model_body(result.briefing)
+    evidence_text = json.dumps(result.evidence["results"]) + json.dumps(result.evidence["request"])
+    known = numbers_in(evidence_text)
+    prose = _ID.sub(" ", _BRACKET.sub(" ", body))
+    prose = "\n".join(ln for ln in prose.splitlines() if not ln.startswith("#"))
+    prose = re.sub(r"(?m)^\s*\d+[.)]\s", "", prose)
+    loose = sorted(numbers_in(prose) - known)
+
+    valid = {f["id"] for r in result.evidence["results"] for f in r["facts"]}
+    valid |= {row for r in result.evidence["results"] for f in r["facts"] for row in f["rows"]}
+    cited = {c for line in body.splitlines() for c in extract_citations(line)}
+    unknown = sorted(cited - valid)
+
+    sections = make_plan(case["trigger"]).sections
+    positions = [body.find(f"## {s}") for s in sections]
+    in_order = all(p >= 0 for p in positions) and positions == sorted(positions)
+
+    codes = {g["code"] for r in result.evidence["results"] for g in r["gaps"]}
+    missing_codes = [c for c in case.get("gap_codes", []) if c not in codes]
+    missing_cites = [c for c in case.get("must_cite", []) if c not in cited]
+    words = len(body.split())
+    flagged = len(result.report.violations)
+    return {
+        "grounded": (not loose, f"not in any tool output: {loose}" if loose else ""),
+        "verifier": (flagged == 0, f"{flagged} line(s) flagged" if flagged else ""),
+        "citations": (not unknown, f"unknown: {unknown}" if unknown else ""),
+        "sections": (in_order, "" if in_order else "missing or out of order"),
+        "gaps": (not missing_codes, f"not detected: {missing_codes}" if missing_codes else ""),
+        "must_cite": (not missing_cites, f"not cited: {missing_cites}" if missing_cites else ""),
+        "length": (words <= MAX_WORDS, f"{words} words" if words > MAX_WORDS else ""),
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--no-llm", action="store_true")
+    parser.add_argument("--only", default="", help="comma-separated case ids")
+    args = parser.parse_args()
+    cases = json.loads((ROOT / "eval" / "cases.json").read_text())
+    if args.only:
+        cases = [c for c in cases if c["id"] in args.only.split(",")]
+    ds = db.load()
+    names = ["grounded", "verifier", "citations", "sections", "gaps", "must_cite", "length"]
+    if args.no_llm:
+        # Sections, must_cite and length judge the model's writing; offline there is none.
+        names = ["grounded", "verifier", "citations", "gaps"]
+
+    rows, failures, tokens = [], [], [0, 0]
+    for case in cases:
+        writer = None if args.no_llm else AnthropicWriter()
+        try:
+            result = run(ds, case["client"], case["trigger"], case.get("context", ""), writer)
+        except (ModelError, RequestError) as exc:
+            rows.append(f"| {case['id']} | {case['trigger']} | ERROR | {exc} |")
+            failures.append(f"- **{case['id']}**: did not run: {exc}")
+            continue
+        out = ROOT / "outputs" / case["id"]
+        out.mkdir(parents=True, exist_ok=True)
+        (out / "briefing.md").write_text(result.briefing)
+        (out / "evidence.json").write_text(json.dumps(result.evidence, indent=2))
+        for call in getattr(writer, "calls", []):
+            tokens[0] += int(call["input_tokens"])
+            tokens[1] += int(call["output_tokens"])
+        checks = check_case(case, result)
+        marks = " | ".join("pass" if checks[n][0] else "FAIL" for n in names)
+        first = len(result.first_report.violations)
+        rows.append(f"| {case['id']} | {case['trigger']} | {marks} | {first} | "
+                    f"{'yes' if result.repaired else 'no'} |")
+        for n in names:
+            if not checks[n][0]:
+                failures.append(f"- **{case['id']}** / {n}: {checks[n][1]}")
+        print(f"{case['id']}: {marks}", file=sys.stderr)
+
+    total = len(cases) * len(names)
+    failed = len(failures)
+    mode = "offline (no model)" if args.no_llm else "with model"
+    report = [
+        "# Evaluation report", "",
+        f"Mode: {mode}. Cases: {len(cases)}. Checks passed: {total - failed} of {total}.",
+        "" if args.no_llm else f"Tokens: {tokens[0]:,} in, {tokens[1]:,} out.", "",
+        f"| case | trigger | {' | '.join(names)} | flagged on first draft | repaired |",
+        "|" + "---|" * (len(names) + 4),
+        *rows, "", "## Failures", "",
+        *(failures or ["None."]), "",
+        "## What each case is for", "",
+        *[f"- **{c['id']}** ({c['client']}, {c['trigger']}): {c['why']}" for c in cases], "",
+    ]
+    name = "report_offline.md" if args.no_llm else "report.md"
+    (ROOT / "eval" / name).write_text("\n".join(report))
+    print(f"wrote eval/{name}: {total - failed} of {total} checks passed", file=sys.stderr)
+    return 0 if not failures else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
