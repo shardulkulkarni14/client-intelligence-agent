@@ -26,6 +26,13 @@ uv run client-intel --client "Halden Bet" --trigger renewal
 The briefing is printed and saved to `runs/<client id>_<trigger>/briefing.md`,
 next to its `evidence.json`.
 
+The same request in the second writing mode, where the model only selects facts
+and comments on them and code writes every sentence that contains a figure:
+
+```bash
+uv run client-intel --client "Halden Bet" --trigger renewal --mode structured
+```
+
 | Option | Meaning |
 |---|---|
 | `--client` | name or ID: `"Halden Bet"`, `C001`, `"Brenmoor League"`. An ambiguous name stops with the candidates. |
@@ -73,6 +80,7 @@ points (command, API, UI) cannot drift apart. The port is set with
 
 ```bash
 uv run pytest                           # 295 tests, no model calls
+uv run python eval/run_eval.py --mode structured   # evaluation of structured mode (uses the key)
 uv run ruff check .
 uv run python eval/run_eval.py          # the evaluation, with the model
 uv run python eval/run_eval.py --no-llm # same cases on tool output only, free
@@ -100,6 +108,7 @@ request ─► resolve client ─► plan (trigger config) ─► tools (Python 
 | Plan | configuration, `triggers.toml` | Each trigger names its question, the tools to run, the sections of the briefing and what to lead with. Profile and data quality always run. |
 | Tools | code, `tools/` | Ten functions. Each returns facts: one sentence, figures already formatted, with the IDs of the rows it came from. Missing data comes back as an explicit gap. |
 | Write | model, `prompts/` | Gets the question, the sections, the facts and the gaps. Chooses what matters, orders it, words it, proposes next steps. Copies figures; calculates nothing. |
+| Write, structured mode | model, then code | With `--mode structured` the model returns JSON instead: which facts matter per section, with a comment that contains no figure. Code prints each comment followed by the tool's own sentence for the fact. See "Two ways of writing". |
 | Verify | code, `verify.py` | Every number on a line must be in a fact cited on that line; a change must carry its sign or a known direction word that agrees with the fact; a figure that only a person wrote needs an attribution; unknown citations fail. |
 | Repair | model, once | The flagged lines go back to the writer with the reason. |
 | Policy | code | What is still unsupported stays in the text, marked `[UNVERIFIED: reason]`, and is listed in a Verification section. |
@@ -171,6 +180,21 @@ function `(Dataset, client_id) -> ToolResult` registered in `pipeline.TOOLS`.
 | What can still go wrong | a correct figure next to the wrong subject or measure | the comment can misread the fact printed next to it; no figure can be wrong |
 | Checked after writing | every number, sign and citation; products named on the line | the comment contains no figure; fact IDs exist; then the same verifier |
 | Reads | like a colleague wrote it; files of 570 to 720 words with the code-written sections | stiffer and longer; files of 660 to 940 words |
+
+One bullet in each mode, same client and fact:
+
+- `prose`, written by the model and checked afterwards:
+  "ODDS_LIVE (In-play Odds Feed) was at 51.6% utilisation in Oct 2026 and fell
+  -40.0% year on year in Aug-Oct [calc:usage_trend#9] [calc:usage_trend#10]."
+- `structured`, the model's comment followed by the tool's sentence:
+  "In-play odds usage is well below what they pay for and has fallen sharply year
+  on year, which supports the client's request for a smaller in-play scope.
+  ODDS_LIVE (In-play Odds Feed): 3,331 markets priced (thousands) in Aug-Oct 2026
+  versus 5,549 in Aug-Oct 2025, a change of -40.0% year on year.
+  [calc:usage_trend#10]"
+
+If the model's answer cannot be read as JSON after one repair, the rep gets the
+facts-only briefing with a line saying so; that did not happen in the evaluation.
 
 `prose` came first and is the evaluated default. `structured` (`structured.py`,
 `prompts/structured_*.md`) was added at the end, after an independent review
@@ -259,6 +283,7 @@ Done after the six must-haves were complete and evaluated:
 | Parallel tools with a trace | Tools run in a thread pool with the result order kept stable. `evidence.json` has a `trace`: every step with seconds, and tokens and cost for model calls. A tool that raises becomes a visible `tool_error` gap, not a failed run. These are parallel deterministic tools, not parallel model specialists. |
 | Portfolio view | `--portfolio` ranks all clients by renewal risk and by growth without a model. The score is a sum of fixed points; every point carries the fact and citation that earned it. It is an ordering aid, not a probability: the data has no churn history to fit weights to, and only a handful of clients carry real risk signals. |
 | Small UI | A FastAPI service (`api.py`, four endpoints) and a Next.js page in `ui/` that calls it. Run a briefing, click any citation to see the evidence behind it, see the trace, browse the portfolio. The API is a thin layer over the same `run()` function; it loads the data once and runs the pipeline in a worker thread. It is a local, single-user service: no authentication, no job queue for runs of up to a minute, no rate limiting. |
+| Structured writing mode (not in the brief) | `--mode structured`: the model never writes a figure. Evaluated separately, 105 of 110. Available on the command and the API; the web page has no switch for it. |
 | LLM-as-judge scoring | Not done. I preferred to spend the time on the verifier; a judge model would rate usefulness, which is the part my automatic checks do not cover, so it is the first thing in "next". |
 
 ## Known limitations
