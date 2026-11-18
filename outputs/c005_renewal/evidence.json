@@ -2397,51 +2397,70 @@
       }
     }
   ],
+  "gaps": [
+    {
+      "id": "gap:no_renewal_opportunity#1",
+      "code": "no_renewal_opportunity",
+      "text": "Contract K-0008 ends on 2026-11-30, 29 days after 2026-11-01, and no renewal opportunity is recorded; the contract auto-renews.",
+      "rows": [
+        "contracts:K-0008"
+      ]
+    },
+    {
+      "id": "gap:no_opportunities#1",
+      "code": "no_opportunities",
+      "text": "No CRM opportunity is on file for client C005.",
+      "rows": []
+    },
+    {
+      "id": "gap:missing_month#1",
+      "code": "missing_month",
+      "text": "LIVE_DATA (Live Match Data Feed): no usage row for 2026-03. Usage in these months is unknown, not zero, and they are left out of every total.",
+      "rows": []
+    },
+    {
+      "id": "gap:missing_month#2",
+      "code": "missing_month",
+      "text": "STATS_ARCHIVE (Historical Stats Archive): no usage row for 2026-03. Usage in these months is unknown, not zero, and they are left out of every total.",
+      "rows": []
+    },
+    {
+      "id": "gap:missing_month#3",
+      "code": "missing_month",
+      "text": "STREAM (Live Streaming): no usage row for 2026-03. Usage in these months is unknown, not zero, and they are left out of every total.",
+      "rows": []
+    },
+    {
+      "id": "gap:missing_month#4",
+      "code": "missing_month",
+      "text": "WIDGETS (Match Visualisation Widgets): no usage row for 2026-03. Usage in these months is unknown, not zero, and they are left out of every total.",
+      "rows": []
+    }
+  ],
   "writer": {
     "mode": "model",
     "calls": [
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 7557,
-        "output_tokens": 4141,
-        "stop_reason": "end_turn"
-      },
-      {
-        "model": "claude-haiku-5-5",
-        "input_tokens": 9305,
-        "output_tokens": 2169,
+        "output_tokens": 4712,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": true
+    "repaired": false
   },
   "verification": {
     "first_pass": {
-      "ok": false,
-      "numbers_checked": 41,
-      "citations_checked": 28,
-      "violations": [
-        {
-          "line_no": 11,
-          "line": "- Widget impressions reached 101.8% of the included volume in Oct 2026 (44.8 million against 44.0 million), and were over the included volume in 2 of the last 12 months. [calc:usage_trend#23] [calc:usage_trend#28]",
-          "kind": "number_not_in_cited_evidence",
-          "token": "44.8 million",
-          "detail": "44.8 million is not in the evidence cited on this line; abbreviated figures are not accepted, copy the figure exactly"
-        },
-        {
-          "line_no": 11,
-          "line": "- Widget impressions reached 101.8% of the included volume in Oct 2026 (44.8 million against 44.0 million), and were over the included volume in 2 of the last 12 months. [calc:usage_trend#23] [calc:usage_trend#28]",
-          "kind": "number_not_in_cited_evidence",
-          "token": "44.0 million",
-          "detail": "44.0 million is not in the evidence cited on this line; abbreviated figures are not accepted, copy the figure exactly"
-        }
-      ],
+      "ok": true,
+      "numbers_checked": 42,
+      "citations_checked": 30,
+      "violations": [],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 43,
-      "citations_checked": 28,
+      "numbers_checked": 42,
+      "citations_checked": 30,
       "violations": [],
       "uncited_lines": 0
     }

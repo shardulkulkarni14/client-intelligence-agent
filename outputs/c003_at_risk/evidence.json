@@ -2210,13 +2210,31 @@
       }
     }
   ],
+  "gaps": [
+    {
+      "id": "gap:no_previous_contract#1",
+      "code": "no_previous_contract",
+      "text": "Contract K-0005 is the only signed contract on file, so the change in annual value at the last renewal cannot be computed.",
+      "rows": [
+        "contracts:K-0005"
+      ]
+    },
+    {
+      "id": "gap:source_conflict#1",
+      "code": "source_conflict",
+      "text": "Note N-006 and the usage data disagree about STREAM; the briefing uses the measured figure.",
+      "rows": [
+        "note:N-006"
+      ]
+    }
+  ],
   "writer": {
     "mode": "model",
     "calls": [
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 6921,
-        "output_tokens": 4285,
+        "output_tokens": 4092,
         "stop_reason": "end_turn"
       }
     ],
@@ -2225,15 +2243,15 @@
   "verification": {
     "first_pass": {
       "ok": true,
-      "numbers_checked": 28,
-      "citations_checked": 26,
+      "numbers_checked": 25,
+      "citations_checked": 24,
       "violations": [],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 28,
-      "citations_checked": 26,
+      "numbers_checked": 25,
+      "citations_checked": 24,
       "violations": [],
       "uncited_lines": 0
     }

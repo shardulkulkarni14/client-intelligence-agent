@@ -3,39 +3,38 @@
 _Data as of 2026-11-01. Account owner: Elif Aydin._
 
 ## Bottom line
-Spare capacity on the one product they hold, not volume, is the main constraint. Quillon used 40.0% of its included LIVE_DATA volume in Oct 2026 [calc:usage_trend#2], so more LIVE_DATA is a weak pitch. Growth is more likely from products they do not hold, mainly WIDGETS, STATS_ARCHIVE and ODDS_LIVE. Confidence is low: usage covers only 2 months [calc:usage_trend#1] and the peer group has 2 clients [calc:whitespace#2].
+Growth is more likely through new products than through more volume: Quillon holds 1 of 8 catalogue products [calc:whitespace#1], and usage is well under the included volume [calc:usage_trend#2]. Confidence is low, because only two months of usage and a two-client peer group are on file [calc:data_quality#1] [gap:short_history#1] [gap:small_peer_group#1].
 
 ## More of what they already use
-- Usage was 800 API calls (thousands) against 2,000 included in Oct 2026, a utilisation of 40.0% [calc:usage_trend#2].
-- Average utilisation for Sep–Oct 2026 was 33.1%, or 1,323 API calls (thousands) against 4,000 included [calc:usage_trend#3].
-- Usage never exceeded the included volume in the 2 months on file [calc:usage_trend#5], so there is no capacity trigger for an upgrade.
+- Live Match Data Feed used 800 API calls (thousands) in Oct 2026 against 2,000 included, a utilisation of 40.0% [calc:usage_trend#2].
+- The two-month average is 33.1%, with 1,323 API calls (thousands) used against 4,000 included [calc:usage_trend#3]. Usage was above the included volume in 0 of the last 2 months [calc:usage_trend#5].
+- Treat this as headroom, not proven demand, since the history is only two months [gap:short_history#1].
 
 ## Products they do not hold
-- Quillon holds 1 of 8 catalogue products, so 7 are not held [calc:whitespace#1].
-- ODDS_LIVE, at an indicative EUR 75,000 per year, is often bought with LIVE_DATA and its prerequisite is already held [product:ODDS_LIVE]. It is not typically sold to this segment and no peers hold it, so it is the hardest sell.
-- WIDGETS, at an indicative EUR 30,000 per year, is typically sold to this segment and often bought with LIVE_DATA [product:WIDGETS]. Both peers hold it, but the peer group is too small to rely on [gap:small_peer_group#1].
-- STATS_ARCHIVE, at an indicative EUR 20,000 per year, is typically sold to this segment and both peers hold it [product:STATS_ARCHIVE].
+- In-play Odds Feed (ODDS_LIVE) is the largest entry price at EUR 75,000 per year. It is often bought with held LIVE_DATA, and its prerequisite is already held, but it is not typically sold to Fantasy & Gaming and no peer holds it [product:ODDS_LIVE].
+- Match Visualisation Widgets (WIDGETS) is EUR 30,000 per year, is often bought with LIVE_DATA, and is held by both segment peers. The peer evidence is weak [product:WIDGETS] [gap:small_peer_group#1].
+- Historical Stats Archive (STATS_ARCHIVE) is EUR 20,000 per year and is held by both segment peers [product:STATS_ARCHIVE].
+- Fan Engagement Analytics, Integrity Monitoring, Pre-match Odds Feed and Live Streaming are not typically sold to the segment and no peer holds them [product:FAN_INSIGHTS] [product:INTEGRITY] [product:ODDS_PRE] [product:STREAM].
 
 ## What could block the pitch
-- Their contract already includes 2,000 API calls (thousands) a month for an annual fee of EUR 48,000 [contracts:K-0006]. They use 40.0% of it [calc:usage_trend#2], so a pitch framed around more volume will be questioned.
-- No meeting notes exist, so relationship context is unknown [gap:no_meeting_notes#1].
-- No support tickets are recorded. This means no ticket data, not no problems [gap:no_support_tickets#1].
+- Low data confidence means any volume or product case rests on a short history [calc:data_quality#1].
+- With usage under the included volume, a pitch for more volume is hard to justify on current data [calc:usage_trend#2].
+- No meeting notes exist, so the relationship context and client priorities are unknown [gap:no_meeting_notes#1].
 
 ## Timing
-- Contract K-0006 runs 2026-09-01 to 2027-08-31 and renews automatically unless notice is given 30 days before the end date [contracts:K-0006].
-- The notice deadline is 2027-08-01, 273 days after 2026-11-01 [calc:contract_status#2].
-- The CRM next step on O-0004 reads "Signed" (reported by the CRM). This matches the measured Closed Won stage [opp:O-0004]. There is only one contract on file, so the change in value at renewal cannot be computed [gap:no_previous_contract#1].
+- Contract K-0006 runs 2026-09-01 to 2027-08-31 at an annual value of EUR 48,000 [contracts:K-0006].
+- It renews automatically unless notice is given 30 days before the end date. The notice deadline is 2027-08-01 [contracts:K-0006] [calc:contract_status#2].
+- The contract ends 303 days after 2026-11-01 [calc:contract_status#1].
 
 ## Suggested next steps
-- Ask account owner Elif Aydin to confirm how the team plans to use LIVE_DATA before pitching more of it [client:C004] [calc:usage_trend#3].
-- Lead with WIDGETS, positioned as a complement to LIVE_DATA [product:WIDGETS], and hold ODDS_LIVE for later, given its price [product:ODDS_LIVE].
-- Pull further months of usage to firm up the 40.0% figure before the pitch [gap:short_history#1] [calc:usage_trend#2].
-- Record meeting notes and support tickets so the next review has context [gap:no_meeting_notes#1] [gap:no_support_tickets#1].
-- Set the renewal review ahead of the 2027-08-01 notice deadline [calc:contract_status#2].
+- Ask Elif Aydin to review Live Match Data Feed usage against the included volume before proposing more volume, starting from 40.0% in Oct 2026 [calc:usage_trend#2].
+- Open the ODDS_LIVE conversation first, since it builds on the held LIVE_DATA [product:ODDS_LIVE]. Test WIDGETS as an alternative because it is often bought with LIVE_DATA [product:WIDGETS].
+- Plan the proposal to land before the notice deadline of 2027-08-01 [calc:contract_status#2].
+- Record meeting notes with the client to fill the relationship gap [gap:no_meeting_notes#1].
 
 ## Verification
 
-All 30 numbers and 28 citations were checked against the evidence.
+All 24 numbers and 29 citations were checked against the evidence.
 
 
 ## Data gaps and confidence

@@ -2863,13 +2863,14 @@
       }
     }
   ],
+  "gaps": [],
   "writer": {
     "mode": "model",
     "calls": [
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 9025,
-        "output_tokens": 5351,
+        "output_tokens": 5046,
         "stop_reason": "end_turn"
       }
     ],
@@ -2878,17 +2879,17 @@
   "verification": {
     "first_pass": {
       "ok": true,
-      "numbers_checked": 45,
-      "citations_checked": 35,
+      "numbers_checked": 46,
+      "citations_checked": 33,
       "violations": [],
-      "uncited_lines": 0
+      "uncited_lines": 1
     },
     "final": {
       "ok": true,
-      "numbers_checked": 45,
-      "citations_checked": 35,
+      "numbers_checked": 46,
+      "citations_checked": 33,
       "violations": [],
-      "uncited_lines": 0
+      "uncited_lines": 1
     }
   }
 }

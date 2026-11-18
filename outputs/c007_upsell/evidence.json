@@ -2092,53 +2092,75 @@
       }
     }
   ],
+  "gaps": [
+    {
+      "id": "gap:blank_included_units#1",
+      "code": "blank_included_units",
+      "text": "INTEGRITY (Integrity Monitoring): the included volume is blank for 2026-10 (no signed contract covered the month), so utilisation and overage are not computed for those months.",
+      "rows": [
+        "usage:U-00500"
+      ]
+    },
+    {
+      "id": "gap:blank_included_units#2",
+      "code": "blank_included_units",
+      "text": "LIVE_DATA (Live Match Data Feed): the included volume is blank for 2026-10 (no signed contract covered the month), so utilisation and overage are not computed for those months.",
+      "rows": [
+        "usage:U-00501"
+      ]
+    },
+    {
+      "id": "gap:blank_included_units#3",
+      "code": "blank_included_units",
+      "text": "STATS_ARCHIVE (Historical Stats Archive): the included volume is blank for 2026-10 (no signed contract covered the month), so utilisation and overage are not computed for those months.",
+      "rows": [
+        "usage:U-00502"
+      ]
+    },
+    {
+      "id": "gap:holding_based_on_expired_contract#1",
+      "code": "holding_based_on_expired_contract",
+      "text": "No contract is in force at 2026-11-01; held products are taken from K-0011, which ended 2026-09-30.",
+      "rows": [
+        "contracts:K-0011"
+      ]
+    },
+    {
+      "id": "gap:no_contract_in_force#1",
+      "code": "no_contract_in_force",
+      "text": "No contract is in force for client C007 as of 2026-11-01.",
+      "rows": [
+        "contracts:K-0011",
+        "contracts:K-0045"
+      ]
+    }
+  ],
   "writer": {
     "mode": "model",
     "calls": [
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 6968,
-        "output_tokens": 3577,
-        "stop_reason": "end_turn"
-      },
-      {
-        "model": "claude-haiku-5-5",
-        "input_tokens": 8824,
-        "output_tokens": 2195,
+        "output_tokens": 4788,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": true
+    "repaired": false
   },
   "verification": {
     "first_pass": {
-      "ok": false,
-      "numbers_checked": 39,
-      "citations_checked": 24,
-      "violations": [
-        {
-          "line_no": 2,
-          "line": "The clearest growth is in products the client does not hold yet: Fan Engagement Analytics and Live Streaming are each held by 4 of 5 segment peers. Usage is mixed, and the pitch should wait until the pending renewal is signed, since no contract is in force and the data-rights clause is under legal review. Confidence is low [calc:data_quality#1]. No agreed uplift is recorded anywhere in the data, so none is stated here.",
-          "kind": "number_not_in_cited_evidence",
-          "token": "4",
-          "detail": "4 is not in the evidence cited on this line; it does appear in product:FAN_INSIGHTS, product:STREAM, calc:support_summary#2"
-        },
-        {
-          "line_no": 2,
-          "line": "The clearest growth is in products the client does not hold yet: Fan Engagement Analytics and Live Streaming are each held by 4 of 5 segment peers. Usage is mixed, and the pitch should wait until the pending renewal is signed, since no contract is in force and the data-rights clause is under legal review. Confidence is low [calc:data_quality#1]. No agreed uplift is recorded anywhere in the data, so none is stated here.",
-          "kind": "number_not_in_cited_evidence",
-          "token": "5",
-          "detail": "5 is not in the evidence cited on this line; it does appear in calc:whitespace#1, calc:whitespace#2, product:FAN_INSIGHTS"
-        }
-      ],
-      "uncited_lines": 0
+      "ok": true,
+      "numbers_checked": 31,
+      "citations_checked": 27,
+      "violations": [],
+      "uncited_lines": 1
     },
     "final": {
       "ok": true,
-      "numbers_checked": 39,
+      "numbers_checked": 31,
       "citations_checked": 27,
       "violations": [],
-      "uncited_lines": 0
+      "uncited_lines": 1
     }
   }
 }

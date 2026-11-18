@@ -2477,30 +2477,70 @@
       }
     }
   ],
+  "gaps": [
+    {
+      "id": "gap:no_previous_contract#1",
+      "code": "no_previous_contract",
+      "text": "Contract K-0005 is the only signed contract on file, so the change in annual value at the last renewal cannot be computed.",
+      "rows": [
+        "contracts:K-0005"
+      ]
+    },
+    {
+      "id": "gap:source_conflict#1",
+      "code": "source_conflict",
+      "text": "Note N-006 and the usage data disagree about STREAM; the briefing uses the measured figure.",
+      "rows": [
+        "note:N-006"
+      ]
+    },
+    {
+      "id": "gap:peer_holding_based_on_expired_contract#1",
+      "code": "peer_holding_based_on_expired_contract",
+      "text": "Peer holdings for C007 are taken from an expired contract because none is in force.",
+      "rows": [
+        "client:C007"
+      ]
+    }
+  ],
   "writer": {
     "mode": "model",
     "calls": [
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 7759,
-        "output_tokens": 5411,
+        "output_tokens": 4695,
+        "stop_reason": "end_turn"
+      },
+      {
+        "model": "claude-haiku-5-5",
+        "input_tokens": 9497,
+        "output_tokens": 1920,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": false
+    "repaired": true
   },
   "verification": {
     "first_pass": {
-      "ok": true,
-      "numbers_checked": 41,
-      "citations_checked": 37,
-      "violations": [],
+      "ok": false,
+      "numbers_checked": 45,
+      "citations_checked": 36,
+      "violations": [
+        {
+          "line_no": 30,
+          "line": "- Check the STREAM position with the commercial director before accepting the +10% basis, using the measured -22.6% [calc:usage_trend#24][calc:claim_check#1].",
+          "kind": "number_not_in_cited_evidence",
+          "token": "10%",
+          "detail": "10% is not in the evidence cited on this line; it does appear in calc:opportunities#1, note:N-006"
+        }
+      ],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 41,
-      "citations_checked": 37,
+      "numbers_checked": 44,
+      "citations_checked": 36,
       "violations": [],
       "uncited_lines": 0
     }

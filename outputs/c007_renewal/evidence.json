@@ -2092,53 +2092,75 @@
       }
     }
   ],
+  "gaps": [
+    {
+      "id": "gap:no_contract_in_force#1",
+      "code": "no_contract_in_force",
+      "text": "No contract is in force for client C007 as of 2026-11-01.",
+      "rows": [
+        "contracts:K-0011",
+        "contracts:K-0045"
+      ]
+    },
+    {
+      "id": "gap:blank_included_units#1",
+      "code": "blank_included_units",
+      "text": "INTEGRITY (Integrity Monitoring): the included volume is blank for 2026-10 (no signed contract covered the month), so utilisation and overage are not computed for those months.",
+      "rows": [
+        "usage:U-00500"
+      ]
+    },
+    {
+      "id": "gap:blank_included_units#2",
+      "code": "blank_included_units",
+      "text": "LIVE_DATA (Live Match Data Feed): the included volume is blank for 2026-10 (no signed contract covered the month), so utilisation and overage are not computed for those months.",
+      "rows": [
+        "usage:U-00501"
+      ]
+    },
+    {
+      "id": "gap:blank_included_units#3",
+      "code": "blank_included_units",
+      "text": "STATS_ARCHIVE (Historical Stats Archive): the included volume is blank for 2026-10 (no signed contract covered the month), so utilisation and overage are not computed for those months.",
+      "rows": [
+        "usage:U-00502"
+      ]
+    },
+    {
+      "id": "gap:holding_based_on_expired_contract#1",
+      "code": "holding_based_on_expired_contract",
+      "text": "No contract is in force at 2026-11-01; held products are taken from K-0011, which ended 2026-09-30.",
+      "rows": [
+        "contracts:K-0011"
+      ]
+    }
+  ],
   "writer": {
     "mode": "model",
     "calls": [
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 6928,
-        "output_tokens": 4591,
-        "stop_reason": "end_turn"
-      },
-      {
-        "model": "claude-haiku-5-5",
-        "input_tokens": 8738,
-        "output_tokens": 1895,
+        "output_tokens": 4250,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": true
+    "repaired": false
   },
   "verification": {
     "first_pass": {
-      "ok": false,
-      "numbers_checked": 41,
-      "citations_checked": 29,
-      "violations": [
-        {
-          "line_no": 6,
-          "line": "- Pending K-0045 is drafted for 2026-10-01 to 2028-09-30 at EUR 200,000 a year, a change of +5.8% versus K-0011 [calc:contract_status#2].",
-          "kind": "number_not_in_cited_evidence",
-          "token": "2026-10-01",
-          "detail": "2026-10-01 is not in the evidence cited on this line; it does appear in contracts:K-0045"
-        },
-        {
-          "line_no": 6,
-          "line": "- Pending K-0045 is drafted for 2026-10-01 to 2028-09-30 at EUR 200,000 a year, a change of +5.8% versus K-0011 [calc:contract_status#2].",
-          "kind": "number_not_in_cited_evidence",
-          "token": "2028-09-30",
-          "detail": "2028-09-30 is not in the evidence cited on this line; it does appear in contracts:K-0045"
-        }
-      ],
-      "uncited_lines": 1
+      "ok": true,
+      "numbers_checked": 37,
+      "citations_checked": 28,
+      "violations": [],
+      "uncited_lines": 2
     },
     "final": {
       "ok": true,
-      "numbers_checked": 41,
-      "citations_checked": 30,
+      "numbers_checked": 37,
+      "citations_checked": 28,
       "violations": [],
-      "uncited_lines": 1
+      "uncited_lines": 2
     }
   }
 }

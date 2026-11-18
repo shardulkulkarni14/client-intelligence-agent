@@ -866,13 +866,53 @@
       }
     }
   ],
+  "gaps": [
+    {
+      "id": "gap:short_history#1",
+      "code": "short_history",
+      "text": "LIVE_DATA (Live Match Data Feed): only 2 months of usage history (fewer than 12), so no year-on-year comparison is possible.",
+      "rows": [
+        "usage:U-00265",
+        "usage:U-00266"
+      ]
+    },
+    {
+      "id": "gap:small_peer_group#1",
+      "code": "small_peer_group",
+      "text": "Only 2 other clients in segment Fantasy & Gaming; peer adoption is a weak comparison and no percentage is given.",
+      "rows": [
+        "client:C006",
+        "client:C019"
+      ]
+    },
+    {
+      "id": "gap:no_previous_contract#1",
+      "code": "no_previous_contract",
+      "text": "Contract K-0006 is the only signed contract on file, so the change in annual value at the last renewal cannot be computed.",
+      "rows": [
+        "contracts:K-0006"
+      ]
+    },
+    {
+      "id": "gap:no_meeting_notes#1",
+      "code": "no_meeting_notes",
+      "text": "No meeting notes exist for this client, so there is no relationship context from notes.",
+      "rows": []
+    },
+    {
+      "id": "gap:no_support_tickets#1",
+      "code": "no_support_tickets",
+      "text": "No support tickets are recorded for this client. That means no ticket data, not that the client has no problems.",
+      "rows": []
+    }
+  ],
   "writer": {
     "mode": "model",
     "calls": [
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 3741,
-        "output_tokens": 4593,
+        "output_tokens": 4218,
         "stop_reason": "end_turn"
       }
     ],
@@ -881,15 +921,15 @@
   "verification": {
     "first_pass": {
       "ok": true,
-      "numbers_checked": 30,
-      "citations_checked": 28,
+      "numbers_checked": 24,
+      "citations_checked": 29,
       "violations": [],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 30,
-      "citations_checked": 28,
+      "numbers_checked": 24,
+      "citations_checked": 29,
       "violations": [],
       "uncited_lines": 0
     }

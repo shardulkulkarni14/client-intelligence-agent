@@ -1,33 +1,25 @@
 # Evaluation report
 
-Mode: with model. Cases: 11. Checks passed: 68 of 77.
-Tokens: 110,856 in, 57,793 out.
+Mode: with model. Cases: 11. Checks passed: 77 of 77.
+Tokens: 95,151 in, 55,033 out.
 
 | case | trigger | grounded | verifier | citations | sections | gaps | must_cite | length | flagged on first draft | repaired |
 |---|---|---|---|---|---|---|---|---|---|---|
 | halden_renewal | renewal | pass | pass | pass | pass | pass | pass | pass | 0 | no |
-| halden_at_risk | at_risk | pass | pass | pass | pass | pass | pass | pass | 0 | no |
-| c003_at_risk | at_risk | pass | pass | FAIL | pass | pass | pass | pass | 0 | no |
-| c003_renewal | renewal | pass | pass | FAIL | pass | pass | pass | pass | 0 | no |
-| c005_renewal | renewal | pass | pass | FAIL | pass | pass | pass | pass | 2 | yes |
-| c005_at_risk | at_risk | pass | pass | FAIL | pass | pass | pass | pass | 1 | yes |
-| c007_renewal | renewal | pass | pass | FAIL | pass | pass | pass | pass | 2 | yes |
-| c007_upsell | upsell | pass | pass | FAIL | pass | pass | pass | pass | 2 | yes |
-| c004_upsell | upsell | pass | pass | FAIL | pass | pass | pass | pass | 0 | no |
-| c017_upsell | upsell | pass | pass | FAIL | pass | pass | pass | pass | 0 | no |
-| c006_meeting_prep | meeting_prep | pass | pass | FAIL | pass | pass | pass | pass | 0 | no |
+| halden_at_risk | at_risk | pass | pass | pass | pass | pass | pass | pass | 1 | yes |
+| c003_at_risk | at_risk | pass | pass | pass | pass | pass | pass | pass | 0 | no |
+| c003_renewal | renewal | pass | pass | pass | pass | pass | pass | pass | 1 | yes |
+| c005_renewal | renewal | pass | pass | pass | pass | pass | pass | pass | 0 | no |
+| c005_at_risk | at_risk | pass | pass | pass | pass | pass | pass | pass | 0 | no |
+| c007_renewal | renewal | pass | pass | pass | pass | pass | pass | pass | 0 | no |
+| c007_upsell | upsell | pass | pass | pass | pass | pass | pass | pass | 0 | no |
+| c004_upsell | upsell | pass | pass | pass | pass | pass | pass | pass | 0 | no |
+| c017_upsell | upsell | pass | pass | pass | pass | pass | pass | pass | 0 | no |
+| c006_meeting_prep | meeting_prep | pass | pass | pass | pass | pass | pass | pass | 0 | no |
 
 ## Failures
 
-- **c003_at_risk** / citations: unknown: ['gap:no_previous_contract#1', 'gap:source_conflict#1']
-- **c003_renewal** / citations: unknown: ['gap:no_previous_contract#1', 'gap:source_conflict#1']
-- **c005_renewal** / citations: unknown: ['gap:missing_month#1', 'gap:no_renewal_opportunity#1']
-- **c005_at_risk** / citations: unknown: ['gap:missing_month#1']
-- **c007_renewal** / citations: unknown: ['gap:blank_included_units#1']
-- **c007_upsell** / citations: unknown: ['gap:blank_included_units#1', 'gap:no_contract_in_force#1']
-- **c004_upsell** / citations: unknown: ['gap:no_meeting_notes#1', 'gap:no_previous_contract#1', 'gap:no_support_tickets#1', 'gap:short_history#1', 'gap:small_peer_group#1']
-- **c017_upsell** / citations: unknown: ['gap:no_meeting_notes#1', 'gap:small_peer_group#1']
-- **c006_meeting_prep** / citations: unknown: ['gap:no_renewal_opportunity#1']
+None.
 
 ## What each case is for
 

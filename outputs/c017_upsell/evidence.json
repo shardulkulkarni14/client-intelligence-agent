@@ -1903,13 +1903,29 @@
       }
     }
   ],
+  "gaps": [
+    {
+      "id": "gap:small_peer_group#1",
+      "code": "small_peer_group",
+      "text": "Only 1 other client in segment Club; peer adoption is a weak comparison and no percentage is given.",
+      "rows": [
+        "client:C022"
+      ]
+    },
+    {
+      "id": "gap:no_meeting_notes#1",
+      "code": "no_meeting_notes",
+      "text": "No meeting notes exist for this client, so there is no relationship context from notes.",
+      "rows": []
+    }
+  ],
   "writer": {
     "mode": "model",
     "calls": [
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 6170,
-        "output_tokens": 4755,
+        "output_tokens": 6123,
         "stop_reason": "end_turn"
       }
     ],
@@ -1918,15 +1934,15 @@
   "verification": {
     "first_pass": {
       "ok": true,
-      "numbers_checked": 37,
-      "citations_checked": 26,
+      "numbers_checked": 31,
+      "citations_checked": 29,
       "violations": [],
       "uncited_lines": 1
     },
     "final": {
       "ok": true,
-      "numbers_checked": 37,
-      "citations_checked": 26,
+      "numbers_checked": 31,
+      "citations_checked": 29,
       "violations": [],
       "uncited_lines": 1
     }

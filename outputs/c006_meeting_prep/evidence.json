@@ -1705,13 +1705,46 @@
       }
     }
   ],
+  "gaps": [
+    {
+      "id": "gap:duplicate_row#1",
+      "code": "duplicate_row",
+      "text": "contracts row K-0010 appears twice with identical values; counted once.",
+      "rows": [
+        "contracts:K-0010"
+      ]
+    },
+    {
+      "id": "gap:duplicate_natural_key#1",
+      "code": "duplicate_natural_key",
+      "text": "usage_monthly rows U-00422 and U-01991 are the same record (C006/LIVE_DATA/2026-08) under two IDs; counted once.",
+      "rows": [
+        "usage:U-00422",
+        "usage:U-01991"
+      ]
+    },
+    {
+      "id": "gap:no_renewal_opportunity#1",
+      "code": "no_renewal_opportunity",
+      "text": "Contract K-0010 ends on 2027-02-28, 119 days after 2026-11-01, and no renewal opportunity is recorded; the contract auto-renews.",
+      "rows": [
+        "contracts:K-0010"
+      ]
+    },
+    {
+      "id": "gap:no_opportunities#1",
+      "code": "no_opportunities",
+      "text": "No CRM opportunity is on file for client C006.",
+      "rows": []
+    }
+  ],
   "writer": {
     "mode": "model",
     "calls": [
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 5566,
-        "output_tokens": 4113,
+        "output_tokens": 3269,
         "stop_reason": "end_turn"
       }
     ],
@@ -1720,15 +1753,15 @@
   "verification": {
     "first_pass": {
       "ok": true,
-      "numbers_checked": 31,
-      "citations_checked": 27,
+      "numbers_checked": 37,
+      "citations_checked": 28,
       "violations": [],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 31,
-      "citations_checked": 27,
+      "numbers_checked": 37,
+      "citations_checked": 28,
       "violations": [],
       "uncited_lines": 0
     }

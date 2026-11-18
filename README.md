@@ -23,7 +23,7 @@ briefing is printed.
 Exit code: 0 clean, 1 briefing written with flagged lines, 2 request could not be answered.
 
 ```bash
-uv run pytest                           # RESULT_TESTS tests, no model calls
+uv run pytest                           # 232 tests, no model calls
 uv run python eval/run_eval.py          # the evaluation, with the model
 uv run python eval/run_eval.py --no-llm # same cases on tool output only, free
 ```
@@ -100,7 +100,7 @@ Why this shape:
 
 ## Evaluation
 
-`eval/cases.json` holds RESULT_CASES cases over RESULT_CLIENTS clients and all four triggers; four
+`eval/cases.json` holds 11 cases over 7 clients and all four triggers; four
 clients are run with two triggers each. Every case exists for a reason listed in
 the report. Checks are automatic:
 
@@ -114,7 +114,31 @@ the report. Checks are automatic:
 | must_cite | Rows a useful briefing for the case has to refer to. |
 | length | About one page. |
 
-RESULT_BLOCK
+**Result of the last run** (`eval/report.md`, model `claude-haiku-5-5`): 77 of 77
+checks passed over 11 briefings. The verifier flagged a line in 2 of the 11 first
+drafts; the single repair attempt fixed both. About 95,000 input and 55,000 output
+tokens for the whole run.
+
+That clean result is the third run, and the first two are the more useful story:
+
+| Run | Result | What failed | What I changed |
+|---|---|---|---|
+| 1 | 53 of 56 (8 cases) | First drafts flagged in 5 of 8 cases; 2 still flagged after repair. A ticket's age was treated as an unverified claim; the model rewrote units and built its own ratio ("2 of 5 tickets"); one correct figure was cited to the wrong fact. | Ticket fields became data facts; prompt rules on units, on not counting, and on citing both facts. One evaluation check was too strict. |
+| 2 | 68 of 77 (11 cases) | All 9 failures were the evaluation not recognising the new citable gap IDs. Verifier: 4 first drafts flagged, all repaired. | Fixed the evaluation. Between runs 1 and 2 the verifier was made stricter after an independent review (see "How I built it"). |
+| 3 | 77 of 77 | none | |
+
+What the verifier caught across the runs, all in first drafts: a figure on a line
+without a citation, "44.8 million" for a figure whose unit is "impressions
+(millions)", a ratio the model computed itself, a correct figure cited to the
+wrong fact, and a "+10%" that appears only inside a quoted note.
+
+One case (`c007_upsell`) carries a rep context that tells the writer to ignore its
+rules and state a 50% uplift. The briefing does not state it.
+
+What this evaluation does not show: whether a rep finds the briefing useful, and
+whether a figure is attached to the right subject. Eleven cases on one model on
+one day is a smoke test, not a measurement of reliability; the first-draft flag
+rate moved between 2 of 11 and 5 of 8 across runs.
 
 Sample briefings and evidence files from this run are in `outputs/`.
 
@@ -160,7 +184,56 @@ traceable.
 
 ## How I built it
 
-RESULT_HOWBUILT
+**Time.** Timed build on Wednesday 18 November 2026, start 08:59, end RESULT_END.
+Before the timed build, on 17 November, I read the brief and the data pack and wrote
+myself a data survey and a schema diagram (about two hours, no solution code). So
+the design decisions on duplicates, missing months and the seasonal comparison were
+made before the clock started; all code, prompts, tests and this README were
+written inside the timed session.
+
+**Tool.** Claude Code, with the instructions in `CLAUDE.md`. I set the architecture
+and the rules (numbers from code, fixed sequence, triggers as configuration, flag
+instead of delete, what counts as "in force", how to compare seasons); the
+assistant wrote the code against them.
+
+**How the work was split.**
+1. I had the loader and the shared `Fact` format written first, alone, because
+   everything else depends on that contract.
+2. Four sub-agents then worked in parallel, each owning its files and nothing
+   else: contracts and client resolution; usage and data quality; support, notes
+   and white-space; the verifier. Each had to write tests with exact values checked
+   against the data. Meanwhile the main session wrote the pipeline, prompts and
+   command.
+3. Integration check: all 25 clients with all 4 triggers, without a model, through
+   the verifier. Zero flags was the bar before any model call.
+4. A separate reviewer agent, with no part in the build, recomputed figures from
+   the database, attacked the verifier with deliberately wrong lines and ran the
+   sample requests. It was told to report only, not to edit.
+5. Three agents fixed its findings in parallel, again by file ownership.
+
+**What worked.** A written data contract before parallel work: four agents
+produced code that fitted together at the first attempt. Exact-value tests against
+known rows. The model-free sweep as a gate. An independent reviewer: my own tests
+all passed while the verifier still accepted a flipped sign.
+
+**What I had to correct.**
+- The first verifier accepted "+28.0%" for a fact saying -28.0%, let a row citation
+  lend a line every figure computed from that row, and treated figures typed by
+  the rep as evidence. All three were found by the reviewer, not by tests.
+- Auto-renewing contracts past their notice date were described as ending, which
+  would have sent a rep into an emergency that does not exist.
+- Open tickets were tagged as "reported" as a whole, so a ticket's age was flagged
+  as an unverified claim. Found in the first evaluation run.
+- My evaluation's own check was wrong twice (it demanded a row ID where the
+  briefing cited the calculation built on it, and it did not know citable gaps).
+- Python rounds 1.25 to 1.2; figures now round half up.
+- My first time estimate for the evaluation loop was too low; the model's drafts
+  needed the repair step in about half the cases, mostly for rewriting units
+  ("44.8 million" for a figure whose unit is "impressions (millions)") or for
+  citing the wrong one of two facts.
+
+The assistant did not choose the design, and paid model runs happened only on my
+instruction.
 
 ## Repository
 

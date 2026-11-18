@@ -2138,44 +2138,70 @@
       }
     }
   ],
+  "gaps": [
+    {
+      "id": "gap:missing_month#1",
+      "code": "missing_month",
+      "text": "LIVE_DATA (Live Match Data Feed): no usage row for 2026-03. Usage in these months is unknown, not zero, and they are left out of every total.",
+      "rows": []
+    },
+    {
+      "id": "gap:missing_month#2",
+      "code": "missing_month",
+      "text": "STATS_ARCHIVE (Historical Stats Archive): no usage row for 2026-03. Usage in these months is unknown, not zero, and they are left out of every total.",
+      "rows": []
+    },
+    {
+      "id": "gap:missing_month#3",
+      "code": "missing_month",
+      "text": "STREAM (Live Streaming): no usage row for 2026-03. Usage in these months is unknown, not zero, and they are left out of every total.",
+      "rows": []
+    },
+    {
+      "id": "gap:missing_month#4",
+      "code": "missing_month",
+      "text": "WIDGETS (Match Visualisation Widgets): no usage row for 2026-03. Usage in these months is unknown, not zero, and they are left out of every total.",
+      "rows": []
+    },
+    {
+      "id": "gap:no_renewal_opportunity#1",
+      "code": "no_renewal_opportunity",
+      "text": "Contract K-0008 ends on 2026-11-30, 29 days after 2026-11-01, and no renewal opportunity is recorded; the contract auto-renews.",
+      "rows": [
+        "contracts:K-0008"
+      ]
+    },
+    {
+      "id": "gap:no_opportunities#1",
+      "code": "no_opportunities",
+      "text": "No CRM opportunity is on file for client C005.",
+      "rows": []
+    }
+  ],
   "writer": {
     "mode": "model",
     "calls": [
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 6808,
-        "output_tokens": 4358,
-        "stop_reason": "end_turn"
-      },
-      {
-        "model": "claude-haiku-5-5",
-        "input_tokens": 8234,
-        "output_tokens": 1646,
+        "output_tokens": 4752,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": true
+    "repaired": false
   },
   "verification": {
     "first_pass": {
-      "ok": false,
-      "numbers_checked": 28,
-      "citations_checked": 27,
-      "violations": [
-        {
-          "line_no": 2,
-          "line": "The account is at real risk of shrinking or leaving, mainly because of its renewal position, not its usage. Contract K-0008 ends in 29 days and renews automatically unless notice was given, and the notice deadline has passed with no record of notice either way. Confidence is medium: the renewal facts are measured, but the data cannot show whether the client intends to stay.",
-          "kind": "number_without_citation",
-          "token": "29",
-          "detail": "29 is on a line with no citation"
-        }
-      ],
+      "ok": true,
+      "numbers_checked": 34,
+      "citations_checked": 34,
+      "violations": [],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 28,
-      "citations_checked": 29,
+      "numbers_checked": 34,
+      "citations_checked": 34,
       "violations": [],
       "uncited_lines": 0
     }

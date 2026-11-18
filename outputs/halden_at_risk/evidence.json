@@ -2599,32 +2599,47 @@
       }
     }
   ],
+  "gaps": [],
   "writer": {
     "mode": "model",
     "calls": [
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 8312,
-        "output_tokens": 4713,
+        "output_tokens": 5271,
+        "stop_reason": "end_turn"
+      },
+      {
+        "model": "claude-haiku-5-5",
+        "input_tokens": 9899,
+        "output_tokens": 1897,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": false
+    "repaired": true
   },
   "verification": {
     "first_pass": {
-      "ok": true,
+      "ok": false,
       "numbers_checked": 26,
-      "citations_checked": 27,
-      "violations": [],
-      "uncited_lines": 3
+      "citations_checked": 25,
+      "violations": [
+        {
+          "line_no": 18,
+          "line": "- What the reduced in-play scope covers, and whether the EUR 541,500 on O-0001 reflects it.",
+          "kind": "number_without_citation",
+          "token": "EUR 541,500",
+          "detail": "EUR 541,500 is on a line with no citation"
+        }
+      ],
+      "uncited_lines": 5
     },
     "final": {
       "ok": true,
-      "numbers_checked": 26,
-      "citations_checked": 27,
+      "numbers_checked": 25,
+      "citations_checked": 30,
       "violations": [],
-      "uncited_lines": 3
+      "uncited_lines": 1
     }
   }
 }
