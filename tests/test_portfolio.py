@@ -41,7 +41,7 @@ def test_known_accounts_lead_the_renewal_risk_ranking(ds):
         + portfolio.RISK_OPEN_P1_P2 + portfolio.RISK_LOW_CSAT + portfolio.RISK_TICKETS_RISING)
     assert [r["cite"] for r in halden["renewal_risk"]["reasons"]] == [
         "calc:opportunities#1", "calc:usage_trend#3", "calc:usage_trend#10",
-        "calc:support_summary#13", "calc:support_summary#10"]
+        "calc:support_summary#13", "calc:support_summary#10", "calc:support_summary#12"]
 
     varrow = by_id["C007"]
     assert (varrow["arr_eur"], varrow["contract_id"], varrow["contract_end"]) == (
