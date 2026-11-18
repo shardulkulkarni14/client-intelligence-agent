@@ -7,8 +7,10 @@ used in exactly one step (writing), and its output is checked by code.
 
 from __future__ import annotations
 
+import time
 import tomllib
 from collections.abc import Callable
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -25,6 +27,7 @@ from client_intel.tools.quality import check_data_quality
 from client_intel.tools.support import get_support_summary
 from client_intel.tools.usage import get_usage_trend
 from client_intel.tools.whitespace import get_whitespace
+from client_intel.trace import Trace, calls_made, model_detail, writer_model
 
 _HERE = Path(__file__).resolve().parent
 PROMPTS = _HERE / "prompts"
@@ -220,12 +223,58 @@ def gaps_section(results: list[ToolResult]) -> str:
     return "\n".join(lines)
 
 
+TOOL_ERROR = "error"  # a tool raised; the run continues without its facts
+
+
+def _run_one(name: str, tool: Tool, ds: Dataset, client_id: str) -> tuple[ToolResult, float]:
+    started = time.perf_counter()
+    try:
+        result = tool(ds, client_id)
+    except Exception as exc:  # noqa: BLE001 - one broken tool must not cost the whole briefing
+        gap = Gap(
+            code="tool_error",
+            text=f"The tool {name} failed with {type(exc).__name__}; nothing it would have "
+                 "reported is in this briefing.",
+        )
+        result = ToolResult(tool=name, status=TOOL_ERROR, gaps=[gap])
+    return result, time.perf_counter() - started
+
+
+def run_tools(ds: Dataset, client_id: str,
+              jobs: list[tuple[str, Tool]]) -> list[tuple[ToolResult, float]]:
+    """Run independent, read-only tools at the same time; results keep the order of `jobs`.
+
+    The order matters: the prompt lists facts in it and the offline briefing
+    follows it, so it must not depend on which thread finishes first.
+    """
+    if not jobs:
+        return []
+    with ThreadPoolExecutor(max_workers=len(jobs)) as pool:
+        futures = [pool.submit(_run_one, name, tool, ds, client_id) for name, tool in jobs]
+        return [future.result() for future in futures]
+
+
+def _counts(result: ToolResult) -> dict[str, Any]:
+    return {"status": result.status, "facts": len(result.facts), "gaps": len(result.gaps)}
+
+
+def _verify_detail(report: verifier.VerificationReport) -> dict[str, Any]:
+    return {"numbers_checked": report.numbers_checked,
+            "citations_checked": report.citations_checked,
+            "violations": len(report.violations)}
+
+
 def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
         writer: Writer | None = None) -> RunResult:
     """Produce one briefing. `writer=None` gives the offline, model-free briefing."""
-    plan = make_plan(trigger)
+    trace = Trace()
+    with trace.step("plan", "plan") as detail:
+        plan = make_plan(trigger)
+        detail.update(trigger=plan.trigger, tools=list(plan.tools))
 
+    started = time.perf_counter()
     resolved = resolve_client(ds, client_query)
+    trace.add(resolved.tool, "resolve", time.perf_counter() - started, _counts(resolved))
     status = resolved.data.get("status")
     if status != "resolved":
         names = ", ".join(
@@ -237,37 +286,51 @@ def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
     client_id: str = resolved.data["client_id"]
     client = ds.clients[client_id]
 
+    jobs = list(ALWAYS.items()) + [(name, TOOLS[name]) for name in plan.tools]
     results: list[ToolResult] = [resolved]
-    results += [tool(ds, client_id) for tool in ALWAYS.values()]
-    results += [TOOLS[name](ds, client_id) for name in plan.tools]
+    for result, seconds in run_tools(ds, client_id, jobs):
+        results.append(result)
+        # Named as in tools_run, so the two lists can be joined on the name.
+        trace.add(result.tool, "tool", seconds, _counts(result))
 
     facts = index_facts(results)
     # Text the model may echo without a citation: what the request itself said.
     allowed = f"{client_id} {client['client_name']} {ds.as_of.isoformat()}"
 
-    def check(text: str) -> verifier.VerificationReport:
+    def check(text: str, step: str) -> verifier.VerificationReport:
         # A figure the rep typed is not evidence: it passes only on a line that
         # attributes it to the rep. Headings must be the configured ones.
-        return verifier.verify(text, facts, allowed, context_text=context,
-                               allowed_headings=plan.sections)
+        with trace.step(step, "verify") as detail:
+            checked = verifier.verify(text, facts, allowed, context_text=context,
+                                      allowed_headings=plan.sections)
+            detail.update(_verify_detail(checked))
+        return checked
+
+    def write(system: str, user: str, step: str) -> str:
+        assert writer is not None
+        before = calls_made(writer)
+        started = time.perf_counter()
+        text = writer(system, user)
+        trace.add(step, "model", time.perf_counter() - started, model_detail(writer, before))
+        return text
 
     model_calls: list[dict[str, Any]] = []
     repaired = False
     if writer is None:
         body = offline_briefing(plan, results)
-        first = report = check(body)
+        first = report = check(body, "verify_offline")
     else:
         system, user = build_prompt(plan, client, ds, results, context)
-        body = writer(system, user)
-        first = report = check(body)
+        body = write(system, user, "first_draft")
+        first = report = check(body, "verify_first_draft")
         if not report.ok:
             # One repair attempt, then stop: a second failure is flagged in the text
             # rather than hidden, so the reader always sees what could not be backed up.
             repair = (PROMPTS / "repair.md").read_text().format(
                 problems=verifier.repair_instructions(report), briefing=body
             )
-            candidate = writer(system, f"{user}\n\n{repair}")
-            candidate_report = check(candidate)
+            candidate = write(system, f"{user}\n\n{repair}", "repair")
+            candidate_report = check(candidate, "verify_repair")
             if len(candidate_report.violations) <= len(report.violations):
                 body, report, repaired = candidate, candidate_report, True
         model_calls = list(getattr(writer, "calls", []))
@@ -278,9 +341,10 @@ def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
         + (f" Rep context: {context}" if context else "")
         + "_\n\n"
     )
-    briefing = "\n\n".join(
-        [header.strip(), verifier.apply_policy(body, report), gaps_section(results)]
-    ) + "\n"
+    with trace.step("apply_policy", "policy") as detail:
+        checked_body = verifier.apply_policy(body, report)
+        detail.update(flagged=len(report.violations), repaired=repaired)
+    briefing = "\n\n".join([header.strip(), checked_body, gaps_section(results)]) + "\n"
 
     evidence = {
         "request": {"client_query": client_query, "client_id": client_id,
@@ -295,6 +359,7 @@ def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
         "writer": {"mode": "model" if writer else "offline", "calls": model_calls,
                    "repaired": repaired},
         "verification": {"first_pass": first.to_dict(), "final": report.to_dict()},
+        "trace": trace.to_dict(writer_model(writer)),
     }
     return RunResult(client_id, client["client_name"], trigger, briefing, evidence, report,
                      first, repaired, results)

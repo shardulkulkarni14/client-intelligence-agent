@@ -18,6 +18,30 @@ DEFAULT_MODEL = "claude-haiku-5-5"
 MAX_TOKENS = 8000
 TIMEOUT_SECONDS = 120.0
 
+# List prices on 2026-11-18 in USD per million tokens, as (input, output). Used
+# only for the cost shown in the run trace. A model that is not in this table
+# gives a cost of null: an unknown price is not a price of zero.
+TOKENS_PER_PRICE_UNIT = 1_000_000
+PRICES_USD_PER_MTOK: dict[str, tuple[float, float]] = {
+    "claude-haiku-5-5": (0.10, 0.50),
+    "claude-sonnet-5-5": (2.00, 10.00),
+    "claude-opus-5-5": (4.00, 20.00),
+}
+
+
+def call_cost_usd(model: str | None, input_tokens: int, output_tokens: int) -> float | None:
+    """Cost of one call from the price table, or None when the model has no entry."""
+    if not model:
+        return None
+    price = PRICES_USD_PER_MTOK.get(model)
+    if price is None:
+        # The API may answer with a dated ID of a model that is in the table.
+        price = next((p for name, p in PRICES_USD_PER_MTOK.items()
+                      if model.startswith(f"{name}-")), None)
+    if price is None:
+        return None
+    return (input_tokens * price[0] + output_tokens * price[1]) / TOKENS_PER_PRICE_UNIT
+
 
 class ModelError(RuntimeError):
     """The model could not produce a briefing; the message says why and what to do."""
