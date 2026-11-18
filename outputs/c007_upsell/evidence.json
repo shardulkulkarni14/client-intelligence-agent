@@ -2141,46 +2141,32 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 6968,
-        "output_tokens": 5526,
-        "stop_reason": "end_turn"
-      },
-      {
-        "model": "claude-haiku-5-5",
-        "input_tokens": 8659,
-        "output_tokens": 2488,
+        "output_tokens": 3044,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": true
+    "repaired": false
   },
   "verification": {
     "first_pass": {
-      "ok": false,
-      "numbers_checked": 39,
+      "ok": true,
+      "numbers_checked": 32,
       "citations_checked": 32,
-      "violations": [
-        {
-          "line_no": 6,
-          "line": "- INTEGRITY is down -6.0% year on year [calc:usage_trend#3]. It exceeded its included volume in only 1 of 11 months, at 101.1% in Dec 2025 [calc:usage_trend#6].",
-          "kind": "number_not_in_cited_evidence",
-          "token": "1",
-          "detail": "1 is not in the evidence cited on this line; it does appear in calc:usage_trend#7, calc:meeting_notes#1, calc:support_summary#2"
-        }
-      ],
+      "violations": [],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 39,
-      "citations_checked": 33,
+      "numbers_checked": 32,
+      "citations_checked": 32,
       "violations": [],
       "uncited_lines": 0
     }
   },
   "trace": {
     "model": "claude-haiku-5-5",
-    "total_seconds": 30.998,
-    "total_cost_usd": 0.00557,
+    "total_seconds": 12.718,
+    "total_cost_usd": 0.002219,
     "steps": [
       {
         "name": "plan",
@@ -2302,42 +2288,21 @@
       {
         "name": "first_draft",
         "kind": "model",
-        "seconds": 21.8,
+        "seconds": 12.702,
         "detail": {
           "input_tokens": 6968,
-          "output_tokens": 5526,
-          "cost_usd": 0.00346,
+          "output_tokens": 3044,
+          "cost_usd": 0.002219,
           "stop_reason": "end_turn"
         }
       },
       {
         "name": "verify_first_draft",
         "kind": "verify",
-        "seconds": 0.016,
+        "seconds": 0.008,
         "detail": {
-          "numbers_checked": 39,
+          "numbers_checked": 32,
           "citations_checked": 32,
-          "violations": 1
-        }
-      },
-      {
-        "name": "repair",
-        "kind": "model",
-        "seconds": 9.157,
-        "detail": {
-          "input_tokens": 8659,
-          "output_tokens": 2488,
-          "cost_usd": 0.00211,
-          "stop_reason": "end_turn"
-        }
-      },
-      {
-        "name": "verify_repair",
-        "kind": "verify",
-        "seconds": 0.016,
-        "detail": {
-          "numbers_checked": 39,
-          "citations_checked": 33,
           "violations": 0
         }
       },
@@ -2347,7 +2312,7 @@
         "seconds": 0.0,
         "detail": {
           "flagged": 0,
-          "repaired": true
+          "repaired": false
         }
       }
     ]

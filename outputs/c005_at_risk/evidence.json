@@ -2184,32 +2184,46 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 6808,
-        "output_tokens": 4266,
+        "output_tokens": 4606,
+        "stop_reason": "end_turn"
+      },
+      {
+        "model": "claude-haiku-5-5",
+        "input_tokens": 8174,
+        "output_tokens": 1845,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": false
+    "repaired": true
   },
   "verification": {
     "first_pass": {
-      "ok": true,
+      "ok": false,
       "numbers_checked": 27,
-      "citations_checked": 34,
-      "violations": [],
+      "citations_checked": 27,
+      "violations": [
+        {
+          "line_no": 2,
+          "line": "The usage and support data do not show the account shrinking or leaving. The real exposure is timing: contract K-0008 ends on 2026-11-30 and renews automatically, the notice deadline has already passed, and no renewal opportunity is on file. Confidence is medium, because the renewal intent is unknown and the data has gaps.",
+          "kind": "number_without_citation",
+          "token": "2026-11-30",
+          "detail": "2026-11-30 is on a line with no citation"
+        }
+      ],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
       "numbers_checked": 27,
-      "citations_checked": 34,
+      "citations_checked": 31,
       "violations": [],
       "uncited_lines": 0
     }
   },
   "trace": {
     "model": "claude-haiku-5-5",
-    "total_seconds": 17.814,
-    "total_cost_usd": 0.002814,
+    "total_seconds": 27.094,
+    "total_cost_usd": 0.004724,
     "steps": [
       {
         "name": "plan",
@@ -2320,21 +2334,42 @@
       {
         "name": "first_draft",
         "kind": "model",
-        "seconds": 17.795,
+        "seconds": 20.045,
         "detail": {
           "input_tokens": 6808,
-          "output_tokens": 4266,
-          "cost_usd": 0.002814,
+          "output_tokens": 4606,
+          "cost_usd": 0.002984,
           "stop_reason": "end_turn"
         }
       },
       {
         "name": "verify_first_draft",
         "kind": "verify",
-        "seconds": 0.013,
+        "seconds": 0.007,
         "detail": {
           "numbers_checked": 27,
-          "citations_checked": 34,
+          "citations_checked": 27,
+          "violations": 1
+        }
+      },
+      {
+        "name": "repair",
+        "kind": "model",
+        "seconds": 7.025,
+        "detail": {
+          "input_tokens": 8174,
+          "output_tokens": 1845,
+          "cost_usd": 0.00174,
+          "stop_reason": "end_turn"
+        }
+      },
+      {
+        "name": "verify_repair",
+        "kind": "verify",
+        "seconds": 0.008,
+        "detail": {
+          "numbers_checked": 27,
+          "citations_checked": 31,
           "violations": 0
         }
       },
@@ -2344,7 +2379,7 @@
         "seconds": 0.0,
         "detail": {
           "flagged": 0,
-          "repaired": false
+          "repaired": true
         }
       }
     ]

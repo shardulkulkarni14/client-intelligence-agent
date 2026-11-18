@@ -177,10 +177,9 @@ the report. Checks are automatic:
 | must_cite | Rows a useful briefing for the case has to refer to. |
 | length | About one page. |
 
-**Result of the last run** (`eval/report.md`, model `claude-haiku-5-5`): 76 of 77
-checks passed over 11 briefings. The one failure: in one briefing the model wrote
-two sections in the wrong order. The verifier flagged a line in 3 of the 11 first
-drafts; the single repair attempt fixed all three. About 104,000 input and 57,000
+**Result of the last run** (`eval/report.md`, model `claude-haiku-5-5`): 77 of 77
+checks passed over 11 briefings. The verifier flagged a line in 3 of the 11 first
+drafts; the single repair attempt fixed all three. About 100,000 input and 54,000
 output tokens for the whole run, roughly 4 US cents.
 
 The runs in order, failures included, because they are the more useful story:
@@ -190,7 +189,8 @@ The runs in order, failures included, because they are the more useful story:
 | 1 | 53 of 56 (8 cases) | First drafts flagged in 5 of 8 cases; 2 still flagged after repair. A ticket's age was treated as an unverified claim; the model rewrote units and built its own ratio ("2 of 5 tickets"); one correct figure was cited to the wrong fact. | Ticket fields became data facts; prompt rules on units, on not counting, and on citing both facts. One evaluation check was too strict. |
 | 2 | 68 of 77 (11 cases) | All 9 failures were the evaluation not recognising the new citable gap IDs. Verifier: 4 first drafts flagged, all repaired. | Fixed the evaluation. Between runs 1 and 2 the verifier was made stricter after an independent review (see "How I built it"). |
 | 3 | 77 of 77 | none | |
-| 4 | 76 of 77 | Re-run on the final code. `halden_renewal`: "Risks to the renewal" came before "Usage against what they pay for". The same case passed in run 3, so this is the model varying between runs. | Section order is now set in code (`order_sections` in `pipeline.py`), with tests, instead of being left to the prompt. Not re-run with the model after this fix; `outputs/` and `eval/report.md` are run 4 as it happened. |
+| 4 | 76 of 77 | Re-run on the final code. `halden_renewal`: "Risks to the renewal" came before "Usage against what they pay for". The same case passed in run 3, so this is the model varying between runs. | Section order is now set in code (`order_sections` in `pipeline.py`), with tests, instead of being left to the prompt. |
+| 5 | 77 of 77 | none | Re-run after the fix of run 4. `outputs/` and `eval/report.md` are this run. |
 
 What the verifier caught across the runs, all in first drafts: a figure on a line
 without a citation, "44.8 million" for a figure whose unit is "impressions

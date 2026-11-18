@@ -1744,32 +1744,46 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 5566,
-        "output_tokens": 4291,
+        "output_tokens": 4751,
+        "stop_reason": "end_turn"
+      },
+      {
+        "model": "claude-haiku-5-5",
+        "input_tokens": 7201,
+        "output_tokens": 2221,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": false
+    "repaired": true
   },
   "verification": {
     "first_pass": {
-      "ok": true,
-      "numbers_checked": 32,
-      "citations_checked": 27,
-      "violations": [],
+      "ok": false,
+      "numbers_checked": 49,
+      "citations_checked": 31,
+      "violations": [
+        {
+          "line_no": 19,
+          "line": "- WIDGETS is flat: 75.5 million impressions in Aug-Oct 2026 versus 75.9 a year earlier, -0.5% [calc:usage_trend#17].",
+          "kind": "number_not_in_cited_evidence",
+          "token": "75.5 million",
+          "detail": "75.5 million is not in the evidence cited on this line; abbreviated figures are not accepted, copy the figure exactly"
+        }
+      ],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 32,
-      "citations_checked": 27,
+      "numbers_checked": 50,
+      "citations_checked": 31,
       "violations": [],
       "uncited_lines": 0
     }
   },
   "trace": {
     "model": "claude-haiku-5-5",
-    "total_seconds": 16.927,
-    "total_cost_usd": 0.002702,
+    "total_seconds": 25.819,
+    "total_cost_usd": 0.004763,
     "steps": [
       {
         "name": "plan",
@@ -1810,7 +1824,7 @@
       {
         "name": "data_quality",
         "kind": "tool",
-        "seconds": 0.0,
+        "seconds": 0.001,
         "detail": {
           "status": "partial",
           "facts": 1,
@@ -1880,21 +1894,42 @@
       {
         "name": "first_draft",
         "kind": "model",
-        "seconds": 16.916,
+        "seconds": 17.866,
         "detail": {
           "input_tokens": 5566,
-          "output_tokens": 4291,
-          "cost_usd": 0.002702,
+          "output_tokens": 4751,
+          "cost_usd": 0.002932,
           "stop_reason": "end_turn"
         }
       },
       {
         "name": "verify_first_draft",
         "kind": "verify",
+        "seconds": 0.008,
+        "detail": {
+          "numbers_checked": 49,
+          "citations_checked": 31,
+          "violations": 1
+        }
+      },
+      {
+        "name": "repair",
+        "kind": "model",
+        "seconds": 7.929,
+        "detail": {
+          "input_tokens": 7201,
+          "output_tokens": 2221,
+          "cost_usd": 0.001831,
+          "stop_reason": "end_turn"
+        }
+      },
+      {
+        "name": "verify_repair",
+        "kind": "verify",
         "seconds": 0.007,
         "detail": {
-          "numbers_checked": 32,
-          "citations_checked": 27,
+          "numbers_checked": 50,
+          "citations_checked": 31,
           "violations": 0
         }
       },
@@ -1904,7 +1939,7 @@
         "seconds": 0.0,
         "detail": {
           "flagged": 0,
-          "repaired": false
+          "repaired": true
         }
       }
     ]

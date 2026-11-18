@@ -2509,53 +2509,32 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 7759,
-        "output_tokens": 3942,
-        "stop_reason": "end_turn"
-      },
-      {
-        "model": "claude-haiku-5-5",
-        "input_tokens": 9527,
-        "output_tokens": 2295,
+        "output_tokens": 4945,
         "stop_reason": "end_turn"
       }
     ],
-    "repaired": true
+    "repaired": false
   },
   "verification": {
     "first_pass": {
-      "ok": false,
-      "numbers_checked": 35,
-      "citations_checked": 30,
-      "violations": [
-        {
-          "line_no": 2,
-          "line": "The renewal is not secured. Contract K-0005 ends on 2026-12-31 and does not renew automatically [calc:contract_status#1] [contracts:K-0005]. The notice deadline of 2026-10-02 has already passed [calc:contract_status#2], so the rep's task is to get a signed renewal before the end date. Confidence in the value is moderate: the EUR 258,500 figure is in the CRM but still awaits client board approval.",
-          "kind": "number_not_in_cited_evidence",
-          "token": "EUR 258,500",
-          "detail": "EUR 258,500 is not in the evidence cited on this line; a cited source row does not carry figures computed from it, cite [calc:opportunities#1] instead"
-        },
-        {
-          "line_no": 30,
-          "line": "- Show the commercial director the measured STREAM decline when discussing the \"+10%\" figure [calc:claim_check#1] [calc:usage_trend#24].",
-          "kind": "number_not_in_cited_evidence",
-          "token": "10%",
-          "detail": "10% is not in the evidence cited on this line; it does appear in calc:opportunities#1, note:N-006"
-        }
-      ],
+      "ok": true,
+      "numbers_checked": 34,
+      "citations_checked": 32,
+      "violations": [],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 35,
-      "citations_checked": 35,
+      "numbers_checked": 34,
+      "citations_checked": 32,
       "violations": [],
       "uncited_lines": 0
     }
   },
   "trace": {
     "model": "claude-haiku-5-5",
-    "total_seconds": 25.187,
-    "total_cost_usd": 0.004847,
+    "total_seconds": 20.649,
+    "total_cost_usd": 0.003248,
     "steps": [
       {
         "name": "plan",
@@ -2677,42 +2656,21 @@
       {
         "name": "first_draft",
         "kind": "model",
-        "seconds": 16.7,
+        "seconds": 20.633,
         "detail": {
           "input_tokens": 7759,
-          "output_tokens": 3942,
-          "cost_usd": 0.002747,
+          "output_tokens": 4945,
+          "cost_usd": 0.003248,
           "stop_reason": "end_turn"
         }
       },
       {
         "name": "verify_first_draft",
         "kind": "verify",
-        "seconds": 0.01,
+        "seconds": 0.009,
         "detail": {
-          "numbers_checked": 35,
-          "citations_checked": 30,
-          "violations": 2
-        }
-      },
-      {
-        "name": "repair",
-        "kind": "model",
-        "seconds": 8.454,
-        "detail": {
-          "input_tokens": 9527,
-          "output_tokens": 2295,
-          "cost_usd": 0.0021,
-          "stop_reason": "end_turn"
-        }
-      },
-      {
-        "name": "verify_repair",
-        "kind": "verify",
-        "seconds": 0.015,
-        "detail": {
-          "numbers_checked": 35,
-          "citations_checked": 35,
+          "numbers_checked": 34,
+          "citations_checked": 32,
           "violations": 0
         }
       },
@@ -2722,7 +2680,7 @@
         "seconds": 0.0,
         "detail": {
           "flagged": 0,
-          "repaired": true
+          "repaired": false
         }
       }
     ]
