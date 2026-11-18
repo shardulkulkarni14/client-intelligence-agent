@@ -98,6 +98,21 @@ Why this shape:
   percentages.
 - **Rounding** is half up, one decimal for percentages.
 
+### Adding a trigger
+
+A trigger is one block in `src/client_intel/triggers.toml`; no code changes:
+
+```toml
+[qbr]
+question = "What should the quarterly review cover, and what has changed since the last one?"
+tools = ["usage_trend", "support_summary", "meeting_notes", "claim_check", "contract_status"]
+sections = ["Bottom line", "What changed this quarter", "Open issues", "Suggested agenda"]
+lead = ["risk", "notes"]
+```
+
+`uv run client-intel --client C001 --trigger qbr` then works. A new analysis is a
+function `(Dataset, client_id) -> ToolResult` registered in `pipeline.TOOLS`.
+
 ## Evaluation
 
 `eval/cases.json` holds 11 cases over 7 clients and all four triggers; four
