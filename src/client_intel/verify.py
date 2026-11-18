@@ -122,12 +122,20 @@ _CITATION_ID_RE = re.compile(r"[a-z_]+:[A-Za-z0-9_.\-]+(?:#\d+)?")
 _FLAG_RE = re.compile(r"\[UNVERIFIED:[^\[\]]*\]")
 
 
+# A writer sometimes puts the attribution inside the bracket: "[note:N-003, reported]".
+# Reading that as "not a citation" would leave the ID unchecked, so plain words next
+# to an ID are tolerated and only the IDs are returned.
+_MARKER_WORDS_RE = re.compile(r"[A-Za-z][A-Za-z' \-]*")
+
+
 def _bracket_citations(content: str) -> list[str]:
     """IDs in one bracket, or [] when the bracket is not a citation (a link, a flag)."""
     parts = [p.strip() for p in re.split(r"[;,]", content)]
-    if not parts or not all(_CITATION_ID_RE.fullmatch(p) for p in parts):
+    ids = [p for p in parts if _CITATION_ID_RE.fullmatch(p)]
+    others = [p for p in parts if not _CITATION_ID_RE.fullmatch(p)]
+    if not ids or not all(_MARKER_WORDS_RE.fullmatch(p) for p in others):
         return []
-    return parts
+    return ids
 
 
 def extract_citations(line: str) -> list[str]:

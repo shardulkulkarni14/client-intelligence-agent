@@ -644,3 +644,15 @@ def test_to_dict(facts):
         ],
         "uncited_lines": 0,
     }
+
+
+def test_citation_with_a_marker_inside_the_bracket_is_still_a_citation():
+    assert extract_citations("x [note:N-003, reported].") == ["note:N-003"]
+    assert extract_citations("x [ticket:T-0269, client-written].") == ["ticket:T-0269"]
+    assert extract_citations("x [reported]") == []
+    assert extract_citations("x [UNVERIFIED: 5 is not in note:N-003, check]") == []
+
+
+def test_unknown_id_with_a_marker_inside_the_bracket_is_flagged(facts):
+    report = verify("The client said so [note:N-999, reported].", facts)
+    assert [v.kind for v in report.violations] == ["unknown_citation"]

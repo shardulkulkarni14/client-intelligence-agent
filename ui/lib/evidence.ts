@@ -33,7 +33,10 @@ export function lookupCitation(evidence: Evidence | undefined, id: string): Look
 }
 
 const CITE_ID = "[a-z_]+:[\\w#.\\-]+";
-const CITE_RE = new RegExp(`\\[(${CITE_ID}(?:\\s*[,;]\\s*${CITE_ID})*)\\]`, "g");
+// Same rule as verify.py: IDs, optionally with plain marker words ("reported") in the bracket.
+const CITE_PART = `(?:${CITE_ID}|[A-Za-z][A-Za-z' \\-]*)`;
+const CITE_RE = new RegExp(`\\[(${CITE_PART}(?:\\s*[,;]\\s*${CITE_PART})*)\\]`, "g");
+const CITE_ID_ONLY = new RegExp(`^${CITE_ID}$`);
 const FLAG_RE = /(?:\*\*)?\[UNVERIFIED:\s*([^\[\]]*)\](?:\*\*)?/g;
 
 export const CITE_HREF = "#cite=";
@@ -49,10 +52,14 @@ export function markCitations(markdown: string): string {
       const text = reason.trim().replace(/([\\[\]*_`<>])/g, "\\$1") || "unverified";
       return `[${text}](${FLAG_HREF})`;
     })
-    .replace(CITE_RE, (_m, ids: string) =>
-      ids
-        .split(/\s*[,;]\s*/)
+    .replace(CITE_RE, (match, inner: string) => {
+      const parts = inner.split(/\s*[,;]\s*/);
+      const ids = parts.filter((part) => CITE_ID_ONLY.test(part));
+      if (ids.length === 0) return match;
+      const words = parts.filter((part) => !CITE_ID_ONLY.test(part));
+      const chips = ids
         .map((id) => `[${id.replace(/_/g, "\\_")}](${CITE_HREF}${encodeURIComponent(id)})`)
-        .join(" "),
-    );
+        .join(" ");
+      return words.length > 0 ? `${chips} (${words.join(", ")})` : chips;
+    });
 }
