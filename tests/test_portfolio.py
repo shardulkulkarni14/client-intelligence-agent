@@ -34,10 +34,11 @@ def test_known_accounts_lead_the_renewal_risk_ranking(ds):
     assert (halden["arr_eur"], halden["contract_id"], halden["contract_end"]) == (
         752000.0, "K-0002", "2027-01-31")
     assert (halden["days_to_end"], halden["auto_renew"]) == (91, "Y")
-    # Renewal deal below contract value, two falling products, open P1/P2, low CSAT.
+    # Renewal deal below contract value, two falling products, open P1/P2, low CSAT,
+    # and more tickets than in the previous period.
     assert halden["renewal_risk"]["score"] == (
         portfolio.RISK_RENEWAL_BELOW_VALUE + 2 * portfolio.RISK_USAGE_DECLINE
-        + portfolio.RISK_OPEN_P1_P2 + portfolio.RISK_LOW_CSAT)
+        + portfolio.RISK_OPEN_P1_P2 + portfolio.RISK_LOW_CSAT + portfolio.RISK_TICKETS_RISING)
     assert [r["cite"] for r in halden["renewal_risk"]["reasons"]] == [
         "calc:opportunities#1", "calc:usage_trend#3", "calc:usage_trend#10",
         "calc:support_summary#13", "calc:support_summary#10"]

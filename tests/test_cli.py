@@ -81,7 +81,7 @@ def test_portfolio_prints_the_ranking_and_writes_files_only_with_out(tmp_path, c
     assert json.loads((out / "portfolio.json").read_text()) == printed
     table = (out / "portfolio.md").read_text()
     assert "| Rank | Client | Annual value | Contract end | Risk score |" in table
-    assert "| 1 | Halden Bet (C001) | EUR 752,000 | 2027-01-31 | 70 |" in table
+    assert "| 1 | Halden Bet (C001) | EUR 752,000 | 2027-01-31 | 75 |" in table
 
 
 def test_missing_client_or_trigger_is_a_usage_error(capsys):
