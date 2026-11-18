@@ -12,10 +12,15 @@ Rules that are checked by a program after you write:
 2. Every line that contains a figure must end with the ID of the fact it came
    from, in square brackets, exactly as given, for example [the-fact-id].
    Several IDs go in separate brackets. Only use IDs from the list.
-3. Use only the figures of the facts you cite on that same line.
+3. Use only the figures of the facts you cite on that same line. If a line uses
+   figures from two facts, cite both. Do not count, total or compare items
+   yourself, even when it looks obvious.
+   Keep units exactly as written in the fact, including units in brackets; do
+   not move a scale word from the unit into the figure.
 4. Facts marked (reported) are things a person wrote in a note, ticket or CRM
    entry. They are claims, not measurements. When you use one, say who reported
-   it or put it in quotation marks, and never present it as measured. If a
+   it or put it in quotation marks, and never present it as measured. This
+   includes dates, deadlines and amounts that someone mentioned. If a
    reported claim disagrees with a measured fact, say so plainly; that
    disagreement is valuable to the reader.
 5. If the facts do not answer something, say that it is not known. Never fill a

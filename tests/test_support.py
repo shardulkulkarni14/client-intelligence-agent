@@ -1,5 +1,5 @@
 from client_intel.db import Dataset
-from client_intel.evidence import NO_DATA, OK, REPORTED
+from client_intel.evidence import DATA, NO_DATA, OK
 from client_intel.tools.support import MAX_ROWS, get_support_summary
 
 
@@ -34,7 +34,7 @@ def test_c001_open_tickets_exact(ds: Dataset) -> None:
     assert summary.text == "2 open tickets at 2026-11-01, of which 2 are P1/P2."
     assert summary.signal == "risk"
     p1 = next(f for f in result.facts if f.id == "ticket:T-0284")
-    assert p1.kind == REPORTED
+    assert p1.kind == DATA  # recorded fields; only the subject is quoted wording
     assert p1.signal == "risk"
     assert "priority P1" in p1.text
     assert "open for 11 days" in p1.text

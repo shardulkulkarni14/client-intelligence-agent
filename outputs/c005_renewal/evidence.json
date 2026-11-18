@@ -1,0 +1,2305 @@
+{
+  "request": {
+    "client_query": "C005",
+    "client_id": "C005",
+    "trigger": "renewal",
+    "context": "",
+    "as_of": "2026-11-01"
+  },
+  "plan": {
+    "trigger": "renewal",
+    "question": "Is this renewal on track, at what value, and what must the rep do before the notice deadline?",
+    "tools": [
+      "contract_status",
+      "opportunities",
+      "usage_trend",
+      "support_summary",
+      "meeting_notes",
+      "claim_check",
+      "whitespace"
+    ],
+    "sections": [
+      "Bottom line",
+      "Contract and renewal position",
+      "Usage against what they pay for",
+      "Risks to the renewal",
+      "Room to grow",
+      "Suggested next steps"
+    ],
+    "lead": [
+      "contract",
+      "renewal",
+      "risk"
+    ]
+  },
+  "tools_run": [
+    {
+      "tool": "resolve_client",
+      "status": "ok",
+      "facts": 1,
+      "gaps": 0
+    },
+    {
+      "tool": "get_client_profile",
+      "status": "ok",
+      "facts": 1,
+      "gaps": 0
+    },
+    {
+      "tool": "data_quality",
+      "status": "partial",
+      "facts": 1,
+      "gaps": 5
+    },
+    {
+      "tool": "contract_status",
+      "status": "ok",
+      "facts": 10,
+      "gaps": 0
+    },
+    {
+      "tool": "opportunities",
+      "status": "no_data",
+      "facts": 1,
+      "gaps": 2
+    },
+    {
+      "tool": "usage_trend",
+      "status": "partial",
+      "facts": 25,
+      "gaps": 4
+    },
+    {
+      "tool": "support_summary",
+      "status": "ok",
+      "facts": 13,
+      "gaps": 0
+    },
+    {
+      "tool": "meeting_notes",
+      "status": "ok",
+      "facts": 4,
+      "gaps": 0
+    },
+    {
+      "tool": "claim_check",
+      "status": "ok",
+      "facts": 0,
+      "gaps": 0
+    },
+    {
+      "tool": "whitespace",
+      "status": "ok",
+      "facts": 10,
+      "gaps": 0
+    }
+  ],
+  "results": [
+    {
+      "tool": "resolve_client",
+      "status": "ok",
+      "facts": [
+        {
+          "id": "client:C005",
+          "text": "The request \"C005\" refers to client Marrowfield Sports Network (C005).",
+          "rows": [
+            "client:C005"
+          ],
+          "kind": "data",
+          "topic": "client",
+          "signal": ""
+        }
+      ],
+      "gaps": [],
+      "data": {
+        "query": "C005",
+        "status": "resolved",
+        "client_id": "C005",
+        "match_type": "id",
+        "candidates": [
+          {
+            "client_id": "C005",
+            "client_name": "Marrowfield Sports Network"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "get_client_profile",
+      "status": "ok",
+      "facts": [
+        {
+          "id": "client:C005",
+          "text": "Marrowfield Sports Network (C005) is a client in the Broadcaster segment, based in country IT, with tier Core, account owner Grace Okafor and customer since 2019-11-01.",
+          "rows": [
+            "client:C005"
+          ],
+          "kind": "data",
+          "topic": "profile",
+          "signal": ""
+        }
+      ],
+      "gaps": [],
+      "data": {
+        "client_id": "C005",
+        "client_name": "Marrowfield Sports Network",
+        "segment": "Broadcaster",
+        "country": "IT",
+        "account_owner": "Grace Okafor",
+        "tier": "Core",
+        "customer_since": "2019-11-01",
+        "missing_fields": []
+      }
+    },
+    {
+      "tool": "data_quality",
+      "status": "partial",
+      "facts": [
+        {
+          "id": "calc:data_quality#1",
+          "text": "Data confidence for C005 is medium; reasons: missing_month, no_opportunities.",
+          "rows": [],
+          "kind": "calc",
+          "topic": "confidence",
+          "signal": ""
+        }
+      ],
+      "gaps": [
+        {
+          "code": "missing_month",
+          "text": "LIVE_DATA (Live Match Data Feed): no usage row for 2026-03; usage in these months is unknown, not zero.",
+          "rows": []
+        },
+        {
+          "code": "missing_month",
+          "text": "STATS_ARCHIVE (Historical Stats Archive): no usage row for 2026-03; usage in these months is unknown, not zero.",
+          "rows": []
+        },
+        {
+          "code": "missing_month",
+          "text": "STREAM (Live Streaming): no usage row for 2026-03; usage in these months is unknown, not zero.",
+          "rows": []
+        },
+        {
+          "code": "missing_month",
+          "text": "WIDGETS (Match Visualisation Widgets): no usage row for 2026-03; usage in these months is unknown, not zero.",
+          "rows": []
+        },
+        {
+          "code": "no_opportunities",
+          "text": "There are no CRM opportunities on file for C005.",
+          "rows": []
+        }
+      ],
+      "data": {
+        "confidence": "medium",
+        "reasons": [
+          "LIVE_DATA (Live Match Data Feed): no usage row for 2026-03; usage in these months is unknown, not zero.",
+          "STATS_ARCHIVE (Historical Stats Archive): no usage row for 2026-03; usage in these months is unknown, not zero.",
+          "STREAM (Live Streaming): no usage row for 2026-03; usage in these months is unknown, not zero.",
+          "WIDGETS (Match Visualisation Widgets): no usage row for 2026-03; usage in these months is unknown, not zero.",
+          "There are no CRM opportunities on file for C005."
+        ],
+        "codes": [
+          "missing_month",
+          "no_opportunities"
+        ]
+      }
+    },
+    {
+      "tool": "contract_status",
+      "status": "ok",
+      "facts": [
+        {
+          "id": "contracts:K-0008",
+          "text": "Contract K-0008 is in force as of 2026-11-01: it runs 2025-12-01 to 2026-11-30 (12 months) with an annual value of EUR 363,000.",
+          "rows": [
+            "contracts:K-0008"
+          ],
+          "kind": "data",
+          "topic": "contract",
+          "signal": ""
+        },
+        {
+          "id": "contracts:K-0008",
+          "text": "Contract K-0008 renews automatically for the same term unless notice is given; its notice period is 60 days before the end date.",
+          "rows": [
+            "contracts:K-0008"
+          ],
+          "kind": "data",
+          "topic": "renewal",
+          "signal": ""
+        },
+        {
+          "id": "calc:contract_status#1",
+          "text": "Contract K-0008 ends on 2026-11-30, 29 days after 2026-11-01.",
+          "rows": [
+            "contracts:K-0008"
+          ],
+          "kind": "calc",
+          "topic": "renewal",
+          "signal": "risk"
+        },
+        {
+          "id": "calc:contract_status#2",
+          "text": "The notice deadline for contract K-0008 was 2026-10-01 (end date 2026-11-30 minus 60 days) and passed 31 days before 2026-11-01.",
+          "rows": [
+            "contracts:K-0008"
+          ],
+          "kind": "calc",
+          "topic": "renewal",
+          "signal": "risk"
+        },
+        {
+          "id": "contracts:K-0008",
+          "text": "Contract K-0008 includes Live Match Data Feed (LIVE_DATA) for an annual fee of EUR 132,000 with an included monthly volume of 5,500 (unit: API calls (thousands)).",
+          "rows": [
+            "contracts:K-0008",
+            "product:LIVE_DATA"
+          ],
+          "kind": "data",
+          "topic": "contract_lines",
+          "signal": ""
+        },
+        {
+          "id": "contracts:K-0008",
+          "text": "Contract K-0008 includes Live Streaming (STREAM) for an annual fee of EUR 121,000 with an included monthly volume of 660 (unit: streamed hours).",
+          "rows": [
+            "contracts:K-0008",
+            "product:STREAM"
+          ],
+          "kind": "data",
+          "topic": "contract_lines",
+          "signal": ""
+        },
+        {
+          "id": "contracts:K-0008",
+          "text": "Contract K-0008 includes Match Visualisation Widgets (WIDGETS) for an annual fee of EUR 66,000 with an included monthly volume of 44 (unit: widget impressions (millions)).",
+          "rows": [
+            "contracts:K-0008",
+            "product:WIDGETS"
+          ],
+          "kind": "data",
+          "topic": "contract_lines",
+          "signal": ""
+        },
+        {
+          "id": "contracts:K-0008",
+          "text": "Contract K-0008 includes Historical Stats Archive (STATS_ARCHIVE) for an annual fee of EUR 44,000 with an included monthly volume of 220 (unit: queries (thousands)).",
+          "rows": [
+            "contracts:K-0008",
+            "product:STATS_ARCHIVE"
+          ],
+          "kind": "data",
+          "topic": "contract_lines",
+          "signal": ""
+        },
+        {
+          "id": "calc:contract_status#3",
+          "text": "The annual value of contract K-0008 is EUR 363,000, a change of +4.3% versus EUR 348,000 on the previous contract K-0007.",
+          "rows": [
+            "contracts:K-0008",
+            "contracts:K-0007"
+          ],
+          "kind": "calc",
+          "topic": "contract_change",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:contract_status#4",
+          "text": "The term changed from 24 months on the previous contract K-0007 to 12 months on contract K-0008.",
+          "rows": [
+            "contracts:K-0007",
+            "contracts:K-0008"
+          ],
+          "kind": "calc",
+          "topic": "contract_change",
+          "signal": "risk"
+        }
+      ],
+      "gaps": [],
+      "data": {
+        "client_id": "C005",
+        "as_of": "2026-11-01",
+        "in_force_contract_id": "K-0008",
+        "in_force": {
+          "contract_id": "K-0008",
+          "contract_type": "renewal",
+          "status": "active",
+          "start_date": "2025-12-01",
+          "end_date": "2026-11-30",
+          "term_months": 12,
+          "auto_renew": "Y",
+          "notice_period_days": 60,
+          "arr_eur": 363000.0,
+          "signed_date": "2025-11-22",
+          "lines": [
+            {
+              "line_id": "L-00024",
+              "product_id": "LIVE_DATA",
+              "annual_fee_eur": 132000.0,
+              "included_units_monthly": 5500.0,
+              "overage_rate_eur_per_unit": 6.0
+            },
+            {
+              "line_id": "L-00025",
+              "product_id": "STREAM",
+              "annual_fee_eur": 121000.0,
+              "included_units_monthly": 660.0,
+              "overage_rate_eur_per_unit": 55.0
+            },
+            {
+              "line_id": "L-00026",
+              "product_id": "WIDGETS",
+              "annual_fee_eur": 66000.0,
+              "included_units_monthly": 44.0,
+              "overage_rate_eur_per_unit": 300.0
+            },
+            {
+              "line_id": "L-00027",
+              "product_id": "STATS_ARCHIVE",
+              "annual_fee_eur": 44000.0,
+              "included_units_monthly": 220.0,
+              "overage_rate_eur_per_unit": 50.0
+            }
+          ],
+          "days_to_end": 29,
+          "notice_deadline": "2026-10-01",
+          "days_to_notice_deadline": -31,
+          "notice_deadline_passed": true
+        },
+        "last_expired_contract_id": "K-0007",
+        "last_expired": {
+          "contract_id": "K-0007",
+          "contract_type": "renewal",
+          "status": "expired",
+          "start_date": "2023-12-01",
+          "end_date": "2025-11-30",
+          "term_months": 24,
+          "auto_renew": "Y",
+          "notice_period_days": 60,
+          "arr_eur": 348000.0,
+          "signed_date": "2023-11-11",
+          "lines": [
+            {
+              "line_id": "L-00020",
+              "product_id": "LIVE_DATA",
+              "annual_fee_eur": 126500.0,
+              "included_units_monthly": 5500.0,
+              "overage_rate_eur_per_unit": 6.0
+            },
+            {
+              "line_id": "L-00021",
+              "product_id": "STREAM",
+              "annual_fee_eur": 116000.0,
+              "included_units_monthly": 660.0,
+              "overage_rate_eur_per_unit": 55.0
+            },
+            {
+              "line_id": "L-00022",
+              "product_id": "WIDGETS",
+              "annual_fee_eur": 63500.0,
+              "included_units_monthly": 44.0,
+              "overage_rate_eur_per_unit": 300.0
+            },
+            {
+              "line_id": "L-00023",
+              "product_id": "STATS_ARCHIVE",
+              "annual_fee_eur": 42000.0,
+              "included_units_monthly": 220.0,
+              "overage_rate_eur_per_unit": 50.0
+            }
+          ]
+        },
+        "previous_contract_id": "K-0007",
+        "pending": [],
+        "pending_contract_ids": [],
+        "held_product_ids": [
+          "LIVE_DATA",
+          "STREAM",
+          "WIDGETS",
+          "STATS_ARCHIVE"
+        ],
+        "held_products_source": "in_force",
+        "held_from_expired": false,
+        "arr_change": {
+          "contract_id": "K-0008",
+          "arr_eur": 363000.0,
+          "compared_to_contract_id": "K-0007",
+          "compared_to_arr_eur": 348000.0,
+          "pct": 4.310344827586207
+        },
+        "term_change": {
+          "previous_term_months": 24,
+          "current_term_months": 12
+        },
+        "pending_vs_reference": [],
+        "contract_count": 2
+      }
+    },
+    {
+      "tool": "opportunities",
+      "status": "no_data",
+      "facts": [
+        {
+          "id": "calc:opportunities#1",
+          "text": "Contract K-0008 ends on 2026-11-30, 29 days after 2026-11-01, and no open renewal opportunity exists in the CRM.",
+          "rows": [
+            "contracts:K-0008"
+          ],
+          "kind": "calc",
+          "topic": "renewal",
+          "signal": "risk"
+        }
+      ],
+      "gaps": [
+        {
+          "code": "no_renewal_opportunity",
+          "text": "Contract K-0008 ends on 2026-11-30, 29 days after 2026-11-01, and no open renewal opportunity exists in the CRM.",
+          "rows": [
+            "contracts:K-0008"
+          ]
+        },
+        {
+          "code": "no_opportunities",
+          "text": "No CRM opportunity is on file for client C005.",
+          "rows": []
+        }
+      ],
+      "data": {
+        "client_id": "C005",
+        "as_of": "2026-11-01",
+        "open": [],
+        "closed": [],
+        "open_product_ids": [],
+        "open_products": [],
+        "lost_product_ids": [],
+        "lost_products": [],
+        "renewal_vs_contract": [],
+        "stale_opp_ids": [],
+        "won_not_contracted": [],
+        "no_renewal_opportunity": true
+      }
+    },
+    {
+      "tool": "usage_trend",
+      "status": "partial",
+      "facts": [
+        {
+          "id": "calc:usage_trend#1",
+          "text": "LIVE_DATA (Live Match Data Feed): 23 months of usage data, from Nov 2024 to Oct 2026; usage is measured in API calls (thousands).",
+          "rows": [
+            "usage:U-00267",
+            "usage:U-00355"
+          ],
+          "kind": "calc",
+          "topic": "history",
+          "signal": ""
+        },
+        {
+          "id": "calc:usage_trend#2",
+          "text": "LIVE_DATA (Live Match Data Feed): 4,223 API calls (thousands) used in Oct 2026 against 5,500 included, a utilisation of 76.8%.",
+          "rows": [
+            "usage:U-00355"
+          ],
+          "kind": "calc",
+          "topic": "usage_latest",
+          "signal": ""
+        },
+        {
+          "id": "calc:usage_trend#3",
+          "text": "LIVE_DATA (Live Match Data Feed): 11,503 API calls (thousands) in Aug-Oct 2026 versus 10,768 in Aug-Oct 2025, a change of +6.8% year on year.",
+          "rows": [
+            "usage:U-00347",
+            "usage:U-00351",
+            "usage:U-00355",
+            "usage:U-00303",
+            "usage:U-00307",
+            "usage:U-00311"
+          ],
+          "kind": "calc",
+          "topic": "usage_yoy",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#4",
+          "text": "LIVE_DATA (Live Match Data Feed): 11,503 API calls (thousands) in Aug-Oct 2026 versus 9,151 in May-Jul 2026, a change of +25.7% against the previous three months (not seasonally adjusted).",
+          "rows": [
+            "usage:U-00347",
+            "usage:U-00351",
+            "usage:U-00355",
+            "usage:U-00335",
+            "usage:U-00339",
+            "usage:U-00343"
+          ],
+          "kind": "calc",
+          "topic": "usage_prior_period",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#5",
+          "text": "LIVE_DATA (Live Match Data Feed): average utilisation of 69.7% in Aug-Oct 2026: 11,503 API calls (thousands) used against 16,500 included.",
+          "rows": [
+            "usage:U-00347",
+            "usage:U-00351",
+            "usage:U-00355"
+          ],
+          "kind": "calc",
+          "topic": "utilisation",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#6",
+          "text": "LIVE_DATA (Live Match Data Feed): usage was above the included volume in 0 of the last 12 months with a known included volume (Oct 2025 to Oct 2026), including 0 of 3 in Aug-Oct 2026.",
+          "rows": [
+            "usage:U-00311",
+            "usage:U-00315",
+            "usage:U-00319",
+            "usage:U-00323",
+            "usage:U-00327",
+            "usage:U-00331",
+            "usage:U-00335",
+            "usage:U-00339",
+            "usage:U-00343",
+            "usage:U-00347",
+            "usage:U-00351",
+            "usage:U-00355"
+          ],
+          "kind": "calc",
+          "topic": "over_included",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#7",
+          "text": "STATS_ARCHIVE (Historical Stats Archive): 23 months of usage data, from Nov 2024 to Oct 2026; usage is measured in queries (thousands).",
+          "rows": [
+            "usage:U-00268",
+            "usage:U-00356"
+          ],
+          "kind": "calc",
+          "topic": "history",
+          "signal": ""
+        },
+        {
+          "id": "calc:usage_trend#8",
+          "text": "STATS_ARCHIVE (Historical Stats Archive): 159 queries (thousands) used in Oct 2026 against 220 included, a utilisation of 72.3%.",
+          "rows": [
+            "usage:U-00356"
+          ],
+          "kind": "calc",
+          "topic": "usage_latest",
+          "signal": ""
+        },
+        {
+          "id": "calc:usage_trend#9",
+          "text": "STATS_ARCHIVE (Historical Stats Archive): 460 queries (thousands) in Aug-Oct 2026 versus 489 in Aug-Oct 2025, a change of -5.9% year on year.",
+          "rows": [
+            "usage:U-00348",
+            "usage:U-00352",
+            "usage:U-00356",
+            "usage:U-00304",
+            "usage:U-00308",
+            "usage:U-00312"
+          ],
+          "kind": "calc",
+          "topic": "usage_yoy",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#10",
+          "text": "STATS_ARCHIVE (Historical Stats Archive): 460 queries (thousands) in Aug-Oct 2026 versus 379 in May-Jul 2026, a change of +21.4% against the previous three months (not seasonally adjusted).",
+          "rows": [
+            "usage:U-00348",
+            "usage:U-00352",
+            "usage:U-00356",
+            "usage:U-00336",
+            "usage:U-00340",
+            "usage:U-00344"
+          ],
+          "kind": "calc",
+          "topic": "usage_prior_period",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#11",
+          "text": "STATS_ARCHIVE (Historical Stats Archive): average utilisation of 69.7% in Aug-Oct 2026: 460 queries (thousands) used against 660 included.",
+          "rows": [
+            "usage:U-00348",
+            "usage:U-00352",
+            "usage:U-00356"
+          ],
+          "kind": "calc",
+          "topic": "utilisation",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#12",
+          "text": "STATS_ARCHIVE (Historical Stats Archive): usage was above the included volume in 0 of the last 12 months with a known included volume (Oct 2025 to Oct 2026), including 0 of 3 in Aug-Oct 2026.",
+          "rows": [
+            "usage:U-00312",
+            "usage:U-00316",
+            "usage:U-00320",
+            "usage:U-00324",
+            "usage:U-00328",
+            "usage:U-00332",
+            "usage:U-00336",
+            "usage:U-00340",
+            "usage:U-00344",
+            "usage:U-00348",
+            "usage:U-00352",
+            "usage:U-00356"
+          ],
+          "kind": "calc",
+          "topic": "over_included",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#13",
+          "text": "STREAM (Live Streaming): 23 months of usage data, from Nov 2024 to Oct 2026; usage is measured in streamed hours.",
+          "rows": [
+            "usage:U-00269",
+            "usage:U-00357"
+          ],
+          "kind": "calc",
+          "topic": "history",
+          "signal": ""
+        },
+        {
+          "id": "calc:usage_trend#14",
+          "text": "STREAM (Live Streaming): 524 streamed hours used in Oct 2026 against 660 included, a utilisation of 79.4%.",
+          "rows": [
+            "usage:U-00357"
+          ],
+          "kind": "calc",
+          "topic": "usage_latest",
+          "signal": ""
+        },
+        {
+          "id": "calc:usage_trend#15",
+          "text": "STREAM (Live Streaming): 1,570 streamed hours in Aug-Oct 2026 versus 1,511 in Aug-Oct 2025, a change of +3.9% year on year.",
+          "rows": [
+            "usage:U-00349",
+            "usage:U-00353",
+            "usage:U-00357",
+            "usage:U-00305",
+            "usage:U-00309",
+            "usage:U-00313"
+          ],
+          "kind": "calc",
+          "topic": "usage_yoy",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#16",
+          "text": "STREAM (Live Streaming): 1,570 streamed hours in Aug-Oct 2026 versus 1,286 in May-Jul 2026, a change of +22.1% against the previous three months (not seasonally adjusted).",
+          "rows": [
+            "usage:U-00349",
+            "usage:U-00353",
+            "usage:U-00357",
+            "usage:U-00337",
+            "usage:U-00341",
+            "usage:U-00345"
+          ],
+          "kind": "calc",
+          "topic": "usage_prior_period",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#17",
+          "text": "STREAM (Live Streaming): average utilisation of 79.3% in Aug-Oct 2026: 1,570 streamed hours used against 1,980 included.",
+          "rows": [
+            "usage:U-00349",
+            "usage:U-00353",
+            "usage:U-00357"
+          ],
+          "kind": "calc",
+          "topic": "utilisation",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#18",
+          "text": "STREAM (Live Streaming): usage was above the included volume in 0 of the last 12 months with a known included volume (Oct 2025 to Oct 2026), including 0 of 3 in Aug-Oct 2026.",
+          "rows": [
+            "usage:U-00313",
+            "usage:U-00317",
+            "usage:U-00321",
+            "usage:U-00325",
+            "usage:U-00329",
+            "usage:U-00333",
+            "usage:U-00337",
+            "usage:U-00341",
+            "usage:U-00345",
+            "usage:U-00349",
+            "usage:U-00353",
+            "usage:U-00357"
+          ],
+          "kind": "calc",
+          "topic": "over_included",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#19",
+          "text": "WIDGETS (Match Visualisation Widgets): 23 months of usage data, from Nov 2024 to Oct 2026; usage is measured in widget impressions (millions).",
+          "rows": [
+            "usage:U-00270",
+            "usage:U-00358"
+          ],
+          "kind": "calc",
+          "topic": "history",
+          "signal": ""
+        },
+        {
+          "id": "calc:usage_trend#20",
+          "text": "WIDGETS (Match Visualisation Widgets): 44.8 widget impressions (millions) used in Oct 2026 against 44.0 included, a utilisation of 101.8%.",
+          "rows": [
+            "usage:U-00358"
+          ],
+          "kind": "calc",
+          "topic": "usage_latest",
+          "signal": ""
+        },
+        {
+          "id": "calc:usage_trend#21",
+          "text": "WIDGETS (Match Visualisation Widgets): 128.7 widget impressions (millions) in Aug-Oct 2026 versus 122.0 in Aug-Oct 2025, a change of +5.5% year on year.",
+          "rows": [
+            "usage:U-00350",
+            "usage:U-00354",
+            "usage:U-00358",
+            "usage:U-00306",
+            "usage:U-00310",
+            "usage:U-00314"
+          ],
+          "kind": "calc",
+          "topic": "usage_yoy",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#22",
+          "text": "WIDGETS (Match Visualisation Widgets): 128.7 widget impressions (millions) in Aug-Oct 2026 versus 105.4 in May-Jul 2026, a change of +22.1% against the previous three months (not seasonally adjusted).",
+          "rows": [
+            "usage:U-00350",
+            "usage:U-00354",
+            "usage:U-00358",
+            "usage:U-00338",
+            "usage:U-00342",
+            "usage:U-00346"
+          ],
+          "kind": "calc",
+          "topic": "usage_prior_period",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#23",
+          "text": "WIDGETS (Match Visualisation Widgets): average utilisation of 97.5% in Aug-Oct 2026: 128.7 widget impressions (millions) used against 132.0 included.",
+          "rows": [
+            "usage:U-00350",
+            "usage:U-00354",
+            "usage:U-00358"
+          ],
+          "kind": "calc",
+          "topic": "utilisation",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#24",
+          "text": "WIDGETS (Match Visualisation Widgets): usage was above the included volume in 2 of the last 12 months with a known included volume (Oct 2025 to Oct 2026), including 1 of 3 in Aug-Oct 2026.",
+          "rows": [
+            "usage:U-00314",
+            "usage:U-00318",
+            "usage:U-00322",
+            "usage:U-00326",
+            "usage:U-00330",
+            "usage:U-00334",
+            "usage:U-00338",
+            "usage:U-00342",
+            "usage:U-00346",
+            "usage:U-00350",
+            "usage:U-00354",
+            "usage:U-00358"
+          ],
+          "kind": "calc",
+          "topic": "over_included",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:usage_trend#25",
+          "text": "WIDGETS (Match Visualisation Widgets): usage exceeded the included volume by an estimated 0.8 widget impressions (millions) in Oct 2026. At the overage rate of EUR 300 per unit on contract K-0008 that is an indicative EUR 240; indicative only, there is no billing data to confirm it was charged.",
+          "rows": [
+            "usage:U-00358",
+            "contract_lines:L-00026",
+            "contracts:K-0008"
+          ],
+          "kind": "calc",
+          "topic": "overage",
+          "signal": "opportunity"
+        }
+      ],
+      "gaps": [
+        {
+          "code": "missing_month",
+          "text": "LIVE_DATA (Live Match Data Feed): no usage row for 2026-03. Usage in these months is unknown, not zero, and they are left out of every total.",
+          "rows": []
+        },
+        {
+          "code": "missing_month",
+          "text": "STATS_ARCHIVE (Historical Stats Archive): no usage row for 2026-03. Usage in these months is unknown, not zero, and they are left out of every total.",
+          "rows": []
+        },
+        {
+          "code": "missing_month",
+          "text": "STREAM (Live Streaming): no usage row for 2026-03. Usage in these months is unknown, not zero, and they are left out of every total.",
+          "rows": []
+        },
+        {
+          "code": "missing_month",
+          "text": "WIDGETS (Match Visualisation Widgets): no usage row for 2026-03. Usage in these months is unknown, not zero, and they are left out of every total.",
+          "rows": []
+        }
+      ],
+      "data": {
+        "client_id": "C005",
+        "as_of": "2026-11-01",
+        "last_complete_month": "2026-10",
+        "products": {
+          "LIVE_DATA": {
+            "product_id": "LIVE_DATA",
+            "product_name": "Live Match Data Feed",
+            "unit": "API calls (thousands)",
+            "history_months": 23,
+            "first_month": "2024-11",
+            "last_month": "2026-10",
+            "series": [
+              {
+                "month": "2024-11",
+                "units_used": 3379.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00267"
+              },
+              {
+                "month": "2024-12",
+                "units_used": 3620.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00271"
+              },
+              {
+                "month": "2025-01",
+                "units_used": 3857.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00275"
+              },
+              {
+                "month": "2025-02",
+                "units_used": 3584.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00279"
+              },
+              {
+                "month": "2025-03",
+                "units_used": 3671.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00283"
+              },
+              {
+                "month": "2025-04",
+                "units_used": 3249.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00287"
+              },
+              {
+                "month": "2025-05",
+                "units_used": 3217.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00291"
+              },
+              {
+                "month": "2025-06",
+                "units_used": 2977.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00295"
+              },
+              {
+                "month": "2025-07",
+                "units_used": 2795.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00299"
+              },
+              {
+                "month": "2025-08",
+                "units_used": 3046.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00303"
+              },
+              {
+                "month": "2025-09",
+                "units_used": 3997.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00307"
+              },
+              {
+                "month": "2025-10",
+                "units_used": 3725.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00311"
+              },
+              {
+                "month": "2025-11",
+                "units_used": 4264.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00315"
+              },
+              {
+                "month": "2025-12",
+                "units_used": 3971.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00319"
+              },
+              {
+                "month": "2026-01",
+                "units_used": 3642.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00323"
+              },
+              {
+                "month": "2026-02",
+                "units_used": 3734.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00327"
+              },
+              {
+                "month": "2026-04",
+                "units_used": 3739.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00331"
+              },
+              {
+                "month": "2026-05",
+                "units_used": 3718.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00335"
+              },
+              {
+                "month": "2026-06",
+                "units_used": 2634.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00339"
+              },
+              {
+                "month": "2026-07",
+                "units_used": 2799.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00343"
+              },
+              {
+                "month": "2026-08",
+                "units_used": 3505.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00347"
+              },
+              {
+                "month": "2026-09",
+                "units_used": 3775.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00351"
+              },
+              {
+                "month": "2026-10",
+                "units_used": 4223.0,
+                "included_units": 5500.0,
+                "usage_id": "U-00355"
+              }
+            ],
+            "missing_months": [
+              "2026-03"
+            ],
+            "recent_months": [
+              "2026-08",
+              "2026-09",
+              "2026-10"
+            ],
+            "recent_total": 11503.0,
+            "year_ago_months": [
+              "2025-08",
+              "2025-09",
+              "2025-10"
+            ],
+            "year_ago_total": 10768.0,
+            "yoy_pct": 6.825780089153046,
+            "prior_months": [
+              "2026-05",
+              "2026-06",
+              "2026-07"
+            ],
+            "prior_total": 9151.0,
+            "prior_period_pct": 25.70210905911922,
+            "latest": {
+              "month": "2026-10",
+              "units_used": 4223.0,
+              "included_units": 5500.0,
+              "utilisation_pct": 76.78181818181818,
+              "usage_id": "U-00355"
+            },
+            "utilisation_recent_pct": 69.71515151515152,
+            "utilisation_recent_months": [
+              "2026-08",
+              "2026-09",
+              "2026-10"
+            ],
+            "months_over_included": 0,
+            "months_over_compared": 12,
+            "recent_months_over_included": 0,
+            "overage_units_recent": 0,
+            "overage_rate_eur_per_unit": null,
+            "overage_eur_indicative": null,
+            "signals": [],
+            "flags": [
+              "missing_month"
+            ],
+            "months_over_list": []
+          },
+          "STATS_ARCHIVE": {
+            "product_id": "STATS_ARCHIVE",
+            "product_name": "Historical Stats Archive",
+            "unit": "queries (thousands)",
+            "history_months": 23,
+            "first_month": "2024-11",
+            "last_month": "2026-10",
+            "series": [
+              {
+                "month": "2024-11",
+                "units_used": 173.0,
+                "included_units": 220.0,
+                "usage_id": "U-00268"
+              },
+              {
+                "month": "2024-12",
+                "units_used": 171.0,
+                "included_units": 220.0,
+                "usage_id": "U-00272"
+              },
+              {
+                "month": "2025-01",
+                "units_used": 183.0,
+                "included_units": 220.0,
+                "usage_id": "U-00276"
+              },
+              {
+                "month": "2025-02",
+                "units_used": 174.0,
+                "included_units": 220.0,
+                "usage_id": "U-00280"
+              },
+              {
+                "month": "2025-03",
+                "units_used": 143.0,
+                "included_units": 220.0,
+                "usage_id": "U-00284"
+              },
+              {
+                "month": "2025-04",
+                "units_used": 167.0,
+                "included_units": 220.0,
+                "usage_id": "U-00288"
+              },
+              {
+                "month": "2025-05",
+                "units_used": 150.0,
+                "included_units": 220.0,
+                "usage_id": "U-00292"
+              },
+              {
+                "month": "2025-06",
+                "units_used": 113.0,
+                "included_units": 220.0,
+                "usage_id": "U-00296"
+              },
+              {
+                "month": "2025-07",
+                "units_used": 120.0,
+                "included_units": 220.0,
+                "usage_id": "U-00300"
+              },
+              {
+                "month": "2025-08",
+                "units_used": 154.0,
+                "included_units": 220.0,
+                "usage_id": "U-00304"
+              },
+              {
+                "month": "2025-09",
+                "units_used": 175.0,
+                "included_units": 220.0,
+                "usage_id": "U-00308"
+              },
+              {
+                "month": "2025-10",
+                "units_used": 160.0,
+                "included_units": 220.0,
+                "usage_id": "U-00312"
+              },
+              {
+                "month": "2025-11",
+                "units_used": 162.0,
+                "included_units": 220.0,
+                "usage_id": "U-00316"
+              },
+              {
+                "month": "2025-12",
+                "units_used": 176.0,
+                "included_units": 220.0,
+                "usage_id": "U-00320"
+              },
+              {
+                "month": "2026-01",
+                "units_used": 157.0,
+                "included_units": 220.0,
+                "usage_id": "U-00324"
+              },
+              {
+                "month": "2026-02",
+                "units_used": 173.0,
+                "included_units": 220.0,
+                "usage_id": "U-00328"
+              },
+              {
+                "month": "2026-04",
+                "units_used": 162.0,
+                "included_units": 220.0,
+                "usage_id": "U-00332"
+              },
+              {
+                "month": "2026-05",
+                "units_used": 144.0,
+                "included_units": 220.0,
+                "usage_id": "U-00336"
+              },
+              {
+                "month": "2026-06",
+                "units_used": 117.0,
+                "included_units": 220.0,
+                "usage_id": "U-00340"
+              },
+              {
+                "month": "2026-07",
+                "units_used": 118.0,
+                "included_units": 220.0,
+                "usage_id": "U-00344"
+              },
+              {
+                "month": "2026-08",
+                "units_used": 148.0,
+                "included_units": 220.0,
+                "usage_id": "U-00348"
+              },
+              {
+                "month": "2026-09",
+                "units_used": 153.0,
+                "included_units": 220.0,
+                "usage_id": "U-00352"
+              },
+              {
+                "month": "2026-10",
+                "units_used": 159.0,
+                "included_units": 220.0,
+                "usage_id": "U-00356"
+              }
+            ],
+            "missing_months": [
+              "2026-03"
+            ],
+            "recent_months": [
+              "2026-08",
+              "2026-09",
+              "2026-10"
+            ],
+            "recent_total": 460.0,
+            "year_ago_months": [
+              "2025-08",
+              "2025-09",
+              "2025-10"
+            ],
+            "year_ago_total": 489.0,
+            "yoy_pct": -5.930470347648262,
+            "prior_months": [
+              "2026-05",
+              "2026-06",
+              "2026-07"
+            ],
+            "prior_total": 379.0,
+            "prior_period_pct": 21.372031662269126,
+            "latest": {
+              "month": "2026-10",
+              "units_used": 159.0,
+              "included_units": 220.0,
+              "utilisation_pct": 72.27272727272728,
+              "usage_id": "U-00356"
+            },
+            "utilisation_recent_pct": 69.6969696969697,
+            "utilisation_recent_months": [
+              "2026-08",
+              "2026-09",
+              "2026-10"
+            ],
+            "months_over_included": 0,
+            "months_over_compared": 12,
+            "recent_months_over_included": 0,
+            "overage_units_recent": 0,
+            "overage_rate_eur_per_unit": null,
+            "overage_eur_indicative": null,
+            "signals": [],
+            "flags": [
+              "missing_month"
+            ],
+            "months_over_list": []
+          },
+          "STREAM": {
+            "product_id": "STREAM",
+            "product_name": "Live Streaming",
+            "unit": "streamed hours",
+            "history_months": 23,
+            "first_month": "2024-11",
+            "last_month": "2026-10",
+            "series": [
+              {
+                "month": "2024-11",
+                "units_used": 492.0,
+                "included_units": 660.0,
+                "usage_id": "U-00269"
+              },
+              {
+                "month": "2024-12",
+                "units_used": 478.0,
+                "included_units": 660.0,
+                "usage_id": "U-00273"
+              },
+              {
+                "month": "2025-01",
+                "units_used": 460.0,
+                "included_units": 660.0,
+                "usage_id": "U-00277"
+              },
+              {
+                "month": "2025-02",
+                "units_used": 499.0,
+                "included_units": 660.0,
+                "usage_id": "U-00281"
+              },
+              {
+                "month": "2025-03",
+                "units_used": 531.0,
+                "included_units": 660.0,
+                "usage_id": "U-00285"
+              },
+              {
+                "month": "2025-04",
+                "units_used": 469.0,
+                "included_units": 660.0,
+                "usage_id": "U-00289"
+              },
+              {
+                "month": "2025-05",
+                "units_used": 469.0,
+                "included_units": 660.0,
+                "usage_id": "U-00293"
+              },
+              {
+                "month": "2025-06",
+                "units_used": 379.0,
+                "included_units": 660.0,
+                "usage_id": "U-00297"
+              },
+              {
+                "month": "2025-07",
+                "units_used": 340.0,
+                "included_units": 660.0,
+                "usage_id": "U-00301"
+              },
+              {
+                "month": "2025-08",
+                "units_used": 485.0,
+                "included_units": 660.0,
+                "usage_id": "U-00305"
+              },
+              {
+                "month": "2025-09",
+                "units_used": 498.0,
+                "included_units": 660.0,
+                "usage_id": "U-00309"
+              },
+              {
+                "month": "2025-10",
+                "units_used": 528.0,
+                "included_units": 660.0,
+                "usage_id": "U-00313"
+              },
+              {
+                "month": "2025-11",
+                "units_used": 498.0,
+                "included_units": 660.0,
+                "usage_id": "U-00317"
+              },
+              {
+                "month": "2025-12",
+                "units_used": 548.0,
+                "included_units": 660.0,
+                "usage_id": "U-00321"
+              },
+              {
+                "month": "2026-01",
+                "units_used": 527.0,
+                "included_units": 660.0,
+                "usage_id": "U-00325"
+              },
+              {
+                "month": "2026-02",
+                "units_used": 554.0,
+                "included_units": 660.0,
+                "usage_id": "U-00329"
+              },
+              {
+                "month": "2026-04",
+                "units_used": 544.0,
+                "included_units": 660.0,
+                "usage_id": "U-00333"
+              },
+              {
+                "month": "2026-05",
+                "units_used": 509.0,
+                "included_units": 660.0,
+                "usage_id": "U-00337"
+              },
+              {
+                "month": "2026-06",
+                "units_used": 406.0,
+                "included_units": 660.0,
+                "usage_id": "U-00341"
+              },
+              {
+                "month": "2026-07",
+                "units_used": 371.0,
+                "included_units": 660.0,
+                "usage_id": "U-00345"
+              },
+              {
+                "month": "2026-08",
+                "units_used": 459.0,
+                "included_units": 660.0,
+                "usage_id": "U-00349"
+              },
+              {
+                "month": "2026-09",
+                "units_used": 587.0,
+                "included_units": 660.0,
+                "usage_id": "U-00353"
+              },
+              {
+                "month": "2026-10",
+                "units_used": 524.0,
+                "included_units": 660.0,
+                "usage_id": "U-00357"
+              }
+            ],
+            "missing_months": [
+              "2026-03"
+            ],
+            "recent_months": [
+              "2026-08",
+              "2026-09",
+              "2026-10"
+            ],
+            "recent_total": 1570.0,
+            "year_ago_months": [
+              "2025-08",
+              "2025-09",
+              "2025-10"
+            ],
+            "year_ago_total": 1511.0,
+            "yoy_pct": 3.9046988749172735,
+            "prior_months": [
+              "2026-05",
+              "2026-06",
+              "2026-07"
+            ],
+            "prior_total": 1286.0,
+            "prior_period_pct": 22.08398133748056,
+            "latest": {
+              "month": "2026-10",
+              "units_used": 524.0,
+              "included_units": 660.0,
+              "utilisation_pct": 79.39393939393939,
+              "usage_id": "U-00357"
+            },
+            "utilisation_recent_pct": 79.29292929292929,
+            "utilisation_recent_months": [
+              "2026-08",
+              "2026-09",
+              "2026-10"
+            ],
+            "months_over_included": 0,
+            "months_over_compared": 12,
+            "recent_months_over_included": 0,
+            "overage_units_recent": 0,
+            "overage_rate_eur_per_unit": null,
+            "overage_eur_indicative": null,
+            "signals": [],
+            "flags": [
+              "missing_month"
+            ],
+            "months_over_list": []
+          },
+          "WIDGETS": {
+            "product_id": "WIDGETS",
+            "product_name": "Match Visualisation Widgets",
+            "unit": "widget impressions (millions)",
+            "history_months": 23,
+            "first_month": "2024-11",
+            "last_month": "2026-10",
+            "series": [
+              {
+                "month": "2024-11",
+                "units_used": 42.2,
+                "included_units": 44.0,
+                "usage_id": "U-00270"
+              },
+              {
+                "month": "2024-12",
+                "units_used": 44.1,
+                "included_units": 44.0,
+                "usage_id": "U-00274"
+              },
+              {
+                "month": "2025-01",
+                "units_used": 40.1,
+                "included_units": 44.0,
+                "usage_id": "U-00278"
+              },
+              {
+                "month": "2025-02",
+                "units_used": 48.7,
+                "included_units": 44.0,
+                "usage_id": "U-00282"
+              },
+              {
+                "month": "2025-03",
+                "units_used": 46.5,
+                "included_units": 44.0,
+                "usage_id": "U-00286"
+              },
+              {
+                "month": "2025-04",
+                "units_used": 41.2,
+                "included_units": 44.0,
+                "usage_id": "U-00290"
+              },
+              {
+                "month": "2025-05",
+                "units_used": 37.0,
+                "included_units": 44.0,
+                "usage_id": "U-00294"
+              },
+              {
+                "month": "2025-06",
+                "units_used": 31.1,
+                "included_units": 44.0,
+                "usage_id": "U-00298"
+              },
+              {
+                "month": "2025-07",
+                "units_used": 31.6,
+                "included_units": 44.0,
+                "usage_id": "U-00302"
+              },
+              {
+                "month": "2025-08",
+                "units_used": 36.2,
+                "included_units": 44.0,
+                "usage_id": "U-00306"
+              },
+              {
+                "month": "2025-09",
+                "units_used": 45.1,
+                "included_units": 44.0,
+                "usage_id": "U-00310"
+              },
+              {
+                "month": "2025-10",
+                "units_used": 40.7,
+                "included_units": 44.0,
+                "usage_id": "U-00314"
+              },
+              {
+                "month": "2025-11",
+                "units_used": 39.5,
+                "included_units": 44.0,
+                "usage_id": "U-00318"
+              },
+              {
+                "month": "2025-12",
+                "units_used": 44.9,
+                "included_units": 44.0,
+                "usage_id": "U-00322"
+              },
+              {
+                "month": "2026-01",
+                "units_used": 42.4,
+                "included_units": 44.0,
+                "usage_id": "U-00326"
+              },
+              {
+                "month": "2026-02",
+                "units_used": 43.7,
+                "included_units": 44.0,
+                "usage_id": "U-00330"
+              },
+              {
+                "month": "2026-04",
+                "units_used": 42.7,
+                "included_units": 44.0,
+                "usage_id": "U-00334"
+              },
+              {
+                "month": "2026-05",
+                "units_used": 39.0,
+                "included_units": 44.0,
+                "usage_id": "U-00338"
+              },
+              {
+                "month": "2026-06",
+                "units_used": 33.8,
+                "included_units": 44.0,
+                "usage_id": "U-00342"
+              },
+              {
+                "month": "2026-07",
+                "units_used": 32.6,
+                "included_units": 44.0,
+                "usage_id": "U-00346"
+              },
+              {
+                "month": "2026-08",
+                "units_used": 40.1,
+                "included_units": 44.0,
+                "usage_id": "U-00350"
+              },
+              {
+                "month": "2026-09",
+                "units_used": 43.8,
+                "included_units": 44.0,
+                "usage_id": "U-00354"
+              },
+              {
+                "month": "2026-10",
+                "units_used": 44.8,
+                "included_units": 44.0,
+                "usage_id": "U-00358"
+              }
+            ],
+            "missing_months": [
+              "2026-03"
+            ],
+            "recent_months": [
+              "2026-08",
+              "2026-09",
+              "2026-10"
+            ],
+            "recent_total": 128.7,
+            "year_ago_months": [
+              "2025-08",
+              "2025-09",
+              "2025-10"
+            ],
+            "year_ago_total": 122.0,
+            "yoy_pct": 5.491803278688515,
+            "prior_months": [
+              "2026-05",
+              "2026-06",
+              "2026-07"
+            ],
+            "prior_total": 105.4,
+            "prior_period_pct": 22.106261859582528,
+            "latest": {
+              "month": "2026-10",
+              "units_used": 44.8,
+              "included_units": 44.0,
+              "utilisation_pct": 101.81818181818181,
+              "usage_id": "U-00358"
+            },
+            "utilisation_recent_pct": 97.49999999999999,
+            "utilisation_recent_months": [
+              "2026-08",
+              "2026-09",
+              "2026-10"
+            ],
+            "months_over_included": 2,
+            "months_over_compared": 12,
+            "recent_months_over_included": 1,
+            "overage_units_recent": 0.8,
+            "overage_rate_eur_per_unit": 300.0,
+            "overage_eur_indicative": 240.0,
+            "signals": [],
+            "flags": [
+              "missing_month"
+            ],
+            "months_over_list": [
+              "2025-12",
+              "2026-10"
+            ],
+            "overage_contract_id": "K-0008"
+          }
+        }
+      }
+    },
+    {
+      "tool": "support_summary",
+      "status": "ok",
+      "facts": [
+        {
+          "id": "calc:support_summary#1",
+          "text": "18 tickets on record in total; the most recent was opened 2026-09-13.",
+          "rows": [
+            "ticket:T-0012",
+            "ticket:T-0060",
+            "ticket:T-0071",
+            "ticket:T-0081",
+            "ticket:T-0094",
+            "ticket:T-0100",
+            "ticket:T-0102",
+            "ticket:T-0111",
+            "ticket:T-0120",
+            "ticket:T-0125",
+            "ticket:T-0164",
+            "ticket:T-0167",
+            "ticket:T-0181",
+            "ticket:T-0194",
+            "ticket:T-0202",
+            "ticket:T-0215",
+            "ticket:T-0235",
+            "ticket:T-0267"
+          ],
+          "kind": "calc",
+          "topic": "support_overview",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:support_summary#2",
+          "text": "8 tickets opened in the last 12 months; by priority P1: 1, P3: 6, P4: 1.",
+          "rows": [
+            "ticket:T-0164",
+            "ticket:T-0167",
+            "ticket:T-0181",
+            "ticket:T-0194",
+            "ticket:T-0202",
+            "ticket:T-0215",
+            "ticket:T-0235",
+            "ticket:T-0267"
+          ],
+          "kind": "calc",
+          "topic": "support_12m",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:support_summary#3",
+          "text": "Top ticket categories in the last 12 months: Feature request (2), Integration (2), Access (1).",
+          "rows": [
+            "ticket:T-0164",
+            "ticket:T-0167",
+            "ticket:T-0181",
+            "ticket:T-0194",
+            "ticket:T-0202",
+            "ticket:T-0215",
+            "ticket:T-0235",
+            "ticket:T-0267"
+          ],
+          "kind": "calc",
+          "topic": "support_12m",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:support_summary#4",
+          "text": "1 P1/P2 ticket opened in the last 12 months.",
+          "rows": [
+            "ticket:T-0194"
+          ],
+          "kind": "calc",
+          "topic": "support_12m",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:support_summary#5",
+          "text": "Average CSAT in the last 12 months is 4.2 out of 5, from 6 rated tickets.",
+          "rows": [
+            "ticket:T-0167",
+            "ticket:T-0181",
+            "ticket:T-0194",
+            "ticket:T-0202",
+            "ticket:T-0235",
+            "ticket:T-0267"
+          ],
+          "kind": "calc",
+          "topic": "csat_12m",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:support_summary#6",
+          "text": "Closed tickets opened in the last 12 months took 7.1 days on average to resolve (8 closed tickets).",
+          "rows": [
+            "ticket:T-0164",
+            "ticket:T-0167",
+            "ticket:T-0181",
+            "ticket:T-0194",
+            "ticket:T-0202",
+            "ticket:T-0215",
+            "ticket:T-0235",
+            "ticket:T-0267"
+          ],
+          "kind": "calc",
+          "topic": "support_12m",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:support_summary#7",
+          "text": "1 ticket opened in the last 90 days; by priority P3: 1.",
+          "rows": [
+            "ticket:T-0267"
+          ],
+          "kind": "calc",
+          "topic": "support_90d",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:support_summary#8",
+          "text": "Top ticket categories in the last 90 days: Feature request (1).",
+          "rows": [
+            "ticket:T-0267"
+          ],
+          "kind": "calc",
+          "topic": "support_90d",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:support_summary#9",
+          "text": "0 P1/P2 tickets opened in the last 90 days.",
+          "rows": [],
+          "kind": "calc",
+          "topic": "support_90d",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:support_summary#10",
+          "text": "Average CSAT in the last 90 days is 4.0 out of 5, from 1 rated ticket.",
+          "rows": [
+            "ticket:T-0267"
+          ],
+          "kind": "calc",
+          "topic": "csat_90d",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:support_summary#11",
+          "text": "Closed tickets opened in the last 90 days took 10.0 days on average to resolve (1 closed ticket).",
+          "rows": [
+            "ticket:T-0267"
+          ],
+          "kind": "calc",
+          "topic": "support_90d",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:support_summary#12",
+          "text": "Ticket volume is unchanged: 1 opened in the last 90 days versus 1 in the previous 90 days.",
+          "rows": [
+            "ticket:T-0235",
+            "ticket:T-0267"
+          ],
+          "kind": "calc",
+          "topic": "ticket_trend",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:support_summary#13",
+          "text": "No open tickets at 2026-11-01.",
+          "rows": [],
+          "kind": "calc",
+          "topic": "open_tickets",
+          "signal": "neutral"
+        }
+      ],
+      "gaps": [],
+      "data": {
+        "client_id": "C005",
+        "as_of": "2026-11-01",
+        "total_tickets": 18,
+        "all_ticket_ids": [
+          "T-0012",
+          "T-0060",
+          "T-0071",
+          "T-0081",
+          "T-0094",
+          "T-0100",
+          "T-0102",
+          "T-0111",
+          "T-0120",
+          "T-0125",
+          "T-0164",
+          "T-0167",
+          "T-0181",
+          "T-0194",
+          "T-0202",
+          "T-0215",
+          "T-0235",
+          "T-0267"
+        ],
+        "windows": {
+          "12m": {
+            "count": 8,
+            "ticket_ids": [
+              "T-0164",
+              "T-0167",
+              "T-0181",
+              "T-0194",
+              "T-0202",
+              "T-0215",
+              "T-0235",
+              "T-0267"
+            ],
+            "by_priority": {
+              "P1": 1,
+              "P3": 6,
+              "P4": 1
+            },
+            "by_category": {
+              "Feature request": 2,
+              "Integration": 2,
+              "Access": 1,
+              "Billing": 1,
+              "Latency": 1,
+              "Outage": 1
+            },
+            "p1_p2_count": 1,
+            "csat_avg": 4.166666666666667,
+            "csat_rated": 6,
+            "closed_count": 8,
+            "avg_resolution_days": 7.125,
+            "start_exclusive": "2025-11-01",
+            "end_inclusive": "2026-11-01"
+          },
+          "90d": {
+            "count": 1,
+            "ticket_ids": [
+              "T-0267"
+            ],
+            "by_priority": {
+              "P3": 1
+            },
+            "by_category": {
+              "Feature request": 1
+            },
+            "p1_p2_count": 0,
+            "csat_avg": 4.0,
+            "csat_rated": 1,
+            "closed_count": 1,
+            "avg_resolution_days": 10.0,
+            "start_exclusive": "2026-08-03",
+            "end_inclusive": "2026-11-01"
+          }
+        },
+        "trend": {
+          "recent_count": 1,
+          "previous_count": 1,
+          "recent_ids": [
+            "T-0267"
+          ],
+          "previous_ids": [
+            "T-0235"
+          ],
+          "delta": 0,
+          "rising": false,
+          "pct_change": null
+        },
+        "open_tickets": [],
+        "open_count": 0,
+        "open_p1_p2_count": 0
+      }
+    },
+    {
+      "tool": "meeting_notes",
+      "status": "ok",
+      "facts": [
+        {
+          "id": "calc:meeting_notes#1",
+          "text": "1 meeting note on record; the last meeting was 2026-05-20, 165 days before 2026-11-01.",
+          "rows": [
+            "note:N-010"
+          ],
+          "kind": "calc",
+          "topic": "last_meeting",
+          "signal": "neutral"
+        },
+        {
+          "id": "note:N-010",
+          "text": "Note N-010: \"Account check-in\" on 2026-05-20, written by Grace Okafor.",
+          "rows": [
+            "note:N-010"
+          ],
+          "kind": "reported",
+          "topic": "note",
+          "signal": "neutral"
+        },
+        {
+          "id": "note:N-010",
+          "text": "Note N-010 (2026-05-20) says: \"They could not find their March usage statement in the portal; support ticket raised.\"",
+          "rows": [
+            "note:N-010"
+          ],
+          "kind": "reported",
+          "topic": "complaint",
+          "signal": "risk"
+        },
+        {
+          "id": "note:N-010",
+          "text": "Note N-010 (2026-05-20) says: \"Actions: Grace to chase the missing statement.\"",
+          "rows": [
+            "note:N-010"
+          ],
+          "kind": "reported",
+          "topic": "commitment",
+          "signal": "neutral"
+        }
+      ],
+      "gaps": [],
+      "data": {
+        "client_id": "C005",
+        "note_count": 1,
+        "last_meeting_date": "2026-05-20",
+        "days_since_last_meeting": 165,
+        "notes": [
+          {
+            "note_id": "N-010",
+            "meeting_date": "2026-05-20",
+            "author": "Grace Okafor",
+            "title": "Account check-in",
+            "body": "# Account check-in: Marrowfield\n\nDate: 2026-05-20\nAuthor: Grace Okafor\n\nAttendees: Marrowfield operations manager, Grace Okafor.\n\n- They could not find their March usage statement in the portal; support ticket raised.\n- Widgets performing well on their website.\n\nActions: Grace to chase the missing statement.",
+            "quotes": [
+              {
+                "topic": "complaint",
+                "text": "They could not find their March usage statement in the portal; support ticket raised."
+              },
+              {
+                "topic": "commitment",
+                "text": "Actions: Grace to chase the missing statement."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "tool": "claim_check",
+      "status": "ok",
+      "facts": [],
+      "gaps": [],
+      "data": {
+        "client_id": "C005",
+        "checked": []
+      }
+    },
+    {
+      "tool": "whitespace",
+      "status": "ok",
+      "facts": [
+        {
+          "id": "product:LIVE_DATA",
+          "text": "Client holds Live Match Data Feed (LIVE_DATA).",
+          "rows": [
+            "product:LIVE_DATA",
+            "contracts:K-0008"
+          ],
+          "kind": "data",
+          "topic": "held_products",
+          "signal": "neutral"
+        },
+        {
+          "id": "product:STATS_ARCHIVE",
+          "text": "Client holds Historical Stats Archive (STATS_ARCHIVE).",
+          "rows": [
+            "product:STATS_ARCHIVE",
+            "contracts:K-0008"
+          ],
+          "kind": "data",
+          "topic": "held_products",
+          "signal": "neutral"
+        },
+        {
+          "id": "product:STREAM",
+          "text": "Client holds Live Streaming (STREAM).",
+          "rows": [
+            "product:STREAM",
+            "contracts:K-0008"
+          ],
+          "kind": "data",
+          "topic": "held_products",
+          "signal": "neutral"
+        },
+        {
+          "id": "product:WIDGETS",
+          "text": "Client holds Match Visualisation Widgets (WIDGETS).",
+          "rows": [
+            "product:WIDGETS",
+            "contracts:K-0008"
+          ],
+          "kind": "data",
+          "topic": "held_products",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:whitespace#1",
+          "text": "Client holds 4 of 8 catalogue products; 4 are not held.",
+          "rows": [
+            "contracts:K-0008",
+            "product:LIVE_DATA",
+            "product:STATS_ARCHIVE",
+            "product:STREAM",
+            "product:WIDGETS"
+          ],
+          "kind": "calc",
+          "topic": "whitespace_summary",
+          "signal": "neutral"
+        },
+        {
+          "id": "calc:whitespace#2",
+          "text": "Peer group: 5 other clients in segment Broadcaster.",
+          "rows": [
+            "client:C002",
+            "client:C008",
+            "client:C013",
+            "client:C020",
+            "client:C021"
+          ],
+          "kind": "calc",
+          "topic": "peer_group",
+          "signal": "neutral"
+        },
+        {
+          "id": "product:FAN_INSIGHTS",
+          "text": "Not held: Fan Engagement Analytics (FAN_INSIGHTS); held by 2 of 5 segment peers (40.0%); typically sold to Broadcaster; often bought with held STREAM, WIDGETS; indicative entry price EUR 17,500 per year.",
+          "rows": [
+            "product:FAN_INSIGHTS",
+            "client:C008",
+            "client:C013"
+          ],
+          "kind": "data",
+          "topic": "whitespace",
+          "signal": "opportunity"
+        },
+        {
+          "id": "product:ODDS_LIVE",
+          "text": "Not held: In-play Odds Feed (ODDS_LIVE); held by 0 of 5 segment peers (0.0%); not typically sold to Broadcaster; often bought with held LIVE_DATA, STREAM; prerequisite LIVE_DATA is already held; indicative entry price EUR 75,000 per year.",
+          "rows": [
+            "product:ODDS_LIVE"
+          ],
+          "kind": "data",
+          "topic": "whitespace",
+          "signal": "neutral"
+        },
+        {
+          "id": "product:INTEGRITY",
+          "text": "Not held: Integrity Monitoring (INTEGRITY); held by 0 of 5 segment peers (0.0%); not typically sold to Broadcaster; indicative entry price EUR 25,000 per year.",
+          "rows": [
+            "product:INTEGRITY"
+          ],
+          "kind": "data",
+          "topic": "whitespace",
+          "signal": "neutral"
+        },
+        {
+          "id": "product:ODDS_PRE",
+          "text": "Not held: Pre-match Odds Feed (ODDS_PRE); held by 0 of 5 segment peers (0.0%); not typically sold to Broadcaster; indicative entry price EUR 45,000 per year.",
+          "rows": [
+            "product:ODDS_PRE"
+          ],
+          "kind": "data",
+          "topic": "whitespace",
+          "signal": "neutral"
+        }
+      ],
+      "gaps": [],
+      "data": {
+        "client_id": "C005",
+        "segment": "Broadcaster",
+        "held_products": [
+          "LIVE_DATA",
+          "STATS_ARCHIVE",
+          "STREAM",
+          "WIDGETS"
+        ],
+        "held_from_contracts": [
+          "K-0008"
+        ],
+        "held_based_on_expired_contract": false,
+        "peer_ids": [
+          "C002",
+          "C008",
+          "C013",
+          "C020",
+          "C021"
+        ],
+        "peer_count": 5,
+        "small_peer_group": false,
+        "candidates": [
+          {
+            "product_id": "FAN_INSIGHTS",
+            "product_name": "Fan Engagement Analytics",
+            "list_price_from_eur": 17500.0,
+            "peers_holding": 2,
+            "peer_count": 5,
+            "peer_holders": [
+              "C008",
+              "C013"
+            ],
+            "peer_share_pct": 40.0,
+            "segment_fit": true,
+            "bought_with_held": [
+              "STREAM",
+              "WIDGETS"
+            ],
+            "prerequisites": [],
+            "prerequisites_missing": [],
+            "tickets": [],
+            "open_opps": [],
+            "lost_opps": [],
+            "won_opps": [],
+            "score": 5.2,
+            "rank": 1,
+            "signal": "opportunity"
+          },
+          {
+            "product_id": "ODDS_LIVE",
+            "product_name": "In-play Odds Feed",
+            "list_price_from_eur": 75000.0,
+            "peers_holding": 0,
+            "peer_count": 5,
+            "peer_holders": [],
+            "peer_share_pct": 0.0,
+            "segment_fit": false,
+            "bought_with_held": [
+              "LIVE_DATA",
+              "STREAM"
+            ],
+            "prerequisites": [
+              "LIVE_DATA"
+            ],
+            "prerequisites_missing": [],
+            "tickets": [],
+            "open_opps": [],
+            "lost_opps": [],
+            "won_opps": [],
+            "score": 2.0,
+            "rank": 2,
+            "signal": "neutral"
+          },
+          {
+            "product_id": "INTEGRITY",
+            "product_name": "Integrity Monitoring",
+            "list_price_from_eur": 25000.0,
+            "peers_holding": 0,
+            "peer_count": 5,
+            "peer_holders": [],
+            "peer_share_pct": 0.0,
+            "segment_fit": false,
+            "bought_with_held": [],
+            "prerequisites": [],
+            "prerequisites_missing": [],
+            "tickets": [],
+            "open_opps": [],
+            "lost_opps": [],
+            "won_opps": [],
+            "score": 0.0,
+            "rank": 3,
+            "signal": "neutral"
+          },
+          {
+            "product_id": "ODDS_PRE",
+            "product_name": "Pre-match Odds Feed",
+            "list_price_from_eur": 45000.0,
+            "peers_holding": 0,
+            "peer_count": 5,
+            "peer_holders": [],
+            "peer_share_pct": 0.0,
+            "segment_fit": false,
+            "bought_with_held": [],
+            "prerequisites": [],
+            "prerequisites_missing": [],
+            "tickets": [],
+            "open_opps": [],
+            "lost_opps": [],
+            "won_opps": [],
+            "score": 0.0,
+            "rank": 4,
+            "signal": "neutral"
+          }
+        ],
+        "top_candidates": [
+          "FAN_INSIGHTS"
+        ],
+        "score_weights": {
+          "peer_share": 3.0,
+          "peer_share_small_group": 1.0,
+          "segment_fit": 2.0,
+          "bought_with": 1.0,
+          "bought_with_cap": 2.0,
+          "ticket_signal": 2.0,
+          "open_opp": 3.0,
+          "lost_opp": -4.0,
+          "prereq_blocker": -3.0
+        }
+      }
+    }
+  ],
+  "writer": {
+    "mode": "model",
+    "calls": [
+      {
+        "model": "claude-haiku-5-5",
+        "input_tokens": 6358,
+        "output_tokens": 4608,
+        "stop_reason": "end_turn"
+      },
+      {
+        "model": "claude-haiku-5-5",
+        "input_tokens": 7984,
+        "output_tokens": 2209,
+        "stop_reason": "end_turn"
+      }
+    ],
+    "repaired": true
+  },
+  "verification": {
+    "first_pass": {
+      "ok": false,
+      "numbers_checked": 35,
+      "citations_checked": 28,
+      "violations": [
+        {
+          "line_no": 11,
+          "line": "- WIDGETS used 44.8 million impressions in Oct 2026 against 44.0 included, 101.8% [calc:usage_trend#20]. It exceeded its included volume in 2 of the last 12 months [calc:usage_trend#24].",
+          "kind": "number_not_in_cited_evidence",
+          "token": "44.8 million",
+          "detail": "44.8 million is not in the evidence cited on this line; abbreviated figures are not accepted, copy the figure exactly"
+        }
+      ]
+    },
+    "final": {
+      "ok": false,
+      "numbers_checked": 36,
+      "citations_checked": 27,
+      "violations": [
+        {
+          "line_no": 2,
+          "line": "K-0008 (EUR 363,000 a year) ends on 2026-11-30 and renews automatically for the same term, because the notice deadline of 2026-10-01 has passed [calc:contract_status#2]. The data holds no record of notice, so the renewal is likely to roll over, but the rollover value is not in the data. Confidence is medium because March usage is missing and there is no CRM opportunity [calc:data_quality#1].",
+          "kind": "number_not_in_cited_evidence",
+          "token": "EUR 363,000",
+          "detail": "EUR 363,000 is not in the evidence cited on this line; it does appear in contracts:K-0008, calc:contract_status#3"
+        }
+      ]
+    }
+  }
+}

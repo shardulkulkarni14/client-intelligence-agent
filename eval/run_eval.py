@@ -74,7 +74,10 @@ def check_case(case: dict, result) -> dict[str, tuple[bool, str]]:
 
     codes = {g["code"] for r in result.evidence["results"] for g in r["gaps"]}
     missing_codes = [c for c in case.get("gap_codes", []) if c not in codes]
-    missing_cites = [c for c in case.get("must_cite", []) if c not in cited]
+    # Citing a computed fact also counts as referring to the rows it was computed from.
+    rows_of = {f["id"]: f["rows"] for r in result.evidence["results"] for f in r["facts"]}
+    referred = cited | {row for c in cited for row in rows_of.get(c, [])}
+    missing_cites = [c for c in case.get("must_cite", []) if c not in referred]
     words = len(body.split())
     flagged = len(result.report.violations)
     return {

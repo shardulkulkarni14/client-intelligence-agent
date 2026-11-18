@@ -254,7 +254,9 @@ def get_support_summary(ds: Dataset, client_id: str) -> ToolResult:
                 "subject": t.get("subject"),
             }
         )
-        fb.reported(
+        # Priority, dates and age are recorded fields, so this is a data fact; only the
+        # subject line is the client's own wording, and the sentence says so.
+        fb.data(
             cite("ticket", t["ticket_id"]),
             f"Open ticket {t['ticket_id']}: priority {t.get('priority') or 'unknown'}, "
             f"category {t.get('category') or 'unknown'}, product "
