@@ -114,7 +114,7 @@ function BriefingPage() {
           <input type="checkbox" checked={useModel} onChange={(e) => setUseModel(e.target.checked)} />
           Use the model
           <span className="muted small">
-            {useModel ? "(written briefing, about 40 seconds, costs a few cents)" : "(facts only, free, instant)"}
+            {useModel ? "(written briefing, 20 to 60 seconds, under one cent)" : "(facts only, free, instant)"}
           </span>
           {noKey ? (
             <span className="small nokey">

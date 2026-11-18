@@ -160,7 +160,7 @@ export default function BriefingView({ result }: { result: BriefingResponse }) {
                     <tr key={`${step.name}-${i}`}>
                       <td>{step.name}</td>
                       <td>{step.kind}</td>
-                      <td className="n">{num(step.seconds)?.toFixed(2) ?? ""}</td>
+                      <td className="n">{num(step.seconds)?.toFixed(3) ?? ""}</td>
                       <td className="n">
                         {tokens.input !== null || tokens.output !== null
                           ? `${tokens.input ?? 0} / ${tokens.output ?? 0}`

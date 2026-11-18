@@ -220,7 +220,7 @@ Done after the six must-haves were complete and evaluated:
 | Unit tests and a repeatable regression run | 262 tests; `eval/run_eval.py` re-runs the cases after any prompt change. |
 | Parallel tools with a trace | Tools run in a thread pool with the result order kept stable. `evidence.json` has a `trace`: every step with seconds, and tokens and cost for model calls. A tool that raises becomes a visible `tool_error` gap, not a failed run. These are parallel deterministic tools, not parallel model specialists. |
 | Portfolio view | `--portfolio` ranks all clients by renewal risk and by growth without a model. The score is a sum of fixed points; every point carries the fact and citation that earned it. It is an ordering aid, not a probability: the data has no churn history to fit weights to, and only a handful of clients carry real risk signals. |
-| Small UI | A FastAPI service (`api.py`, four endpoints) and a Next.js page in `ui/` that calls it. Run a briefing, click any citation to see the evidence behind it, see the trace, browse the portfolio. The API is a thin layer over the same `run()` function; it loads the data once and runs the pipeline in a worker thread. It is a local, single-user service: no authentication, no job queue for the 30 to 60 second runs, no rate limiting. |
+| Small UI | A FastAPI service (`api.py`, four endpoints) and a Next.js page in `ui/` that calls it. Run a briefing, click any citation to see the evidence behind it, see the trace, browse the portfolio. The API is a thin layer over the same `run()` function; it loads the data once and runs the pipeline in a worker thread. It is a local, single-user service: no authentication, no job queue for the 20 to 60 second runs, no rate limiting. |
 | LLM-as-judge scoring | Not done. I preferred to spend the time on the verifier; a judge model would rate usefulness, which is the part my automatic checks do not cover, so it is the first thing in "next". |
 
 ## Known limitations
@@ -243,7 +243,7 @@ Done after the six must-haves were complete and evaluated:
 - **Synthetic data only**, 25 clients. The evaluation cases were chosen by me after
   reading the data, so they test what I knew to look for.
 - **Name matching** has no typo tolerance.
-- Latency is 30 to 60 seconds per briefing, mostly the model writing.
+- Latency is 20 to 60 seconds per briefing, almost all of it the model writing.
 
 ## What I would do next for production
 
@@ -251,7 +251,7 @@ Done after the six must-haves were complete and evaluated:
    model change, with a rep rating usefulness, which no automatic check covers.
 2. Tie each figure to its subject: have the writer emit structured claims
    (fact ID plus sentence) so the verifier can check the pairing, not only the number.
-3. Put the API behind authentication, move the 30 to 60 second runs to a job
+3. Put the API behind authentication, move the 20 to 60 second runs to a job
    queue with status polling, and add rate limits. Read from the warehouse through reviewed SQL views instead of a file, with data
    freshness in the header and row-level access by account owner.
 4. Tracing and cost per briefing, an audit log of what was sent to the model, and
