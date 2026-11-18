@@ -71,7 +71,7 @@ points (command, API, UI) cannot drift apart. The port is set with
 ### 4. Tests and evaluation
 
 ```bash
-uv run pytest                           # 262 tests, no model calls
+uv run pytest                           #  tests, no model calls
 uv run ruff check .
 uv run python eval/run_eval.py          # the evaluation, with the model
 uv run python eval/run_eval.py --no-llm # same cases on tool output only, free
@@ -177,18 +177,20 @@ the report. Checks are automatic:
 | must_cite | Rows a useful briefing for the case has to refer to. |
 | length | About one page. |
 
-**Result of the last run** (`eval/report.md`, model `claude-haiku-5-5`): 77 of 77
-checks passed over 11 briefings. The verifier flagged a line in 2 of the 11 first
-drafts; the single repair attempt fixed both. About 95,000 input and 55,000 output
-tokens for the whole run.
+**Result of the last run** (`eval/report.md`, model `claude-haiku-5-5`): 76 of 77
+checks passed over 11 briefings. The one failure: in one briefing the model wrote
+two sections in the wrong order. The verifier flagged a line in 3 of the 11 first
+drafts; the single repair attempt fixed all three. About 104,000 input and 57,000
+output tokens for the whole run, roughly 4 US cents.
 
-That clean result is the third run, and the first two are the more useful story:
+The runs in order, failures included, because they are the more useful story:
 
 | Run | Result | What failed | What I changed |
 |---|---|---|---|
 | 1 | 53 of 56 (8 cases) | First drafts flagged in 5 of 8 cases; 2 still flagged after repair. A ticket's age was treated as an unverified claim; the model rewrote units and built its own ratio ("2 of 5 tickets"); one correct figure was cited to the wrong fact. | Ticket fields became data facts; prompt rules on units, on not counting, and on citing both facts. One evaluation check was too strict. |
 | 2 | 68 of 77 (11 cases) | All 9 failures were the evaluation not recognising the new citable gap IDs. Verifier: 4 first drafts flagged, all repaired. | Fixed the evaluation. Between runs 1 and 2 the verifier was made stricter after an independent review (see "How I built it"). |
 | 3 | 77 of 77 | none | |
+| 4 | 76 of 77 | Re-run on the final code. `halden_renewal`: "Risks to the renewal" came before "Usage against what they pay for". The same case passed in run 3, so this is the model varying between runs. | Section order is now set in code (`order_sections` in `pipeline.py`), with tests, instead of being left to the prompt. Not re-run with the model after this fix; `outputs/` and `eval/report.md` are run 4 as it happened. |
 
 What the verifier caught across the runs, all in first drafts: a figure on a line
 without a citation, "44.8 million" for a figure whose unit is "impressions
@@ -217,7 +219,7 @@ Done after the six must-haves were complete and evaluated:
 |---|---|
 | New trigger through configuration only | Done; see "Adding a trigger". |
 | Note-versus-data conflicts | Done as the `claim_check` tool; the conflict reaches the briefing as a cited fact and a gap. It is not yet phrased as a question for the rep by code; the writer does that. |
-| Unit tests and a repeatable regression run | 262 tests; `eval/run_eval.py` re-runs the cases after any prompt change. |
+| Unit tests and a repeatable regression run |  tests; `eval/run_eval.py` re-runs the cases after any prompt change. |
 | Parallel tools with a trace | Tools run in a thread pool with the result order kept stable. `evidence.json` has a `trace`: every step with seconds, and tokens and cost for model calls. A tool that raises becomes a visible `tool_error` gap, not a failed run. These are parallel deterministic tools, not parallel model specialists. |
 | Portfolio view | `--portfolio` ranks all clients by renewal risk and by growth without a model. The score is a sum of fixed points; every point carries the fact and citation that earned it. It is an ordering aid, not a probability: the data has no churn history to fit weights to, and only a handful of clients carry real risk signals. |
 | Small UI | A FastAPI service (`api.py`, four endpoints) and a Next.js page in `ui/` that calls it. Run a briefing, click any citation to see the evidence behind it, see the trace, browse the portfolio. The API is a thin layer over the same `run()` function; it loads the data once and runs the pipeline in a worker thread. It is a local, single-user service: no authentication, no job queue for the 20 to 60 second runs, no rate limiting. |

@@ -247,3 +247,28 @@ def test_a_failing_tool_becomes_a_gap_and_the_run_continues(ds, monkeypatch):
     assert "EUR 752,000" in result.briefing
     assert "[gap:tool_error#1]" in result.briefing
     assert result.report.ok
+
+
+def test_sections_are_put_in_the_configured_order():
+    from client_intel.pipeline import order_sections
+
+    text = "intro\n\n## B\n- b1\n\n## Extra\n- x\n\n## A\n- a1\n- a2"
+    assert order_sections(text, ["A", "B"]) == (
+        "intro\n\n## A\n- a1\n- a2\n\n## B\n- b1\n\n## Extra\n- x"
+    )
+    in_order = "## A\n- a\n\n## B\n- b\n"
+    assert order_sections(in_order, ["A", "B"]) == in_order
+    assert order_sections("no headings", ["A"]) == "no headings"
+
+
+def test_a_draft_with_swapped_sections_comes_out_in_plan_order(ds):
+    from client_intel.pipeline import make_plan, run
+
+    sections = make_plan("renewal").sections
+
+    def swapped(system: str, user: str) -> str:
+        return "\n\n".join(f"## {name}\nNothing to add." for name in reversed(sections))
+
+    result = run(ds, "C001", "renewal", writer=swapped)
+    positions = [result.briefing.index(f"## {name}") for name in sections]
+    assert positions == sorted(positions)

@@ -3,39 +3,40 @@
 _Data as of 2026-11-01. Account owner: Grace Okafor._
 
 ## Bottom line
-The notice deadline for K-0008 passed on 2026-10-01, and the data holds no record of notice either way. If no notice was given, the contract would roll over for another 12 months from 2026-12-01 at the current annual value of EUR 363,000 [calc:contract_status#3] [contracts:K-0008]. Confidence is medium because of missing March usage and no renewal opportunity on file [calc:data_quality#1].
+Renewal is effectively automatic. Contract K-0008 (annual value EUR 363,000 [contracts:K-0008]) ends 2026-11-30, and the notice deadline of 2026-10-01 has passed [calc:contract_status#2]. Whether notice was given is not known, and no renewal opportunity is on file [calc:contract_status#3] [gap:no_renewal_opportunity#1]. Confidence is medium [calc:data_quality#1].
 
 ## Contract and renewal position
-- K-0008 runs 2025-12-01 to 2026-11-30 and ends 29 days after 2026-11-01 [contracts:K-0008] [calc:contract_status#1].
-- The notice deadline was 2026-10-01 and passed 31 days before 2026-11-01 [calc:contract_status#2].
-- The annual value is up +4.3% on the previous contract's EUR 348,000 [calc:contract_status#4]. The term fell from 24 months to 12 months [calc:contract_status#5].
-- No renewal opportunity is recorded in the CRM [gap:no_renewal_opportunity#1] [gap:no_opportunities#1].
+- K-0008 auto-renews for the same 12-month term unless notice is given. The deadline passed 31 days before 2026-11-01 [contracts:K-0008] [calc:contract_status#2].
+- Without notice, the contract rolls over for 12 months from 2026-12-01 [calc:contract_status#3].
+- Annual value is EUR 363,000, up +4.3% on EUR 348,000 for K-0007 [calc:contract_status#4].
+- The term was cut from 24 months to 12 months, which shortens the next renewal cycle [calc:contract_status#5].
 
 ## Usage against what they pay for
-- WIDGETS used 44.8 widget impressions (millions) in Oct 2026 against 44.0 included, a utilisation of 101.8% [calc:usage_trend#23]. The estimated overage is an indicative EUR 240, with no billing data to confirm it was charged [calc:usage_trend#29].
-- STREAM reached 88.9% utilisation in Sep 2026 and 79.4% in Oct 2026 [calc:usage_trend#20] [calc:usage_trend#16].
-- LIVE_DATA usage rose +6.8% year on year for Aug-Oct 2026 and reached 76.8% utilisation in Oct 2026 [calc:usage_trend#3] [calc:usage_trend#2].
-- March 2026 usage is missing for four products, so it is unknown, not zero [gap:missing_month#1].
+- WIDGETS reached 101.8% of its included volume in Oct 2026 (44.8 against 44.0) and exceeded it in 2 of the last 12 months [calc:usage_trend#23] [calc:usage_trend#28].
+- The indicative overage for WIDGETS in Oct 2026 is EUR 240. There is no billing data to confirm it was charged [calc:usage_trend#29].
+- LIVE_DATA was at 76.8% of included volume in Oct 2026 and up +6.8% year on year in Aug-Oct [calc:usage_trend#2] [calc:usage_trend#3].
+- STREAM peaked at 88.9% of included volume in Sep 2026 [calc:usage_trend#20].
 
 ## Risks to the renewal
-- Whether notice was given is unknown, and that decides whether the auto-renewal applies [calc:contract_status#3].
-- A P1 outage ticket, "Feed unavailable for 20 minutes", was opened 2026-03-20 and closed after 4 days [ticket:T-0194].
-- Note N-010 from Grace Okafor on 2026-05-20 reports: "They could not find their March usage statement in the portal; support ticket raised." This is a reported claim [note:N-010].
-- The last meeting was 165 days before 2026-11-01 [calc:meeting_notes#1]. The data does not show whether the statement action was closed [note:N-010].
+- Support: one P1 outage in the last 12 months, "Feed unavailable for 20 minutes" [ticket:T-0194]. Average CSAT is 4.2 out of 5 from 6 rated tickets [calc:support_summary#5].
+- Reported in a 2026-05-20 note by Grace Okafor: the client "could not find their March usage statement in the portal" [note:N-010].
+- The last meeting was 165 days before 2026-11-01 [calc:meeting_notes#1].
+- March 2026 usage is missing for all four products, so those months are unknown, not zero [gap:missing_month#1].
 
 ## Room to grow
-- Fan Engagement Analytics (FAN_INSIGHTS) is not held. It is held by 2 of 5 segment peers, is often bought with STREAM and WIDGETS, and has an indicative entry price of EUR 17,500 per year [product:FAN_INSIGHTS].
-- In-play Odds Feed (ODDS_LIVE) is not held. LIVE_DATA, its prerequisite, is already held. The indicative price is EUR 75,000 per year, and no segment peer holds it [product:ODDS_LIVE].
+- Fan Engagement Analytics (FAN_INSIGHTS) is not held, is held by 2 of 5 peers, and is often bought with STREAM and WIDGETS. Indicative entry price is EUR 17,500 per year [product:FAN_INSIGHTS].
+- In-play Odds Feed (ODDS_LIVE) is not typically sold to Broadcasters, but its prerequisite LIVE_DATA is held. Indicative entry price is EUR 75,000 per year [product:ODDS_LIVE].
 
 ## Suggested next steps
-- Confirm with Grace Okafor and the contract file whether notice was sent for K-0008 [client:C005] [calc:contract_status#3].
-- Open a renewal opportunity in the CRM before the 2026-11-30 end date [calc:opportunities#1].
-- Check whether the WIDGETS overage was billed and close the March usage statement ticket [calc:usage_trend#29] [note:N-010].
-- Discuss the drop from 24 to 12 months with the client before renewal terms are set [calc:contract_status#5].
+- Ask Grace Okafor whether notice was given before 2026-10-01 and record the answer [calc:contract_status#2].
+- Confirm with billing whether the EUR 240 WIDGETS overage was charged [calc:usage_trend#29].
+- Chase the March 2026 usage statement noted in N-010, which Grace was to chase [note:N-010].
+- Open a renewal opportunity in the CRM before 2026-11-30 [gap:no_renewal_opportunity#1].
+- Raise the WIDGETS capacity against the 12-month term with the client [calc:usage_trend#23] [calc:contract_status#5].
 
 ## Verification
 
-All 42 numbers and 30 citations were checked against the evidence.
+All 44 numbers and 29 citations were checked against the evidence.
 
 
 ## Data gaps and confidence

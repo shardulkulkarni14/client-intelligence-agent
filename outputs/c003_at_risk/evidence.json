@@ -2234,7 +2234,7 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 6921,
-        "output_tokens": 4092,
+        "output_tokens": 5284,
         "stop_reason": "end_turn"
       }
     ],
@@ -2243,17 +2243,160 @@
   "verification": {
     "first_pass": {
       "ok": true,
-      "numbers_checked": 25,
-      "citations_checked": 24,
+      "numbers_checked": 31,
+      "citations_checked": 30,
       "violations": [],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 25,
-      "citations_checked": 24,
+      "numbers_checked": 31,
+      "citations_checked": 30,
       "violations": [],
       "uncited_lines": 0
     }
+  },
+  "trace": {
+    "model": "claude-haiku-5-5",
+    "total_seconds": 23.002,
+    "total_cost_usd": 0.003334,
+    "steps": [
+      {
+        "name": "plan",
+        "kind": "plan",
+        "seconds": 0.0,
+        "detail": {
+          "trigger": "at_risk",
+          "tools": [
+            "usage_trend",
+            "support_summary",
+            "contract_status",
+            "opportunities",
+            "meeting_notes",
+            "claim_check"
+          ]
+        }
+      },
+      {
+        "name": "resolve_client",
+        "kind": "resolve",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "get_client_profile",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "data_quality",
+        "kind": "tool",
+        "seconds": 0.001,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "usage_trend",
+        "kind": "tool",
+        "seconds": 0.001,
+        "detail": {
+          "status": "ok",
+          "facts": 28,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "support_summary",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 17,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "contract_status",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 8,
+          "gaps": 1
+        }
+      },
+      {
+        "name": "opportunities",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 3,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "meeting_notes",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 10,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "claim_check",
+        "kind": "tool",
+        "seconds": 0.001,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 1
+        }
+      },
+      {
+        "name": "first_draft",
+        "kind": "model",
+        "seconds": 22.972,
+        "detail": {
+          "input_tokens": 6921,
+          "output_tokens": 5284,
+          "cost_usd": 0.003334,
+          "stop_reason": "end_turn"
+        }
+      },
+      {
+        "name": "verify_first_draft",
+        "kind": "verify",
+        "seconds": 0.017,
+        "detail": {
+          "numbers_checked": 31,
+          "citations_checked": 30,
+          "violations": 0
+        }
+      },
+      {
+        "name": "apply_policy",
+        "kind": "policy",
+        "seconds": 0.0,
+        "detail": {
+          "flagged": 0,
+          "repaired": false
+        }
+      }
+    ]
   }
 }

@@ -3,38 +3,41 @@
 _Data as of 2026-11-01. Account owner: Elif Aydin._
 
 ## Bottom line
-Growth is more likely through new products than through more volume: Quillon holds 1 of 8 catalogue products [calc:whitespace#1], and usage is well under the included volume [calc:usage_trend#2]. Confidence is low, because only two months of usage and a two-client peer group are on file [calc:data_quality#1] [gap:short_history#1] [gap:small_peer_group#1].
+Growth is more likely from new products than from more volume. The client holds 1 of 8 catalogue products [calc:whitespace#1] and used 40.0% of its included volume in Oct 2026 [calc:usage_trend#2]. WIDGETS and STATS_ARCHIVE are the most natural first add-ons, but confidence is low because usage covers only two months [calc:data_quality#1] [gap:short_history#1].
 
 ## More of what they already use
-- Live Match Data Feed used 800 API calls (thousands) in Oct 2026 against 2,000 included, a utilisation of 40.0% [calc:usage_trend#2].
-- The two-month average is 33.1%, with 1,323 API calls (thousands) used against 4,000 included [calc:usage_trend#3]. Usage was above the included volume in 0 of the last 2 months [calc:usage_trend#5].
-- Treat this as headroom, not proven demand, since the history is only two months [gap:short_history#1].
+- Live Match Data Feed used 800 API calls (thousands) of 2,000 included in Oct 2026, a utilisation of 40.0% [calc:usage_trend#2].
+- Average utilisation for Sep-Oct 2026 was 33.1% [calc:usage_trend#3]. Usage has not exceeded the included volume in either month [calc:usage_trend#5].
+- Headroom exists, but the evidence does not support a volume pitch yet. No year-on-year trend can be read [gap:short_history#1].
 
 ## Products they do not hold
-- In-play Odds Feed (ODDS_LIVE) is the largest entry price at EUR 75,000 per year. It is often bought with held LIVE_DATA, and its prerequisite is already held, but it is not typically sold to Fantasy & Gaming and no peer holds it [product:ODDS_LIVE].
-- Match Visualisation Widgets (WIDGETS) is EUR 30,000 per year, is often bought with LIVE_DATA, and is held by both segment peers. The peer evidence is weak [product:WIDGETS] [gap:small_peer_group#1].
-- Historical Stats Archive (STATS_ARCHIVE) is EUR 20,000 per year and is held by both segment peers [product:STATS_ARCHIVE].
-- Fan Engagement Analytics, Integrity Monitoring, Pre-match Odds Feed and Live Streaming are not typically sold to the segment and no peer holds them [product:FAN_INSIGHTS] [product:INTEGRITY] [product:ODDS_PRE] [product:STREAM].
+- Match Visualisation Widgets: EUR 30,000 per year. Often bought with held LIVE_DATA and typical for Fantasy & Gaming [product:WIDGETS].
+- Historical Stats Archive: EUR 20,000 per year. Typical for the segment [product:STATS_ARCHIVE].
+- In-play Odds Feed: EUR 75,000 per year. Its prerequisite is already held and it is often bought with LIVE_DATA, but it is not typically sold to Fantasy & Gaming [product:ODDS_LIVE].
+- Fan Engagement Analytics (EUR 17,500 [product:FAN_INSIGHTS]), Integrity Monitoring (EUR 25,000 [product:INTEGRITY]), Pre-match Odds Feed (EUR 45,000 [product:ODDS_PRE]) and Live Streaming (EUR 55,000 [product:STREAM]) have no segment signal.
 
 ## What could block the pitch
-- Low data confidence means any volume or product case rests on a short history [calc:data_quality#1].
-- With usage under the included volume, a pitch for more volume is hard to justify on current data [calc:usage_trend#2].
-- No meeting notes exist, so the relationship context and client priorities are unknown [gap:no_meeting_notes#1].
+- Peer evidence is weak: only 2 other clients in the segment [gap:small_peer_group#1], so peer adoption cannot be relied on [product:WIDGETS].
+- A volume-led pitch is hard to justify at 40.0% utilisation [calc:usage_trend#2].
+- ODDS_LIVE is outside the segment's typical buying pattern [product:ODDS_LIVE].
+- No meeting notes or support tickets exist, so relationship context and any service problems are unknown [gap:no_meeting_notes#1] [gap:no_support_tickets#1].
 
 ## Timing
-- Contract K-0006 runs 2026-09-01 to 2027-08-31 at an annual value of EUR 48,000 [contracts:K-0006].
-- It renews automatically unless notice is given 30 days before the end date. The notice deadline is 2027-08-01 [contracts:K-0006] [calc:contract_status#2].
-- The contract ends 303 days after 2026-11-01 [calc:contract_status#1].
+- Contract K-0006 runs 2026-09-01 to 2027-08-31 at EUR 48,000 a year and renews automatically unless notice is given [contracts:K-0006].
+- The notice deadline is 2027-08-01 [calc:contract_status#2].
+- The LIVE_DATA opportunity O-0004 was Closed Won for EUR 48,000 [opp:O-0004]. The CRM note "Signed" is consistent with the contract on file [opp:O-0004].
+- The change in value at the last renewal is not known [gap:no_previous_contract#1].
 
 ## Suggested next steps
-- Ask Elif Aydin to review Live Match Data Feed usage against the included volume before proposing more volume, starting from 40.0% in Oct 2026 [calc:usage_trend#2].
-- Open the ODDS_LIVE conversation first, since it builds on the held LIVE_DATA [product:ODDS_LIVE]. Test WIDGETS as an alternative because it is often bought with LIVE_DATA [product:WIDGETS].
-- Plan the proposal to land before the notice deadline of 2027-08-01 [calc:contract_status#2].
-- Record meeting notes with the client to fill the relationship gap [gap:no_meeting_notes#1].
+- Lead with WIDGETS alongside LIVE_DATA, since it is often bought with it [product:WIDGETS].
+- Offer STATS_ARCHIVE at EUR 20,000 per year as the second option [product:STATS_ARCHIVE].
+- Hold ODDS_LIVE (EUR 75,000 per year) until demand is confirmed [product:ODDS_LIVE].
+- Review the account before the 2027-08-01 notice deadline [calc:contract_status#2].
+- Ask account owner Elif Aydin to record meeting notes, since none exist [client:C004] [gap:no_meeting_notes#1].
 
 ## Verification
 
-All 24 numbers and 29 citations were checked against the evidence.
+All 27 numbers and 32 citations were checked against the evidence.
 
 
 ## Data gaps and confidence

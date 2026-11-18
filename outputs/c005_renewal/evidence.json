@@ -2443,7 +2443,7 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 7557,
-        "output_tokens": 4712,
+        "output_tokens": 4037,
         "stop_reason": "end_turn"
       }
     ],
@@ -2452,17 +2452,171 @@
   "verification": {
     "first_pass": {
       "ok": true,
-      "numbers_checked": 42,
-      "citations_checked": 30,
+      "numbers_checked": 44,
+      "citations_checked": 29,
       "violations": [],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 42,
-      "citations_checked": 30,
+      "numbers_checked": 44,
+      "citations_checked": 29,
       "violations": [],
       "uncited_lines": 0
     }
+  },
+  "trace": {
+    "model": "claude-haiku-5-5",
+    "total_seconds": 15.986,
+    "total_cost_usd": 0.002774,
+    "steps": [
+      {
+        "name": "plan",
+        "kind": "plan",
+        "seconds": 0.0,
+        "detail": {
+          "trigger": "renewal",
+          "tools": [
+            "contract_status",
+            "opportunities",
+            "usage_trend",
+            "support_summary",
+            "meeting_notes",
+            "claim_check",
+            "whitespace"
+          ]
+        }
+      },
+      {
+        "name": "resolve_client",
+        "kind": "resolve",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "get_client_profile",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "data_quality",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "partial",
+          "facts": 1,
+          "gaps": 5
+        }
+      },
+      {
+        "name": "contract_status",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 11,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "opportunities",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "no_data",
+          "facts": 1,
+          "gaps": 2
+        }
+      },
+      {
+        "name": "usage_trend",
+        "kind": "tool",
+        "seconds": 0.001,
+        "detail": {
+          "status": "partial",
+          "facts": 29,
+          "gaps": 4
+        }
+      },
+      {
+        "name": "support_summary",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 15,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "meeting_notes",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 5,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "claim_check",
+        "kind": "tool",
+        "seconds": 0.001,
+        "detail": {
+          "status": "ok",
+          "facts": 0,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "whitespace",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 10,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "first_draft",
+        "kind": "model",
+        "seconds": 15.975,
+        "detail": {
+          "input_tokens": 7557,
+          "output_tokens": 4037,
+          "cost_usd": 0.002774,
+          "stop_reason": "end_turn"
+        }
+      },
+      {
+        "name": "verify_first_draft",
+        "kind": "verify",
+        "seconds": 0.005,
+        "detail": {
+          "numbers_checked": 44,
+          "citations_checked": 29,
+          "violations": 0
+        }
+      },
+      {
+        "name": "apply_policy",
+        "kind": "policy",
+        "seconds": 0.0,
+        "detail": {
+          "flagged": 0,
+          "repaired": false
+        }
+      }
+    ]
   }
 }

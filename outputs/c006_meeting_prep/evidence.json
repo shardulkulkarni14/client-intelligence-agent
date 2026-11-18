@@ -1744,7 +1744,7 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 5566,
-        "output_tokens": 3269,
+        "output_tokens": 4291,
         "stop_reason": "end_turn"
       }
     ],
@@ -1753,17 +1753,160 @@
   "verification": {
     "first_pass": {
       "ok": true,
-      "numbers_checked": 37,
-      "citations_checked": 28,
+      "numbers_checked": 32,
+      "citations_checked": 27,
       "violations": [],
       "uncited_lines": 0
     },
     "final": {
       "ok": true,
-      "numbers_checked": 37,
-      "citations_checked": 28,
+      "numbers_checked": 32,
+      "citations_checked": 27,
       "violations": [],
       "uncited_lines": 0
     }
+  },
+  "trace": {
+    "model": "claude-haiku-5-5",
+    "total_seconds": 16.927,
+    "total_cost_usd": 0.002702,
+    "steps": [
+      {
+        "name": "plan",
+        "kind": "plan",
+        "seconds": 0.0,
+        "detail": {
+          "trigger": "meeting_prep",
+          "tools": [
+            "meeting_notes",
+            "claim_check",
+            "support_summary",
+            "contract_status",
+            "opportunities",
+            "usage_trend"
+          ]
+        }
+      },
+      {
+        "name": "resolve_client",
+        "kind": "resolve",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "get_client_profile",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "data_quality",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "partial",
+          "facts": 1,
+          "gaps": 3
+        }
+      },
+      {
+        "name": "meeting_notes",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 5,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "claim_check",
+        "kind": "tool",
+        "seconds": 0.001,
+        "detail": {
+          "status": "ok",
+          "facts": 0,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "support_summary",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 14,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "contract_status",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 8,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "opportunities",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "no_data",
+          "facts": 1,
+          "gaps": 2
+        }
+      },
+      {
+        "name": "usage_trend",
+        "kind": "tool",
+        "seconds": 0.001,
+        "detail": {
+          "status": "ok",
+          "facts": 21,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "first_draft",
+        "kind": "model",
+        "seconds": 16.916,
+        "detail": {
+          "input_tokens": 5566,
+          "output_tokens": 4291,
+          "cost_usd": 0.002702,
+          "stop_reason": "end_turn"
+        }
+      },
+      {
+        "name": "verify_first_draft",
+        "kind": "verify",
+        "seconds": 0.007,
+        "detail": {
+          "numbers_checked": 32,
+          "citations_checked": 27,
+          "violations": 0
+        }
+      },
+      {
+        "name": "apply_policy",
+        "kind": "policy",
+        "seconds": 0.0,
+        "detail": {
+          "flagged": 0,
+          "repaired": false
+        }
+      }
+    ]
   }
 }

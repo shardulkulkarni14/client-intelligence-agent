@@ -1,25 +1,25 @@
 # Evaluation report
 
-Mode: with model. Cases: 11. Checks passed: 77 of 77.
-Tokens: 95,151 in, 55,033 out.
+Mode: with model. Cases: 11. Checks passed: 76 of 77.
+Tokens: 103,631 in, 56,974 out.
 
 | case | trigger | grounded | verifier | citations | sections | gaps | must_cite | length | flagged on first draft | repaired |
 |---|---|---|---|---|---|---|---|---|---|---|
-| halden_renewal | renewal | pass | pass | pass | pass | pass | pass | pass | 0 | no |
+| halden_renewal | renewal | pass | pass | pass | FAIL | pass | pass | pass | 0 | no |
 | halden_at_risk | at_risk | pass | pass | pass | pass | pass | pass | pass | 1 | yes |
 | c003_at_risk | at_risk | pass | pass | pass | pass | pass | pass | pass | 0 | no |
-| c003_renewal | renewal | pass | pass | pass | pass | pass | pass | pass | 1 | yes |
+| c003_renewal | renewal | pass | pass | pass | pass | pass | pass | pass | 2 | yes |
 | c005_renewal | renewal | pass | pass | pass | pass | pass | pass | pass | 0 | no |
 | c005_at_risk | at_risk | pass | pass | pass | pass | pass | pass | pass | 0 | no |
 | c007_renewal | renewal | pass | pass | pass | pass | pass | pass | pass | 0 | no |
-| c007_upsell | upsell | pass | pass | pass | pass | pass | pass | pass | 0 | no |
+| c007_upsell | upsell | pass | pass | pass | pass | pass | pass | pass | 1 | yes |
 | c004_upsell | upsell | pass | pass | pass | pass | pass | pass | pass | 0 | no |
 | c017_upsell | upsell | pass | pass | pass | pass | pass | pass | pass | 0 | no |
 | c006_meeting_prep | meeting_prep | pass | pass | pass | pass | pass | pass | pass | 0 | no |
 
 ## Failures
 
-None.
+- **halden_renewal** / sections: missing or out of order
 
 ## What each case is for
 

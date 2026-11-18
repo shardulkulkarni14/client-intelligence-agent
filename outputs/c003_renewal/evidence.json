@@ -2509,13 +2509,13 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 7759,
-        "output_tokens": 4695,
+        "output_tokens": 3942,
         "stop_reason": "end_turn"
       },
       {
         "model": "claude-haiku-5-5",
-        "input_tokens": 9497,
-        "output_tokens": 1920,
+        "input_tokens": 9527,
+        "output_tokens": 2295,
         "stop_reason": "end_turn"
       }
     ],
@@ -2524,12 +2524,19 @@
   "verification": {
     "first_pass": {
       "ok": false,
-      "numbers_checked": 45,
-      "citations_checked": 36,
+      "numbers_checked": 35,
+      "citations_checked": 30,
       "violations": [
         {
+          "line_no": 2,
+          "line": "The renewal is not secured. Contract K-0005 ends on 2026-12-31 and does not renew automatically [calc:contract_status#1] [contracts:K-0005]. The notice deadline of 2026-10-02 has already passed [calc:contract_status#2], so the rep's task is to get a signed renewal before the end date. Confidence in the value is moderate: the EUR 258,500 figure is in the CRM but still awaits client board approval.",
+          "kind": "number_not_in_cited_evidence",
+          "token": "EUR 258,500",
+          "detail": "EUR 258,500 is not in the evidence cited on this line; a cited source row does not carry figures computed from it, cite [calc:opportunities#1] instead"
+        },
+        {
           "line_no": 30,
-          "line": "- Check the STREAM position with the commercial director before accepting the +10% basis, using the measured -22.6% [calc:usage_trend#24][calc:claim_check#1].",
+          "line": "- Show the commercial director the measured STREAM decline when discussing the \"+10%\" figure [calc:claim_check#1] [calc:usage_trend#24].",
           "kind": "number_not_in_cited_evidence",
           "token": "10%",
           "detail": "10% is not in the evidence cited on this line; it does appear in calc:opportunities#1, note:N-006"
@@ -2539,10 +2546,185 @@
     },
     "final": {
       "ok": true,
-      "numbers_checked": 44,
-      "citations_checked": 36,
+      "numbers_checked": 35,
+      "citations_checked": 35,
       "violations": [],
       "uncited_lines": 0
     }
+  },
+  "trace": {
+    "model": "claude-haiku-5-5",
+    "total_seconds": 25.187,
+    "total_cost_usd": 0.004847,
+    "steps": [
+      {
+        "name": "plan",
+        "kind": "plan",
+        "seconds": 0.0,
+        "detail": {
+          "trigger": "renewal",
+          "tools": [
+            "contract_status",
+            "opportunities",
+            "usage_trend",
+            "support_summary",
+            "meeting_notes",
+            "claim_check",
+            "whitespace"
+          ]
+        }
+      },
+      {
+        "name": "resolve_client",
+        "kind": "resolve",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "get_client_profile",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "data_quality",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "contract_status",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 8,
+          "gaps": 1
+        }
+      },
+      {
+        "name": "opportunities",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 3,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "usage_trend",
+        "kind": "tool",
+        "seconds": 0.001,
+        "detail": {
+          "status": "ok",
+          "facts": 28,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "support_summary",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 17,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "meeting_notes",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 10,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "claim_check",
+        "kind": "tool",
+        "seconds": 0.001,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 1
+        }
+      },
+      {
+        "name": "whitespace",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 10,
+          "gaps": 1
+        }
+      },
+      {
+        "name": "first_draft",
+        "kind": "model",
+        "seconds": 16.7,
+        "detail": {
+          "input_tokens": 7759,
+          "output_tokens": 3942,
+          "cost_usd": 0.002747,
+          "stop_reason": "end_turn"
+        }
+      },
+      {
+        "name": "verify_first_draft",
+        "kind": "verify",
+        "seconds": 0.01,
+        "detail": {
+          "numbers_checked": 35,
+          "citations_checked": 30,
+          "violations": 2
+        }
+      },
+      {
+        "name": "repair",
+        "kind": "model",
+        "seconds": 8.454,
+        "detail": {
+          "input_tokens": 9527,
+          "output_tokens": 2295,
+          "cost_usd": 0.0021,
+          "stop_reason": "end_turn"
+        }
+      },
+      {
+        "name": "verify_repair",
+        "kind": "verify",
+        "seconds": 0.015,
+        "detail": {
+          "numbers_checked": 35,
+          "citations_checked": 35,
+          "violations": 0
+        }
+      },
+      {
+        "name": "apply_policy",
+        "kind": "policy",
+        "seconds": 0.0,
+        "detail": {
+          "flagged": 0,
+          "repaired": true
+        }
+      }
+    ]
   }
 }

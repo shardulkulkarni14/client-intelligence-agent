@@ -2606,13 +2606,13 @@
       {
         "model": "claude-haiku-5-5",
         "input_tokens": 8312,
-        "output_tokens": 5271,
+        "output_tokens": 4567,
         "stop_reason": "end_turn"
       },
       {
         "model": "claude-haiku-5-5",
-        "input_tokens": 9899,
-        "output_tokens": 1897,
+        "input_tokens": 9690,
+        "output_tokens": 1576,
         "stop_reason": "end_turn"
       }
     ],
@@ -2621,25 +2621,189 @@
   "verification": {
     "first_pass": {
       "ok": false,
-      "numbers_checked": 26,
-      "citations_checked": 25,
+      "numbers_checked": 28,
+      "citations_checked": 23,
       "violations": [
         {
-          "line_no": 18,
-          "line": "- What the reduced in-play scope covers, and whether the EUR 541,500 on O-0001 reflects it.",
-          "kind": "number_without_citation",
-          "token": "EUR 541,500",
-          "detail": "EUR 541,500 is on a line with no citation"
+          "line_no": 23,
+          "line": "- Before 2026-12-02, agree with the client what renewal scope they want, since they have asked for pricing on reduced in-play scope. [opp:O-0001]",
+          "kind": "number_not_in_cited_evidence",
+          "token": "2026-12-02",
+          "detail": "2026-12-02 is not in the evidence cited on this line; it does appear in calc:contract_status#2"
         }
       ],
-      "uncited_lines": 5
+      "uncited_lines": 2
     },
     "final": {
       "ok": true,
-      "numbers_checked": 25,
-      "citations_checked": 30,
+      "numbers_checked": 28,
+      "citations_checked": 24,
       "violations": [],
-      "uncited_lines": 1
+      "uncited_lines": 2
     }
+  },
+  "trace": {
+    "model": "claude-haiku-5-5",
+    "total_seconds": 25.246,
+    "total_cost_usd": 0.004872,
+    "steps": [
+      {
+        "name": "plan",
+        "kind": "plan",
+        "seconds": 0.0,
+        "detail": {
+          "trigger": "at_risk",
+          "tools": [
+            "usage_trend",
+            "support_summary",
+            "contract_status",
+            "opportunities",
+            "meeting_notes",
+            "claim_check"
+          ]
+        }
+      },
+      {
+        "name": "resolve_client",
+        "kind": "resolve",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "get_client_profile",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "data_quality",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 1,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "usage_trend",
+        "kind": "tool",
+        "seconds": 0.001,
+        "detail": {
+          "status": "ok",
+          "facts": 28,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "support_summary",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 25,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "contract_status",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 9,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "opportunities",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 3,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "meeting_notes",
+        "kind": "tool",
+        "seconds": 0.0,
+        "detail": {
+          "status": "ok",
+          "facts": 19,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "claim_check",
+        "kind": "tool",
+        "seconds": 0.001,
+        "detail": {
+          "status": "ok",
+          "facts": 0,
+          "gaps": 0
+        }
+      },
+      {
+        "name": "first_draft",
+        "kind": "model",
+        "seconds": 19.406,
+        "detail": {
+          "input_tokens": 8312,
+          "output_tokens": 4567,
+          "cost_usd": 0.003115,
+          "stop_reason": "end_turn"
+        }
+      },
+      {
+        "name": "verify_first_draft",
+        "kind": "verify",
+        "seconds": 0.007,
+        "detail": {
+          "numbers_checked": 28,
+          "citations_checked": 23,
+          "violations": 1
+        }
+      },
+      {
+        "name": "repair",
+        "kind": "model",
+        "seconds": 5.816,
+        "detail": {
+          "input_tokens": 9690,
+          "output_tokens": 1576,
+          "cost_usd": 0.001757,
+          "stop_reason": "end_turn"
+        }
+      },
+      {
+        "name": "verify_repair",
+        "kind": "verify",
+        "seconds": 0.008,
+        "detail": {
+          "numbers_checked": 28,
+          "citations_checked": 24,
+          "violations": 0
+        }
+      },
+      {
+        "name": "apply_policy",
+        "kind": "policy",
+        "seconds": 0.0,
+        "detail": {
+          "flagged": 0,
+          "repaired": true
+        }
+      }
+    ]
   }
 }

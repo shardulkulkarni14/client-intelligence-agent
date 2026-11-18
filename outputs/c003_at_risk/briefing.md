@@ -3,33 +3,34 @@
 _Data as of 2026-11-01. Account owner: Tomas Ferreira._
 
 ## Bottom line
-The account is at real risk of shrinking, mainly on the Live Streaming line, and the renewal is not signed. Contract K-0005 ends in 60 days [calc:contract_status#1]. Confidence is high that the measured risk exists, but low on whether the league will renew at the proposed value, because that rests on a reported note.
+Yes, the account is at risk, mainly on renewal and streaming. Contract K-0005 ends on 2026-12-31 and does not renew automatically, and the only signed contract on file is K-0005 [contracts:K-0005] [gap:no_previous_contract#1]. Confidence is moderate: the usage and contract facts are measured and the data is clean, but the reported renewal agreement conflicts with the measured STREAM decline.
 
 ## Warning signs
-- Live Streaming usage fell: 1,292 streamed hours in Aug-Oct 2026 versus 1,669 in Aug-Oct 2025, a change of -22.6% [calc:usage_trend#24].
-- The renewal is unsigned. K-0005 does not renew automatically [contracts:K-0005], and its notice deadline of 2026-10-02 has passed [calc:contract_status#2].
-- Ticket T-0258 asks to pause streams for cup matches "moved to free-to-air partner" [ticket:T-0258]. The client's own wording suggests some matches may leave the platform.
-- The renewal opportunity is still at Proposal, with an expected close of 2026-12-15 [opp:O-0003].
+- Renewal is not signed. K-0005 ends 2026-12-31 unless a new contract is signed, and the notice deadline of 2026-10-02 has passed [contracts:K-0005] [calc:contract_status#2]. The renewal opportunity O-0003 is at Proposal stage, with an amount of EUR 258,500 and an expected close of 2026-12-15 [opp:O-0003].
+- The CRM next step reads "Awaiting client board approval" [opp:O-0003]. The last meeting was 44 days before 2026-11-01 [calc:meeting_notes#1].
+- STREAM usage fell: 1,292 streamed hours in Aug-Oct 2026 versus 1,669 in Aug-Oct 2025, a change of -22.6% [calc:usage_trend#24].
+- The most recent ticket, T-0258 (opened 2026-08-28), asks to pause streams for cup matches moved to a free-to-air partner [ticket:T-0258].
 
 ## Signs of health
-- No open tickets at 2026-11-01 [calc:support_summary#13]. Ticket volume fell to 1 in the last 90 days from 4 in the previous 90 days [calc:support_summary#12].
-- Other products are growing: Fan Insights +8.0% [calc:usage_trend#3], Integrity Monitoring +3.0% [calc:usage_trend#10], and Stats Archive +6.3% [calc:usage_trend#17], all year on year.
-- Satisfaction is steady: average CSAT of 4.0 out of 5 in the last 90 days [calc:support_summary#10].
+- Three of four products grew year on year: INTEGRITY +3.0% [calc:usage_trend#10], FAN_INSIGHTS +8.0% [calc:usage_trend#3], STATS_ARCHIVE +6.3% [calc:usage_trend#17].
+- No open tickets at 2026-11-01, and 1 ticket opened in the last 90 days versus 4 in the previous 90 days [calc:support_summary#13] [calc:support_summary#12].
+- Average CSAT is 4.1 out of 5 over the last 12 months [calc:support_summary#5].
+- Data confidence is high, so these figures can be relied on [calc:data_quality#1].
 
 ## What we do not know
-- Whether the league will sign. Tomas Ferreira recorded that renewal was "basically agreed" at around +10%, pending their board [note:N-006]. The CRM next step reads "Awaiting client board approval" [opp:O-0003].
-- Whether the reported streaming growth is real. The note says usage is "up massively" [note:N-006], but measured STREAM usage fell -22.6% year on year [calc:usage_trend#24]. The briefing uses the measured figure [gap:source_conflict#1].
-- How much streaming volume the free-to-air move affects. The data does not say [ticket:T-0258].
-- How the last renewal changed the annual value. K-0005 is the only signed contract on file [gap:no_previous_contract#1].
+- Whether the board will approve. The note says the renewal was "basically agreed" at around +10%, pending the board. This is reported by Tomas Ferreira, not measured [note:N-006]. The opportunity is +10.0% versus the current annual value of EUR 235,000 [calc:opportunities#1].
+- Why STREAM is falling. The commercial director reportedly said usage is "up massively" [note:N-006]. This conflicts with the measured -22.6% [calc:claim_check#1] [gap:source_conflict#1]. STREAM did rise +24.0% over the previous three months, but that comparison is not seasonally adjusted [calc:usage_trend#25].
+- Whether the free-to-air move is permanent or how many matches it covers. The ticket subject is the only evidence [ticket:T-0258].
 
 ## Suggested next steps
-- Call the commercial director before the board decides. Ask which second-division and cup matches stay on STREAM, given the free-to-air move in [ticket:T-0258].
-- Use the measured decline in the renewal discussion. STREAM is at -22.6% year on year [calc:usage_trend#24], while the proposal is +10.0% above the annual value of EUR 235,000 [calc:opportunities#1]. Check that the STREAM line still fits the usage.
-- Ask Tomas Ferreira to confirm the renewal paperwork recorded as an action in [note:N-006], and track the 2026-12-15 close date [opp:O-0003].
+- Call the board-facing contact to confirm where the renewal stands before the expected close of 2026-12-15 [opp:O-0003].
+- Send the renewal paperwork, which the note assigns to Tomas Ferreira, and confirm it has gone out [note:N-006] [client:C003].
+- Ask the client directly about the free-to-air move and its effect on STREAM volume [ticket:T-0258] [calc:usage_trend#24].
+- Do not repeat the "up massively" claim in any proposal until it is checked against the measured -22.6% [calc:usage_trend#24] [calc:claim_check#1].
 
 ## Verification
 
-All 25 numbers and 24 citations were checked against the evidence.
+All 31 numbers and 30 citations were checked against the evidence.
 
 
 ## Data gaps and confidence

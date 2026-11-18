@@ -226,6 +226,31 @@ def gaps_section(results: list[ToolResult]) -> str:
 TOOL_ERROR = "error"  # a tool raised; the run continues without its facts
 
 
+def order_sections(text: str, sections: list[str]) -> str:
+    """Put the model's sections in the configured order.
+
+    The order is part of the trigger's configuration, so code guarantees it rather
+    than asking the model twice. Nothing is rewritten: whole sections move, a
+    section the trigger does not name keeps its place after the named ones.
+    """
+    lines = text.splitlines()
+    starts = [i for i, line in enumerate(lines) if line.startswith("## ")]
+    if not starts:
+        return text
+    blocks = [lines[a:b] for a, b in zip(starts, [*starts[1:], len(lines)], strict=True)]
+
+    def rank(block: list[str]) -> int:
+        title = block[0][3:].strip()
+        return sections.index(title) if title in sections else len(sections)
+
+    ordered = sorted(blocks, key=rank)  # stable: equal ranks keep the model's order
+    if ordered == blocks:
+        return text
+    # A moved block must still be followed by a blank line before the next heading.
+    parts = ["\n".join(lines[:starts[0]]).rstrip(), *("\n".join(b).rstrip() for b in ordered)]
+    return "\n\n".join(part for part in parts if part)
+
+
 def _run_one(name: str, tool: Tool, ds: Dataset, client_id: str) -> tuple[ToolResult, float]:
     started = time.perf_counter()
     try:
@@ -312,7 +337,7 @@ def run(ds: Dataset, client_query: str, trigger: str, context: str = "",
         started = time.perf_counter()
         text = writer(system, user)
         trace.add(step, "model", time.perf_counter() - started, model_detail(writer, before))
-        return text
+        return order_sections(text, plan.sections)
 
     model_calls: list[dict[str, Any]] = []
     repaired = False
